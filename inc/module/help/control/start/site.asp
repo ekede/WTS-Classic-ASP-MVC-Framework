@@ -22,7 +22,7 @@ Class Control_Start_Site
     Public Function Start()
         '路由
 		wts.route.routers = "" '必须
-        wts.route.rewrite_on = True
+        'wts.route.rewrite_on = True
         wts.route.DeWrite()
 		'静态根路径
 		config("base_url") = wts.route.baseAddr

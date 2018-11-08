@@ -61,7 +61,7 @@ Class Control_Start_Site
 	
         '路由配置 正则,图片,关键词 reg,pic,key
 		wts.route.routers = "pic,key"
-        wts.route.rewrite_on = True '开启地址重写
+       'wts.route.rewrite_on = True '开启地址重写
 
         '初始化站点langId
 		'SetBaseAddr() '自定义路由多网址功能
