@@ -1,0 +1,31 @@
+﻿{include inc/header.htm}
+
+{loop news}
+<table width="50%" border="1">
+{loop_body start}
+<tr>
+    <td>{news/id}</td>
+    <td><img src="{news/pic}" /></td>
+    <td><a href="{news/link}">{news/name}</a></td>
+    <td>{news/time}</td>
+    <td align="center"><a href="{news/link_edit}">Edit</a> | <a href="{news/link_del}">Del</a></td>
+</tr>
+{loop_body end}
+</table>
+{end loop}
+
+{loop news_page}
+<p>Page :
+{loop_body start}
+    {if loop news_page/selected=1}
+       {news_page/num}
+    {else loop}
+       <a href="{news_page/link}">{news_page/num}</a>
+    {end loop if}
+{loop_body end}
+</p>
+{end loop}
+
+<p><a href="{tag_addlink}">Add Name</a></p>
+
+{include inc/footer.htm}

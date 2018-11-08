@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+{loop meta}
+{loop_body start}
+<meta content="{meta/content}" name="{meta/name}" />
+{loop_body end}
+{end loop}
+
+<title>{title}</title>
+
+{loop script}
+{loop_body start}
+<script src="{script/src}" type="text/javascript"></script>
+{loop_body end}
+{end loop}
+
+{loop style}
+{loop_body start}
+<link href="{style/href}" type="text/css" rel="stylesheet" />
+{loop_body end}
+{end loop}
+
+</head>
+<body>

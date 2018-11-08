@@ -1,0 +1,117 @@
+﻿{include inc/header.htm}
+<script type="text/javascript">
+SyntaxHighlighter.defaults['title'] = " ";
+SyntaxHighlighter.all();
+</script>
+<table border="0" width="100%">
+<tr><td width="30%"  valign="top">
+
+    {if list}
+    {loop list}
+    <table width="95%" border="1">
+    {loop_body start}
+    <tr><td><a href="{list/link}">{list/name}</a> {list/select}</td></tr>
+    {loop_body end}
+    </table>
+    {end loop}
+    {end if}
+    
+</td><td valign="top">
+
+    {if tag_frame}
+
+		<p>WTS Framework</p>
+		<p>ASP基于对象的MVCL框架</p>
+		<p>编码: UTF-8带BOM</p>
+		<p>流程: request =&gt; route =&gt; module/control/action (model,view,language)  =&gt; response</p>
+		<p>启动: inc/wts.start()  =&gt; inc/module/---/control/start/site.start()  =&gt; ...</p>
+		<p>架构: </p>
+		<ol>
+		   <li>index.asp 　单入口文件,IIS404,405指向这里</li>
+		</ol>
+		<ol>
+		   <li>inc/  存放程序信息</li>
+		   <li>inc/config.asp  全局配置文件,程序必须的路径及全局常量,变量</li>
+		   <li>inc/wts.asp　 框架核心类</li>
+		   <li>inc/class/　 类库文件</li>
+		   <li>inc/module/　 MVCL模块程序文件</li>
+		</ol>
+		<ol>
+		   <li>data/  存放数据信息</li>
+		   <li>data/cache/  缓存文件</li>
+		   <li>data/db/  数据库</li>
+		   <li>data/log/  日志</li>
+		   <li>data/pic/  图像多媒体</li>
+		   <li>data/static/  网站静态css,js,icon...</li>
+		</ol>
+		<ol>
+		   <li>app/  对应inc/,书写新代码或重写系统核心代码</li>
+		</ol>
+		<ol>
+		   <li>程序及数据文件路径可以通过config配置进行更改</li>
+		   <li>类库和程序文件, 基于对象封装, 加载包含执行通过loader对象实现, 简单去耦合</li>
+		</ol>
+
+		<p>建议权限:</p>
+		<table width="80%" border="1" style="margin-left:20px;">
+		<tr><td>类型</td><td>index.asp</td><td>inc/</td><td>data/</td><td>data/db/</td></tr>
+		<tr><td>windows</td><td>读</td><td>读</td><td>读写</td><td>－</td></tr>
+		<tr><td>IIS</td><td>读,运行</td><td>无</td><td>读</td><td>无</td></tr>
+		</table>
+
+		<p>:) 大家的反馈是对WTS的最大支持。88910787@qq.com</p>
+    {end if}
+    
+    {if head}
+    <p>类描述</p>
+    {loop head}
+    <table width="100%" border="1">
+    {loop_body start}
+    <tr><td width="35%">{head/name}</td><td>{head/content}</td></tr>
+    {loop_body end}
+    </table>
+    {end loop}
+    {end if}
+    
+    {if proper}
+    <p>类属性</p>
+    {loop proper}
+    <table width="100%" border="1">
+    {loop_body start}
+    <tr><td width="35%">{proper/name}</td><td>{proper/content}</td></tr>
+    {loop_body end}
+    </table>
+    {end loop}
+    {end if}
+    
+    {if func}
+    <p>类方法</p>
+    {loop func}
+    <table width="100%" border="1">
+    {loop_body start}
+    <tr><td width="35%">{func/name}</td><td>{func/content}</td></tr>
+    {loop_body end}
+    </table>
+    {end loop}
+    {end if}
+    
+    {if tag_help}
+    <p align="center"><a href="{tag_help}">返回</a></p>
+    {end if}
+
+    {if example}
+    <p>{loop example}</p>
+    {loop_body start}
+        <div>
+        {example/name}
+        <pre class="brush: vb;">
+        {example/content}
+        </pre>
+        </div>
+    {loop_body end}
+    {end loop}
+    {end if}
+    
+</td></tr>
+</table>
+{include inc/footer.htm}
