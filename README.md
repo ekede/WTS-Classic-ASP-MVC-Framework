@@ -8,13 +8,13 @@ Start: inc/wts.start() => inc/module/---/control/start/site.start() => ...
 
 Struct:
 
-    index.asp      　Single entry point, IIS404,405 point here
+    index.asp        Single entry point, IIS404,405 point here
 
     inc/             Program Folder
     inc/config.asp   Global configure File
-    inc/wts.asp　    Core Framework 
-    inc/class/　     Asp Libray
-    inc/module/　    MVCL Program
+    inc/wts.asp      Core Framework 
+    inc/class/       Asp Libray
+    inc/module/      MVCL Program
 
     data/            Data Folder
     data/cache/      Cache Folder
