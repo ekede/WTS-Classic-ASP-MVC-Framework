@@ -38,4 +38,5 @@ Public Sub Die(str)
 	response.End
 End Sub
 '##
+
 %>
