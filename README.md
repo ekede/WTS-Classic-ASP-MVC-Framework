@@ -29,6 +29,3 @@ Note:
 
     Program and Data path can be changed by config.asp
     Class libraries and program files based on object, loading file by loader object
-
-
-:) Contact: todaygods@gmail.com
