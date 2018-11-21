@@ -156,7 +156,7 @@ Class Class_Route
 	
     '--------------------------------------1 首先获得模块信息然后Start对应模块
 	
-	'@GetModule(): 获取模块
+	'@GetModule(): 默认获取模块,特殊模块劫持修改此方法
 	
     Public Sub GetModule()
         Dim temp_path
