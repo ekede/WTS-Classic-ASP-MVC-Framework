@@ -21,7 +21,7 @@ Class Class_Route_Slash
         Dim temp_array
         '
         If r_path = "" Then
-            route_.module = "default"
+            'route_.module = "default" '默认路由为当前路由
             c_path = PATH_MODULE&route_.module&"/"&PATH_CONTROL
             c = "index"
             If route_.loader.LoadFile(c_path&c&".asp")<> -1 Then route_.control = c '--loader
@@ -40,7 +40,7 @@ Class Class_Route_Slash
 						route_.module = temp_array(0)
 						c_path = PATH_MODULE&route_.module&"/"&PATH_CONTROL
 					Else
-						route_.module = "default"
+					   'route_.module = "default" '默认路由为当前路由
 						c_path = PATH_MODULE&route_.module&"/"&PATH_CONTROL
 						c = temp_array(0)
 						If route_.loader.LoadFile(c_path&c&".asp")<> -1 Then route_.control = c '--loader
