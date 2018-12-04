@@ -156,17 +156,22 @@ Class Class_Route
 	
     '--------------------------------------1 首先获得模块信息然后Start对应模块
 	
-	'@GetModule(): 默认获取模块,特殊模块劫持修改此方法
+	'@GetModule(): 获取模块
 	
     Public Sub GetModule()
         Dim temp_path
-        '
+		
+        '获取标准路由路径
         If requests_.Status404 Then
             temp_path = RouteAddr
         Else
             temp_path = requests_.querystr("route")
         End If
-        '
+		
+        '特殊路由模块计算并跳出:例如按照域名或其他特定规则在此判断
+		'...
+		
+		'标准路由模块计算
         If  temp_path <> "" Then
             temp_array = Split(temp_path, "/")
             temp_path = temp_array(0)
