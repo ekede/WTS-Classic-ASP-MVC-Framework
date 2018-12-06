@@ -161,7 +161,7 @@ Class Class_Route
     Public Sub GetModule()
         '特殊路由模块计算并跳出:例如按照域名或其他特定规则在此判断
 		Dim sModule,sStatus
-		Set sModule = loader_.LoadClass("route/moudle")
+		Set sModule = loader_.LoadClass("route/module")
 		    sModule.route = Me
 			sStatus = sModule.GetModule(requests_)
 		Set sModule = Nothing
