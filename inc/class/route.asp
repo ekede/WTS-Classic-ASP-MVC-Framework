@@ -159,6 +159,21 @@ Class Class_Route
 	'@GetModule(): 获取模块
 	
     Public Sub GetModule()
+        '特殊路由模块计算并跳出:例如按照域名或其他特定规则在此判断
+		Dim sModule,sStatus
+		Set sModule = loader_.LoadClass("route/moudle")
+		    sModule.route = Me
+			sStatus = sModule.GetModule(requests_)
+		Set sModule = Nothing
+		
+		'如果已经匹配到模块则跳出
+		If sStatus Then Exit Sub
+		
+	    '标准模块判断
+		GetStandardModule()
+    End Sub
+	
+    Private Sub GetStandardModule()
         Dim temp_path
 		
         '获取标准路由路径
@@ -167,9 +182,6 @@ Class Class_Route
         Else
             temp_path = requests_.querystr("route")
         End If
-		
-        '特殊路由模块计算并跳出:例如按照域名或其他特定规则在此判断
-		'...
 		
 		'标准路由模块计算
         If  temp_path <> "" Then
