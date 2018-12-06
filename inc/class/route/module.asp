@@ -2,7 +2,7 @@
 '@title: Class_Route_Module
 '@author: ekede.com
 '@date: 2018-12-06
-'@description: 路由前特殊模块判断
+'@description: 标准路由前特殊模块判断
 
 Class Class_Route_Module
 
@@ -14,7 +14,7 @@ Class Class_Route_Module
         Set route_ = Value
     End Property
 	
-    '@GetModule(r): 根据Requests特殊对象模块
+    '@GetModule(r): 根据Requests对象参数做特殊模块判断
 
     Public Function GetModule(r)
         GetModule = False
