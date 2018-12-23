@@ -78,7 +78,8 @@ Class Control_Install
 			'创建表Hello
 			sql="create table wts_hello ( "&_
 			"id integer IDENTITY(1,1) primary key, "&_
-			"name varchar(50) "&_
+			"name varchar(50), "&_
+			"times date Default now() "&_
 			")"
 			db.SqlExecute(sql)
 

@@ -58,7 +58,7 @@ Class Control_Hello
                 link_img = wts.route("pic").ReWritePic(wts.site.config("base_pic_url"), "image/no.gif", 50, 50, "")
                 wts.template.setVali "news/pic", i, link_img
                 '
-                wts.template.setVali "news/time", i, wts.fun.FormatDate(wts.times,1)
+                wts.template.setVali "news/time", i, wts.fun.FormatDate(wts.template.GetVali("news/times", i),1)
             Next
             '生成分页"news_page"
             oPage.Plist wts.route,wts.site.config("base_url"),"index.asp?route=hello/list"
@@ -203,7 +203,7 @@ Class Control_Hello
 		If wts.errs.foundErr Then wts.errs.OutMsg
 		'删除
 		Set mHello = loader.LoadModel("Hello")
-		    mHello.Del id
+		   'mHello.Del id
 		Set mHello = Nothing
 		'跳转
 		wts.responses.Direct wts.route.ReWrite(wts.site.config("base_url"),"index.asp?route=hello/list")
