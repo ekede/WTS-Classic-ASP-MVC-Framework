@@ -95,7 +95,7 @@ Class Control_Index
 	
 	    If str="" Then Exit Sub
 		'属性方法
-		Set matches = wts.fun.MatchesExp(str,"'"&""&"@(.*):(.*)\r") '增加了个无用空格，避免被当作注释显示到前端
+		Set matches = wts.fun.MatchesExp(str,"'"&""&"@(.*):(.*)\n") '增加了个无用空格，避免被当作注释显示到前端
 		For Each x in matches
 			names = x.SubMatches(0)
 			content = x.SubMatches(1)
