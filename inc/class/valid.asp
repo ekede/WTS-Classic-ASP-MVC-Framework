@@ -135,6 +135,19 @@ Class Class_Valid
     Public Function Safe(ByVal values)
         If values<>"" Then Safe = Replace(values, "'", "")
     End Function
+	
+	'@Safes(ByVal values): 验证sql注入
+	
+	Public Function Safes(ByVal values)
+		dim inj_data,inj_arr,str,i
+		str = values&""
+		inj_data = "'|and|exec|insert|select|delete|update|count|*|%|chr|mid|master|truncate|char|declare"
+		inj_arr = split(inj_data,"|")
+		For i=0 To Ubound(inj_arr)
+			if instr(str,inj_arr(i)) > 0 Then exit function
+		next
+		Safes = str
+	End Function
 
     '验证邮箱
 
