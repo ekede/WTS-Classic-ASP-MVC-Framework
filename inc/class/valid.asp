@@ -133,7 +133,8 @@ Class Class_Valid
     '@Safe(ByVal values): 验证单引号
 
     Public Function Safe(ByVal values)
-        If values<>"" Then Safe = Replace(values, "'", "")
+	    if isNull(values) or values="" Then exit function
+        Safe = Replace(values, "'", "")
     End Function
 	
 	'@Safes(ByVal values): 验证sql注入
