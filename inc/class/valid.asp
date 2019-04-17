@@ -141,13 +141,13 @@ Class Class_Valid
 	
 	Public Function Safes(ByVal values)
 		dim inj_data,inj_arr,str,i
-		str = values&""
+		str = lcase(values&"")
 		inj_data = "'|and|exec|insert|select|delete|update|count|*|%|chr|mid|master|truncate|char|declare"
 		inj_arr = split(inj_data,"|")
 		For i=0 To Ubound(inj_arr)
 			if instr(str,inj_arr(i)) > 0 Then exit function
 		next
-		Safes = str
+		Safes = lcase(values&"")
 	End Function
 
     '验证邮箱
