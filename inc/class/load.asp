@@ -173,7 +173,6 @@ Class Class_Load
 
 	Public Function LoadFramework(filePath)
 		On Error Resume Next
-		Dim cname
 		Include(frameworkPath_&filePath)
 		Set LoadFramework = Eval("new framework_"&filePath)
 		'
