@@ -16,10 +16,7 @@ Class Control_Index
 	'@Index_Action(): 默认首页
 
     Public Sub Index_Action()
-        
-	   '控制器外部转向
-       'loader.LoadControlAct "Help", "Index"
-	   
+
 	   '标题
 	   wts.template.SetVal "title",wts.site.tempdata("Lan_Hello")
 	   '

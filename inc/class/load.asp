@@ -133,29 +133,30 @@ Class Class_Load
 	
 	'Include 代码块动态包含,包含文件路径-永远是相对根目录路径 PATH_ROOT:回根,filePath相对根目录+文件名
 	
-	'@Include(filePath): 包含并执行,变量全局, 函数,类局部
-
+	'@Include(filePath): 包含并执行,全局
+	
 	Public Sub Include(filePath)
+		On Error Resume Next
+		Dim str,k
+		k="in_"&lcase(filePath)
+		If  Not includeCount_.Exists(k) Then '避免全局类包含两次以上出错,注意windows系统不区分大小写,字典区分
+			includeCount_(k)=1
+			str = LoadFile(filePath&".asp")
+			If str<> -1 Then ExecuteGlobal str  '全局 类,函数,变量
+			If Err Then OutErr("Include:"&filePath&":"&Err.Number&":"&Err.Description)
+		End If
+	End Sub
+	
+	'@IncludeL(filePath): 包含并执行,变量全局, 函数,类局部
+
+	Public Sub IncludeL(filePath)
 		On Error Resume Next
 		Dim str
 		str = LoadFile(filePath&".asp")
 		If str<> -1 Then Execute str  '全局 变量; 类,函数,根据位置全局局部; 类相同位置出错; 函数覆盖静态;
-		If Err Then OutErr("Include:"&filePath&":"&Err.Number&":"&Err.Description)
+		If Err Then OutErr("IncludeL:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Sub
-	
-	'@IncludeG(filePath): 包含并执行,全局
-	
-	Public Sub IncludeG(filePath)
-		On Error Resume Next
-		Dim str
-		If includeCount_(filePath)<>1 Then '避免全局类包含两次以上出错
-			includeCount_(filePath)=1
-			str = LoadFile(filePath&".asp")
-			If str<> -1 Then ExecuteGlobal str  '全局 类,函数,变量
-			If Err Then OutErr("IncludeG:"&filePath&":"&Err.Number&":"&Err.Description)
-		End If
-	End Sub
-	
+
 	'@IncludeS(filePath): 包含不执行,返回内容
 	
 	Public Function IncludeS(filePath)
@@ -166,16 +167,16 @@ Class Class_Load
 		If Err Then OutErr("IncludeS:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 	
+	'Include使用 加载框架,类库,控制器,模型,语言包,视图等
+	
 	'@LoadFrameWork(filePath):加载框架对象
 
 	Public Function LoadFramework(filePath)
 		On Error Resume Next
-		Dim Str, cname
-		Str = LoadFile(frameworkPath_&filePath&".asp")
-		If Str <> -1 Then
-			Execute Str '使类局部,避免多次包含冲突
-			Set LoadFramework = Eval("new framework_"&filePath)
-		End If
+		Dim cname
+		Include(frameworkPath_&filePath)
+		Set LoadFramework = Eval("new framework_"&filePath)
+		'
 		If Err Then OutErr("LoadFramework:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 
@@ -183,17 +184,15 @@ Class Class_Load
 
 	Public Function LoadClass(filePath)
 		On Error Resume Next
-		Dim Str, cname
-		Str = LoadFile(classPath_&filePath&".asp")
-		If Str <> -1 Then
-			Execute Str '使类局部,避免多次包含冲突
-			If InStr(filePath, "/")>0 Then
-				cname = Replace(filePath, "/", "_")
-			Else
-				cname = filePath
-			End If
-			Set LoadClass = Eval("new class_"&cname)
+		Dim cname
+		Include(classPath_&filePath)
+		If InStr(filePath, "/")>0 Then
+			cname = Replace(filePath, "/", "_")
+		Else
+			cname = filePath
 		End If
+		Set LoadClass = Eval("new class_"&cname)
+		'
 		If Err Then OutErr("LoadClass:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 
@@ -201,17 +200,15 @@ Class Class_Load
 
 	Public Function LoadControl(filePath)
 		On Error Resume Next
-		Dim Str, cname
-		Str = LoadFile(controlPath_&filePath&".asp")
-		If Str <> -1 Then
-			Execute Str
-			If InStr(filePath, "/")>0 Then
-				cname = Replace(filePath, "/", "_")
-			Else
-				cname = filePath
-			End If
-			Set LoadControl = Eval("new control_"&cname)
+		Dim cname
+		Include(controlPath_&filePath)
+		If InStr(filePath, "/")>0 Then
+			cname = Replace(filePath, "/", "_")
+		Else
+			cname = filePath
 		End If
+		Set LoadControl = Eval("new control_"&cname)
+		'
 		If Err Then OutErr("LoadControl:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 
@@ -219,17 +216,15 @@ Class Class_Load
 
 	Public Function LoadModel(filePath)
 		On Error Resume Next
-		Dim Str, cname
-		Str = LoadFile(modelPath_&filePath&".asp")
-		If Str <> -1 Then
-			Execute Str
-			If InStr(filePath, "/")>0 Then
-				cname = Replace(filePath, "/", "_")
-			Else
-				cname = filePath
-			End If
-			Set LoadModel = Eval("new model_"&cname)
+		Dim cname
+		Include(modelPath_&filePath)
+		If InStr(filePath, "/")>0 Then
+			cname = Replace(filePath, "/", "_")
+		Else
+			cname = filePath
 		End If
+		Set LoadModel = Eval("new model_"&cname)
+		'
 		If Err Then OutErr("LoadModel:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 
@@ -241,18 +236,13 @@ Class Class_Load
 		Dim Str
 		'默认语言包
 		If  languageDefaultPath_<>"" Then
-		    Str = LoadFile(languageDefaultPath_&filePath&".asp")
-		    If Str<> -1 Then
-			   ExecuteGlobal Str
-		    End If
+		    Include(languageDefaultPath_&filePath)
 		End If
 		'当前语言包-覆盖
 		If  languagePath_<>"" and languagePath_<>languageDefaultPath_ Then
-			Str = LoadFile(languagePath_&filePath&".asp")
-			If Str<> -1 Then
-				ExecuteGlobal Str
-			End If
+		    Include(languagePath_&filePath)
 		End If
+		'
 		If Err Then OutErr("LoadLanguage:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 
@@ -269,45 +259,60 @@ Class Class_Load
 		Set tem = Nothing
 	End Function
 
-	'@LoadControlAct(col, act): 实例化对象执行方法，可跳转 Dispatch
+	'@LoadControlAction(col, act, para): 分发执行，返回执行状态 Dispatch
 
-	Public Function LoadControlAct(col, act)
-		On Error Resume Next
-		LoadControlAct = true
-		'返回实例对象
-		Dim control
-		Set control = LoadControl(col)
-		'调用方法
+	Public Function LoadControlAction(byval col, byval act, byval para)
 		If act<>"" Then
-			Eval("control."&act&"_action()")
+		   act= act&"_action"
 		Else
-			Eval("control.index_action()")
+		   act="index_action"
 		End If
-		If Err Then
-			OutErr("LoadControlAct:"&col&"/"&act&":"&Err.Number&":"&Err.Description)
-			LoadControlAct = False
-		End If
-		Set control = Nothing
+		'
+		LoadControlAction=LoadControlAct(col, act, para, 0)
 	End Function
 
-	'@LoadControlTag(col, act): 加载Tag
+	'@LoadControlAct(col, act, para, obj): 实例化对象并执行 控制器,方法,参数,返回值类型
 
-	Public Function LoadControlTag(col, act)
+	Public Function LoadControlAct(Byval col, Byval act, Byval para, Byval obj)
 		On Error Resume Next
-		'返回实例对象
+		'参数核对
+		If col = "" Then Exit Function
+		If obj = "" Then obj = 2
+		'只有控制器返回控制器对象
 		Dim control
 		Set control = LoadControl(col)
-		'调用方法,返回字符串
-		If act = "" Then
-			Set LoadControlTag = control
+		If  act = "" Then
+			Set LoadControlAct = control
+			Exit Function
+		End If
+		'生成参数字符串
+		Dim i,str
+        if  VarType(para)>8000 Then
+		    For i = 0 to ubound(para)
+			    If i = 0 Then
+				   str="para("&i&")"
+				Else
+				   str=str&",para("&i&")"
+				End If
+		    Next
+		End If
+		'执行并返回计算结果
+		IF obj = 0 Then
+		   Eval("control."&act&"("&str&")") '适合执行无返回结果void,例如sub
+           If Err Then
+		      LoadControlAct = False
+		   else
+		      LoadControlAct = True
+		   end if
+		ElseIF obj = 1 Then
+		   Set LoadControlAct = Eval("control."&act&"("&str&")")
 		Else
-			LoadControlTag = Eval("control."&act)
+		   LoadControlAct = Eval("control."&act&"("&str&")")
 		End If
-		If Err Then
-			OutErr("LoadControlTag:"&col&"/"&act&":"&Err.Number&":"&Err.Description)
-			LoadControlTag = ""
-		End If
+		'释放对象
 		Set control = Nothing
+		'纠错
+		If Err Then OutErr("LoadControlAct:"&col&"/"&act&":"&Err.Number&":"&Err.Description)
 	End Function
 
 	'替换asp标记
@@ -376,8 +381,15 @@ Class Class_Load
 	'@ViewApp(): Application缓存文件查看
 
 	Public Function ViewApp()
-		Dim str
-		Dim i
+		Dim str,i
+		'包含
+		i = 0
+		For Each a In includeCount_
+			i = i + 1
+			str = str & i&":"&a&Chr(10) 'Application(a)
+		Next
+		str=str&chr(10)
+		'文件
 		i = 0
 		For Each a In Application.Contents
 			i = i + 1

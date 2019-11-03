@@ -62,7 +62,7 @@ Class Class_Error
     '@Out(e): 转向404页
 
     Public Sub Out(e)
-        loader_.LoadControlAct "Error", "E404"
+        loader_.LoadControlAction "Error", "E404"
     End Sub
 
 End Class

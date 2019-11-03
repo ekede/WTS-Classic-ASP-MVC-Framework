@@ -7,7 +7,7 @@
 Class Control_Json
 
     Private Sub Class_Initialize()
-        loader.IncludeG PATH_CLASS&"Ext/Json"
+        loader.Include PATH_CLASS&"Ext/Json"
     End Sub
 
     Private Sub Class_Terminate()

@@ -200,7 +200,7 @@ Class Class_Template
             tempStr = m.SubMatches(0)
 			tempArray = Split(tempStr, ":")
 			If Ubound(tempArray)=1 Then
-               tempValue = loader_.LoadControlTag(tempArray(0),tempArray(1))
+               tempValue = loader_.LoadControlAct(tempArray(0),tempArray(1),"","")
 			Else
                tempValue = ""
 			End If

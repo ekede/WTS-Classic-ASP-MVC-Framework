@@ -27,7 +27,7 @@ Class Control_Start_Site
 		'静态根路径
 		config("base_url") = wts.route.baseAddr
         '
-        loader.LoadControlAct wts.route.control, wts.route.action
+        loader.LoadControlAction wts.route.control, wts.route.action, ""
         '
         wts.responses.Outputs
 		

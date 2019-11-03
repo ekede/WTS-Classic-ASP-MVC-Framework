@@ -26,11 +26,9 @@ Class Control_Upload
 	
     Sub Save_Action()
 	    '#上传保存演示:
-	    loader.IncludeG PATH_CLASS&"Ext/UpFile"
-		
 		Dim upfile,i:i=0
 		
-		Set upFile=New Class_Ext_UpFile
+		Set upFile=loader.LoadClass("Ext/UpFile")
 	   'upFile.IsDebug = True
 		upFile.NoAllowExt="asp;exe;htm;html;aspx;cs;vb;js;"
 		upFile.GetData(1024*200)

@@ -7,7 +7,6 @@
 Class Control_Crypt
 
     Private Sub Class_Initialize()
-        loader.IncludeG PATH_CLASS&"Json"
     End Sub
 
     Private Sub Class_Terminate()

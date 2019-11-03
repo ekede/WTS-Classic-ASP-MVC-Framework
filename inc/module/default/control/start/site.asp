@@ -87,7 +87,7 @@ Class Control_Start_Site
         config("base_pic_url") = wts.route.basePicAddr
 		config("base_static_url") = wts.route.basePicAddr&PATH_STATIC&wts.route.module&"/"&tplPath&"/"
         '
-        loader.LoadControlAct wts.route.control, wts.route.action
+        loader.LoadControlAction wts.route.control, wts.route.action, ""
         '
         wts.responses.outputs
     End Function

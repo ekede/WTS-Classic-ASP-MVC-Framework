@@ -8,17 +8,17 @@ Class Control_Clear
 
 	'@Index_Action(): 
 	
-    Public Function Index_Action()
+    Public Sub Index_Action()
         loader.ClearApp()
         wts.cache.ClearValue()
         wts.responses.SetOutput "clear application"
-    End Function
+    End Sub
 	
 	'@View_Action(): 
 
-    Public Function View_Action()
+    Public Sub View_Action()
         wts.responses.SetOutput loader.ViewApp()
-    End Function
+    End Sub
 
 End Class
 %>
