@@ -89,9 +89,14 @@ Class Class_Fso
         If ReportFolderStatus(folderSpec) = 1 Then
             Set f = objFSO.GetFolder(folderSpec)
             Set fc = f.Files
+			i=0
             For Each f1 in fc
-                s = s & f1.Name
-                s = s & "|"
+			    If i = 0 Then
+	               s = s & f1.Name
+				Else
+	               s = s & "|" & f1.Name
+				End If
+				i = i + 1
             Next
             ShowFileList = s
         Else
@@ -342,13 +347,18 @@ Class Class_Fso
     '@ShowFolderList(folderSpec): 目录列表
 
     Public Function ShowFolderList(folderSpec)
-        Dim f, f1, fc, s
+        Dim f, f1, fc, s, i
         If ReportFolderStatus(folderSpec) = 1 Then
             Set f = objFSO.GetFolder(folderSpec)
             Set fc = f.SubFolders
+			i=0
             For Each f1 in fc
-                s = s & f1.Name
-                s = s & "|"
+			    If i = 0 Then
+	               s = s & f1.Name
+				Else
+	               s = s & "|" & f1.Name
+				End If
+				i = i + 1
             Next
             ShowFolderList = s
         Else
@@ -401,7 +411,7 @@ Class Class_Fso
                 Case 6 s = f.Type
                 Case 7 s = f.Size
                 Case 8 s = f.ParentFolder
-                Case 9 s = f.RootFolder
+                Case 9 s = f.IsRootFolder
             End Select
             ShowFolderAccessInfo = s
         Else
@@ -411,19 +421,25 @@ Class Class_Fso
 
     '@DisplayLevelDepth(pathSpec): 遍历目录
 
-    Public Function DisplayLevelDepth(pathSpec)
+    Public Function DisplayLevelDepth(folderSpec)
         Dim f, n , path
-        Set f = objFSO.GetFolder(pathSpec)
-        If f.IsRootFolder Then
-            DisplayLevelDepth = "指定的文件夹是根文件夹。"&RootFolder
-        Else
-            Do Until f.IsRootFolder
-                path = path & f.Name &"<br>"
-                Set f = f.ParentFolder
-                n = n + 1
-            Loop
-            DisplayLevelDepth = "指定的文件夹是嵌套级为 " & n & " 的文件夹。<br>" & path
-        End If
+        If  ReportFolderStatus(folderSpec) = 1 Then
+            Set f = objFSO.GetFolder(folderSpec)
+			If f.IsRootFolder Then
+				'DisplayLevelDepth = "指定的文件夹是根文件夹。"&RootFolder
+				DisplayLevelDepth = 1
+			Else
+				Do Until f.IsRootFolder
+					path = path & f.Name &"<br>"
+					Set f = f.ParentFolder
+					n = n + 1
+				Loop
+				'DisplayLevelDepth = "指定的文件夹是嵌套级为 " & n & " 的文件夹。<br>" & path
+				DisplayLevelDepth = n
+			End If
+		Else
+			DisplayLevelDepth = - 1
+		End If
     End Function
 
     '========磁盘操作========
