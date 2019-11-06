@@ -148,7 +148,7 @@ Class Class_Fso
         End If
     End Function
 
-    '@ShowDatecreated(fileSpec): 文件属性
+    '@GetAttributes(fileSpec): 文件属性
 
     Public Function GetAttributes(fileName)
         Dim f
@@ -171,11 +171,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@ShowFileAccessInfo(fileName, infoType): 最后一次访问/最后一次修改时间
+    '@ShowFileAccessInfo(fileName, infoType): 显示文件创建时信息
 
     Public Function ShowFileAccessInfo(fileName, infoType)
-        '//功能：显示文件创建时信息
-        '//形参：文件名,信息类别
         '// 1 -----创建时间
         '// 2 -----上次访问时间
         '// 3 -----上次修改时间
@@ -185,6 +183,7 @@ Class Class_Fso
         '// 7 -----文件大小
         '// 8 -----父目录
         '// 9 -----根目录
+        '// 10 -----文件属性
         Dim f, s
         If ReportFileStatus(fileName) = 1 Then
             Set f = objFSO.GetFile(fileName)
@@ -198,6 +197,7 @@ Class Class_Fso
                 Case 7 s = f.Size
                 Case 8 s = f.ParentFolder
                 Case 9 s = f.RootFolder
+                Case 10 s = f.Attributes
             End Select
             ShowFileAccessInfo = s
         Else
@@ -270,6 +270,19 @@ Class Class_Fso
     End Function
 
     '=======目录操作========
+	
+    '@ReportFolderStatus(folder): 判断目录是否存在
+
+    Public Function ReportFolderStatus(folder)
+        Dim msg
+        msg = -1
+        If (objFSO.FolderExists(folder)) Then
+            msg = 1
+        Else
+            msg = -1
+        End If
+        ReportFolderStatus = msg
+    End Function
 
     '@GetFolderSize(folderName): 取目录大小
 
@@ -283,16 +296,16 @@ Class Class_Fso
         End If
     End Function
 
-    '@CreateFolderDemo(folderSpec): 创建的文件夹
+    '@CreateAFolder(folderSpec): 创建的文件夹
 
-    Public Function CreateFolderDemo(folderSpec)
+    Public Function CreateAFolder(folderSpec)
         On Error Resume Next
         Dim f
         If ReportFolderStatus(folderSpec) = 1 Then
-            CreateFolderDemo = -1
+            CreateAFolder = -1
         Else
             Set f = objFSO.CreateFolder(folderSpec)
-            CreateFolderDemo = 1
+            CreateAFolder = 1
         End If
     End Function
 
@@ -309,7 +322,7 @@ Class Class_Fso
             strTmpPath = ""
             For i = 0 To ulngPath
                 strTmpPath = strTmpPath & astrPath(i) & "\"
-                createFolderDemo(strTmpPath)
+                CreateAFolder(strTmpPath)
             Next
             CreateFolders = 1
         End If
@@ -360,19 +373,6 @@ Class Class_Fso
         Else
             MoveAFolder = -1
         End If
-    End Function
-
-    '@ReportFolderStatus(folder): 判断目录是否存在
-
-    Public Function ReportFolderStatus(folder)
-        Dim msg
-        msg = -1
-        If (objFSO.FolderExists(folder)) Then
-            msg = 1
-        Else
-            msg = -1
-        End If
-        ReportFolderStatus = msg
     End Function
 
     '@ShowFolderAccessInfo(folderName, infoType): 目录时间,名称,大小,类型,父目录,根目录
