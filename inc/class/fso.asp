@@ -58,17 +58,24 @@ Class Class_Fso
 	End Function
 
     '=======文件操作========
+	
+    '@ReportFileStatus(fileName): 文件是否存在？
 
-    '@GetFileSize(fileName): 取文件大小
-
-    Public Function GetFileSize(fileName)
-        Dim f
-        If ReportFileStatus(fileName) = 1 Then
-            Set f = objFSO.GetFile(fileName)
-            GetFileSize = f.Size
+    Public Function ReportFileStatus(fileName)
+        Dim msg
+        msg = -1
+        If (objFSO.FileExists(fileName)) Then
+            msg = 1
         Else
-            GetFileSize = -1
+            msg = -1
         End If
+        ReportFileStatus = msg
+    End Function
+	
+    '@GetFileObject(fileName): 文件转换为对象
+
+    Public Function GetFileObject(fileName)
+        Set GetFileObject = objFSO.GetFile(fileName)
     End Function
 
     '@DeleteAFile(fileSpec): 文件删除
@@ -79,28 +86,6 @@ Class Class_Fso
             DeleteAFile = 1
         Else
             DeleteAFile = -1
-        End If
-    End Function
-
-    '@ShowFileList(folderSpec): 显示文件列表
-
-    Public Function ShowFileList(folderSpec)
-        Dim f, f1, fc, s
-        If ReportFolderStatus(folderSpec) = 1 Then
-            Set f = objFSO.GetFolder(folderSpec)
-            Set fc = f.Files
-			i=0
-            For Each f1 in fc
-			    If i = 0 Then
-	               s = s & f1.Name
-				Else
-	               s = s & "|" & f1.Name
-				End If
-				i = i + 1
-            Next
-            ShowFileList = s
-        Else
-            ShowFileList = -1
         End If
     End Function
 
@@ -127,18 +112,17 @@ Class Class_Fso
             MoveAFile = -1
         End If
     End Function
+	
+    '@GetFileSize(fileName): 取文件大小
 
-    '@ReportFileStatus(fileName): 文件是否存在？
-
-    Public Function ReportFileStatus(fileName)
-        Dim msg
-        msg = -1
-        If (objFSO.FileExists(fileName)) Then
-            msg = 1
+    Public Function GetFileSize(fileName)
+        Dim f
+        If ReportFileStatus(fileName) = 1 Then
+            Set f = objFSO.GetFile(fileName)
+            GetFileSize = f.Size
         Else
-            msg = -1
+            GetFileSize = -1
         End If
-        ReportFileStatus = msg
     End Function
 
     '@ShowDatecreated(fileSpec): 文件创建日期
@@ -209,8 +193,10 @@ Class Class_Fso
             ShowFileAccessInfo = -1
         End If
     End Function
+	
+    '=======文本文件操作========
 
-    '@CreateTxtFile(fileName, textStr): 文件创建
+    '@CreateTxtFile(fileName, textStr): 文本文件创建
 
     Public Function CreateTxtFile(fileName, textStr)
         Dim f
@@ -288,6 +274,12 @@ Class Class_Fso
         End If
         ReportFolderStatus = msg
     End Function
+	
+    '@GetFolderObject(folder): 目录转换为对象
+
+    Public Function GetFolderObject(folder)
+        Set GetFolderObject = objFSO.GetFolder(folder)
+    End Function
 
     '@GetFolderSize(folderName): 取目录大小
 
@@ -363,6 +355,28 @@ Class Class_Fso
             ShowFolderList = s
         Else
             ShowFolderList = -1
+        End If
+    End Function
+	
+    '@ShowFileList(folderSpec): 显示文件列表
+
+    Public Function ShowFileList(folderSpec)
+        Dim f, f1, fc, s
+        If ReportFolderStatus(folderSpec) = 1 Then
+            Set f = objFSO.GetFolder(folderSpec)
+            Set fc = f.Files
+			i=0
+            For Each f1 in fc
+			    If i = 0 Then
+	               s = s & f1.Name
+				Else
+	               s = s & "|" & f1.Name
+				End If
+				i = i + 1
+            Next
+            ShowFileList = s
+        Else
+            ShowFileList = -1
         End If
     End Function
 
