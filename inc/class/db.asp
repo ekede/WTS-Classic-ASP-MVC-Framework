@@ -59,7 +59,11 @@ Class Class_DB
 			      TempStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source="&dpath&";Extended Properties=Excel 12.0;"
 			   End If
 			Case 3 'MSQL
-                TempStr = "Driver={SQL Server};server="&db_path&";uid="&db_user&";pwd="&db_pass&";database="&db_name&""
+			   If db_version = 1 Then
+                  TempStr = "Driver={SQL Server};server="&db_path&";uid="&db_user&";pwd="&db_pass&";database="&db_name&""
+			   Else
+                  TempStr = "Provider=SQLOLEDB;Data Source="&db_path&";User ID="&db_user&";Password="&db_pass&";Initial Catalog="&db_name&""
+               End If
             Case 4 'MYSQL
                 TempStr = "Driver={mySQL};Server="&db_path&";Port=3306;Option=131072;Stmt=; Database="&db_name&";Uid="&db_user&";Pwd="&db_pass&";"
             Case 5 'ORACLE
