@@ -42,6 +42,7 @@ Class Class_Function
 	End Function
 	
 	'**************************************************
+	'对String对象编码以便它们能在所有计算机上可读,所有空格、标点、重音符号以及其他非ASCII字符都用%xx编码代替其中xx等于表示该字符的十六进制数
 	
 	'@UrlEncodes(ByVal str): 字符串 - URL编码
 	
@@ -51,16 +52,103 @@ Class Class_Function
 	End Function
 	
 	'@UrlDecodes(ByVal str): 字符串 - URL解码
-	
+
 	Public Function UrlDecodes(ByVal str)
-		Dim obj
-		If str = "" Then Exit Function
-		str = Replace(str, "+", " ")
-		Set obj = Server.CreateObject("MSScriptControl.ScriptControl")
-		obj.Language = "JavaScript"
-		obj.AddCode "var itemTemp=decodeURIComponent("""&str&""")"
-		UrlDecodes = obj.CodeObject.itemTemp
-		Set obj = Nothing
+	    die str
+		Dim start,final,length,char,i,butf8,pass
+		Dim leftstr,rightstr,finalstr
+		Dim b0,b1,bx,blength,position,u,utf8
+		On Error Resume Next
+		
+		b0 = Array(192,224,240,248,252,254)
+		str = Replace(str,"+"," ")
+		pass = 0
+		utf8 = -1
+		
+		length = Len(str) : start = InStr(str,"%") : final = InStrRev(str,"%")
+		If start = 0 Or length < 3 Then URLDecodes = str : Exit Function
+		leftstr = Left(str,start - 1) : rightstr = Right(str,length - 2 - final)
+		
+		For i = start To final
+		char = Mid(str,i,1)
+		If char = "%" Then
+		bx = URLDecode_Hex(Mid(str,i + 1,2))
+		If bx > 31 And bx < 128 Then
+		i = i + 2
+		finalstr = finalstr & ChrW(bx)
+		ElseIf bx > 127 Then
+		i = i + 2
+		If utf8 < 0 Then
+		butf8 = 1 : blength = -1 : b1 = bx
+		For position = 4 To 0 Step -1
+		If b1 >= b0(position) And b1 < b0(position + 1) Then
+		blength = position
+		Exit For
+		End If
+		Next
+		If blength > -1 Then
+		For position = 0 To blength
+		b1 = URLDecode_Hex(Mid(str,i + position * 3 + 2,2))
+		If b1 < 128 Or b1 > 191 Then butf8 = 0 : Exit For
+		Next
+		Else
+		butf8 = 0
+		End If
+		If butf8 = 1 And blength = 0 Then butf8 = -2
+		If butf8 > -1 And utf8 = -2 Then i = start - 1 : finalstr = "" : pass = 1
+		utf8 = butf8
+		End If
+		If pass = 0 Then
+		If utf8 = 1 Then
+		b1 = bx : u = 0 : blength = -1
+		For position = 4 To 0 Step -1
+		If b1 >= b0(position) And b1 < b0(position + 1) Then
+		blength = position
+		b1 = (b1 xOr b0(position)) * 64 ^ (position + 1)
+		Exit For
+		End If
+		Next
+		If blength > -1 Then
+		For position = 0 To blength
+		bx = URLDecode_Hex(Mid(str,i + 2,2)) : i = i + 3
+		If bx < 128 Or bx > 191 Then u = 0 : Exit For
+		u = u + (bx And 63) * 64 ^ (blength - position)
+		Next
+		If u > 0 Then finalstr = finalstr & ChrW(b1 + u)
+		End If
+		Else
+		b1 = bx * &h100 : u = 0
+		bx = URLDecode_Hex(Mid(str,i + 2,2))
+		If bx > 0 Then
+		u = b1 + bx
+		i = i + 3
+		Else
+		If Left(str,1) = "%" Then
+		u = b1 + Asc(Mid(str,i + 3,1))
+		i = i + 2
+		Else
+		u = b1 + Asc(Mid(str,i + 1,1))
+		i = i + 1
+		End If
+		End If
+		finalstr = finalstr & Chr(u)
+		End If
+		Else
+		pass = 0
+		End If
+		End If
+		Else
+		finalstr = finalstr & char
+		End If
+		Next
+		URLDecodes = leftstr & finalstr & rightstr
+	End Function
+	'
+	Function URLDecode_Hex(ByVal h)
+		On Error Resume Next
+		h = "&h" & Trim(h) : URLDecode_Hex = -1
+		If Len(h) <> 4 Then Exit Function
+		If isNumeric(h) Then URLDecode_Hex = cInt(h)
 	End Function
 	
 	'**************************************************
