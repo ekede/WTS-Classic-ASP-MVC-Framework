@@ -32,9 +32,9 @@ Class Class_DB
     Private Sub Class_Terminate()
     End Sub
 	
-    '@OpenConn(db_type, db_path, db_name, db_user, db_pass): 打开数据库连接
+    '@OpenConn(db_type, db_path,db_version, db_name, db_user, db_pass): 打开数据库连接
 
-    Public Sub OpenConn(db_type, db_path, db_name, db_user, db_pass)
+    Public Sub OpenConn(db_type, db_version, db_path, db_name, db_user, db_pass)
         on error resume next
         Dim dpath, TempStr
 
@@ -43,14 +43,23 @@ Class Class_DB
         '
         Select Case db_type
             Case 1 'Access
-               'TempStr = "driver={Microsoft Access Driver (*.mdb)};DBQ="&dpath&";DefaultDir=;"
-			   TempStr = "Provider=Microsoft.jet.OLEDB.4.0;Data Source="&dpath
-			   'TempStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" &dpath
+			   If db_version = 1 Then
+                  TempStr = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ="&dpath&";DefaultDir=;"
+			   ElseIf db_version = 2 Then
+			      TempStr = "Provider=Microsoft.jet.OLEDB.4.0;Data Source="&dpath
+			   Else
+			      TempStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" &dpath
+			   End If
             Case 2 'Excel
-                TempStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="&dpath&";Extended Properties=Excel 8.0;"
-			    'TempStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" &dpath& ";Extended Properties=Excel 12.0"
+			   If db_version = 1 Then
+                  TempStr = "DRIVER={Microsoft Excel Driver (*.xls)};DBQ="&dpath&";DefaultDir=;" 
+			   ElseIf db_version = 2 Then
+			      TempStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="&dpath&";Extended Properties=Excel 8.0;"
+			   Else
+			      TempStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source="&dpath&";Extended Properties=Excel 12.0;"
+			   End If
 			Case 3 'MSQL
-                TempStr = "driver={SQL Server};server="&db_path&";uid="&db_user&";pwd="&db_pass&";database="&db_name&""
+                TempStr = "Driver={SQL Server};server="&db_path&";uid="&db_user&";pwd="&db_pass&";database="&db_name&""
             Case 4 'MYSQL
                 TempStr = "Driver={mySQL};Server="&db_path&";Port=3306;Option=131072;Stmt=; Database="&db_name&";Uid="&db_user&";Pwd="&db_pass&";"
             Case 5 'ORACLE

@@ -29,7 +29,8 @@ Const PATH_PIC_THUMBS = "thumb/"
 Const PATH_PIC_IMAGES = "image/"
 
 '@DB_TYPE: 数据库配置
-Const DB_TYPE = 1 '1:access ; 3:sqlserver ; 5:dsn
+Const DB_TYPE = 1 '1:access ; 2:Excel; 3:sqlserver ; 5:dsn
+Const DB_VERSION = 1 '1:DRIVER ; 2:OLEDB ; 3:ACE
       DB_USER = "sa" 'sqlserver
       DB_PASS = "111" 'sqlserver
 Const DB_NAME = "hello.mdb" 'access:caca.asp ; sqlserver:caca ; dsn:caca.dsn ;

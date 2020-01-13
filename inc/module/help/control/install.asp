@@ -73,7 +73,7 @@ Class Control_Install
 		    db.CreateAccess DB_PATH&d_name
 
 			'连接数据库
-            db.OpenConn 1, DB_PATH, d_name, "", ""
+            db.OpenConn 1,DB_VERSION, DB_PATH, d_name, "", ""
 
 			'创建表Hello
 			sql="create table wts_hello ( "&_

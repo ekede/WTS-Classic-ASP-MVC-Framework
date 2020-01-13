@@ -35,7 +35,7 @@ Class Control_Start_Site
         Set wts.cache = loader.LoadClass("Cache")
             wts.cache.fso = wts.fso
         Set wts.db = loader.LoadClass("DB")
-            If DB_TYPE > 0 Then wts.db.OpenConn DB_TYPE, DB_PATH, DB_NAME, DB_USER, DB_PASS
+            If DB_TYPE > 0 Then wts.db.OpenConn DB_TYPE, DB_VERSION, DB_PATH, DB_NAME, DB_USER, DB_PASS
             DB_USER = ""
             DB_PASS = ""
 		'
