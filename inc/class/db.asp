@@ -44,11 +44,11 @@ Class Class_DB
         Select Case db_type
             Case 1 'Access
                'TempStr = "driver={Microsoft Access Driver (*.mdb)};DBQ="&dpath&";DefaultDir=;"
-			   'TempStr = "Provider=Microsoft.jet.OLEDB.4.0;Data Source="&dpath
-			   TempStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" &dpath
+			   TempStr = "Provider=Microsoft.jet.OLEDB.4.0;Data Source="&dpath
+			   'TempStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" &dpath
             Case 2 'Excel
-                'TempStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="&dpath&";Extended Properties=Excel 8.0;"
-			    TempStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" &dpath& ";Extended Properties=Excel 12.0"
+                TempStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="&dpath&";Extended Properties=Excel 8.0;"
+			    'TempStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" &dpath& ";Extended Properties=Excel 12.0"
 			Case 3 'MSQL
                 TempStr = "driver={SQL Server};server="&db_path&";uid="&db_user&";pwd="&db_pass&";database="&db_name&""
             Case 4 'MYSQL
