@@ -76,7 +76,7 @@ Class Class_DB
         '
         Set conn_ = server.CreateObject("ADODB.CONNECTION")
         conn_.Open TempStr
-        If Err Then OutErr(Err.description)
+        If Err Then OutErr("DB"&Err.description)
 
     End Sub
 

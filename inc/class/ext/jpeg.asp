@@ -48,7 +48,8 @@ Class Class_Ext_Jpeg
         version_ = aspJpeg.Version
         expires_ = aspJpeg.expires
 		'
-        If Err.Number <> 0 Then OutErr("创建AspJpeg组件失败,没有正确安装注册")
+        If Err.Number <> 0 Then OutErr("AspJpeg组件创建失败")
+		If expires_<>"9999-9-9" Then OutErr("AspJpeg组件没有注册")
     End Sub
 
     Private Sub Class_Terminate
