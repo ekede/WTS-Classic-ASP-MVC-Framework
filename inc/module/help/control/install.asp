@@ -146,44 +146,45 @@ Class Control_Install
 		Dim theInstalledObjects(30)
 		'危险
 		theInstalledObjects(0) = "WScript.Shell"               'wshom.ocx
-		theInstalledObjects(1) = "Shell.Application"           'shell32.dll
+		theInstalledObjects(1) = "WScript.Network"             'wshom.ocx
+		theInstalledObjects(2) = "Shell.Application"           'shell32.dll
         '内置
-		theInstalledObjects(2) = "MSWC.AdRotator"              'adrot.dll
-		theInstalledObjects(3) = "MSWC.BrowserType"            'Browsercap.dll
-		theInstalledObjects(4) = "MSWC.NextLink"               'mswc.dll
-		theInstalledObjects(5) = "MSWC.Tools"                  'tools.dll
-		theInstalledObjects(6) = "MSWC.Status"                 'status.dll
-		theInstalledObjects(7) = "MSWC.Counters"               'counters.dll 
-		theInstalledObjects(8) = "MSWC.PermissionChecker"      'permchk.dll
+		theInstalledObjects(3) = "MSWC.AdRotator"              'adrot.dll
+		theInstalledObjects(4) = "MSWC.BrowserType"            'Browsercap.dll
+		theInstalledObjects(5) = "MSWC.NextLink"               'mswc.dll
+		theInstalledObjects(6) = "MSWC.Tools"                  'tools.dll
+		theInstalledObjects(7) = "MSWC.Status"                 'status.dll
+		theInstalledObjects(8) = "MSWC.Counters"               'counters.dll 
+		theInstalledObjects(9) = "MSWC.PermissionChecker"      'permchk.dll
 		'必要
-		theInstalledObjects(9) = "ADOX.Catalog"
-		theInstalledObjects(10)= "JRO.JetEngine"
-		theInstalledObjects(11)= "ADODB.Connection"            'msado15.dll 
-		theInstalledObjects(12)= "ADODB.Stream"                'scrrun.dll
-		theInstalledObjects(13)= "Scripting.FileSystemObject"  'scrrun.dll
-		theInstalledObjects(14)= "Scripting.Dictionary"        'scrrun.dll
+		theInstalledObjects(10) = "ADOX.Catalog"
+		theInstalledObjects(11)= "JRO.JetEngine"
+		theInstalledObjects(12)= "ADODB.Connection"            'msado15.dll 
+		theInstalledObjects(13)= "ADODB.Stream"                'scrrun.dll
+		theInstalledObjects(14)= "Scripting.FileSystemObject"  'scrrun.dll
+		theInstalledObjects(15)= "Scripting.Dictionary"        'scrrun.dll
 		'邮件
-		theInstalledObjects(15)= "CDO.Message"                 'cdosys.dll
-		theInstalledObjects(16)= "JMail.Message"               'jmail.dll
+		theInstalledObjects(16)= "CDO.Message"                 'cdosys.dll
+		theInstalledObjects(17)= "JMail.Message"               'jmail.dll
 		'图片
-		theInstalledObjects(17)= "WIA.ImageFile"               'wiaaut.dll
-		theInstalledObjects(18)= "Persits.Jpeg"
+		theInstalledObjects(18)= "WIA.ImageFile"               'wiaaut.dll
+		theInstalledObjects(19)= "Persits.Jpeg"
 		'压缩
-		theInstalledObjects(19)= "Dyy.Zipsvr"                  'dyy.dll
+		theInstalledObjects(20)= "Dyy.Zipsvr"                  'dyy.dll
 		'XML
-		theInstalledObjects(20)= "Microsoft.XMLDOM"            'msxml.dll
-		theInstalledObjects(21)= "MSXML2.DOMDocument"
-		theInstalledObjects(22)= "MSXML2.DOMDocument.3.0"      'msxml3.dll 
-		theInstalledObjects(23)= "MSXML2.DOMDocument.4.0"
-		theInstalledObjects(24)= "MSXML2.DOMDocument.5.0"
-		theInstalledObjects(25)= "MSXML2.DOMDocument.6.0"      'msxml6.dll
+		theInstalledObjects(21)= "Microsoft.XMLDOM"            'msxml.dll
+		theInstalledObjects(22)= "MSXML2.DOMDocument"
+		theInstalledObjects(23)= "MSXML2.DOMDocument.3.0"      'msxml3.dll 
+		theInstalledObjects(24)= "MSXML2.DOMDocument.4.0"
+		theInstalledObjects(25)= "MSXML2.DOMDocument.5.0"
+		theInstalledObjects(26)= "MSXML2.DOMDocument.6.0"      'msxml6.dll
 		'HTTP
-		theInstalledObjects(26)= "MSXML2.ServerXMLHTTP"        'msxml2.dll
+		theInstalledObjects(27)= "MSXML2.ServerXMLHTTP"        'msxml2.dll
         '引擎
-		theInstalledObjects(27)= "MSScriptControl.ScriptControl"
+		theInstalledObjects(28)= "MSScriptControl.ScriptControl"
 		'应用
-		theInstalledObjects(28)= "InternetExplorer.Application"
-		theInstalledObjects(29)= "Excel.Application"
+		theInstalledObjects(29)= "InternetExplorer.Application"
+		theInstalledObjects(30)= "Excel.Application"
 		'##
 		'生成表格
 		str="<table border=1>"

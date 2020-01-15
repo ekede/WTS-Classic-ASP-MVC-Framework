@@ -132,6 +132,7 @@ Class Class_Ext_Wia
 		Set Img = IP.Apply(Img)
 		'保存
         buildFileName = MakeName(originalPath,maxWidth, maxHeight)
+		DeleteFile Server.MapPath(buildBasePath)&"\"&buildFileName
         Img.SaveFile Server.MapPath(buildBasePath)&"\"&buildFileName
         '文件名
         If Right(buildBasePath, 1) <> "/" Then buildBasePath = buildBasePath & "/"
@@ -153,6 +154,17 @@ Class Class_Ext_Wia
         oExt = Mid(oName, pos)
 		MakeName = Replace(oName, oExt, "."&maxWidth&"x"&maxHeight&oExt)
     End Function
+	
+	'删除已存在图片
+	
+	Private Function DeleteFile(Byval path)
+		Dim fso
+		Set fso=Server.CreateObject("Scripting.FileSystemObject") 
+		If fso.FileExists(path) Then
+		   fso.DeleteFile(path)
+		End If
+		Set fso=Nothing
+	End Function
 
     '错误提示
 
