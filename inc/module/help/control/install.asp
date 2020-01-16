@@ -165,12 +165,12 @@ Class Control_Install
 		theInstalledObjects(15)= array("Scripting.Dictionary","scrrun.dll","")
 		'邮件
 		theInstalledObjects(16)= array("CDO.Message","cdosys.dll","")
-		theInstalledObjects(17)= array("JMail.Message","jmail.dll","")
+		theInstalledObjects(17)= array("JMail.Message","jmail.dll","x86")
 		'图片
 		theInstalledObjects(18)= array("WIA.ImageFile","wiaaut.dll","")
-		theInstalledObjects(19)= array("Persits.Jpeg"," aspjpeg.dll","")
+		theInstalledObjects(19)= array("Persits.Jpeg"," aspjpeg.dll","x86")
 		'压缩
-		theInstalledObjects(20)= array("Dyy.Zipsvr","dyy.dll","")
+		theInstalledObjects(20)= array("Dyy.Zipsvr","dyy.dll","x86")
 		'XML
 		theInstalledObjects(21)= array("Microsoft.XMLDOM","msxml.dll","")
 		theInstalledObjects(22)= array("MSXML2.DOMDocument","","")
@@ -181,7 +181,7 @@ Class Control_Install
 		'HTTP
 		theInstalledObjects(27)= array("MSXML2.ServerXMLHTTP","msxml2.dll","")
         '引擎
-		theInstalledObjects(28)= array("MSScriptControl.ScriptControl","","")
+		theInstalledObjects(28)= array("MSScriptControl.ScriptControl","","x86")
 		'应用
 		theInstalledObjects(29)= array("InternetExplorer.Application","","")
 		theInstalledObjects(30)= array("Excel.Application","","")
