@@ -145,59 +145,65 @@ Class Control_Install
 	    '#常用组件:
 		Dim theInstalledObjects(30)
 		'危险
-		theInstalledObjects(0) = "WScript.Shell"               'wshom.ocx
-		theInstalledObjects(1) = "WScript.Network"             'wshom.ocx
-		theInstalledObjects(2) = "Shell.Application"           'shell32.dll
+		theInstalledObjects(0) = array("WScript.Shell","wshom.ocx","danger")
+		theInstalledObjects(1) = array("WScript.Network","wshom.ocx","danger")
+		theInstalledObjects(2) = array("Shell.Application","shell32.dll","danger")
         '内置
-		theInstalledObjects(3) = "MSWC.AdRotator"              'adrot.dll
-		theInstalledObjects(4) = "MSWC.BrowserType"            'Browsercap.dll
-		theInstalledObjects(5) = "MSWC.NextLink"               'mswc.dll
-		theInstalledObjects(6) = "MSWC.Tools"                  'tools.dll
-		theInstalledObjects(7) = "MSWC.Status"                 'status.dll
-		theInstalledObjects(8) = "MSWC.Counters"               'counters.dll 
-		theInstalledObjects(9) = "MSWC.PermissionChecker"      'permchk.dll
+		theInstalledObjects(3) = array("MSWC.AdRotator","adrot.dll","")
+		theInstalledObjects(4) = array("MSWC.BrowserType","Browsercap.dll","")
+		theInstalledObjects(5) = array("MSWC.NextLink","mswc.dll","")
+		theInstalledObjects(6) = array("MSWC.Tools","tools.dll","")
+		theInstalledObjects(7) = array("MSWC.Status","status.dll","")
+		theInstalledObjects(8) = array("MSWC.Counters","counters.dll","")
+		theInstalledObjects(9) = array("MSWC.PermissionChecker","permchk.dll","")
 		'必要
-		theInstalledObjects(10) = "ADOX.Catalog"
-		theInstalledObjects(11)= "JRO.JetEngine"
-		theInstalledObjects(12)= "ADODB.Connection"            'msado15.dll 
-		theInstalledObjects(13)= "ADODB.Stream"                'scrrun.dll
-		theInstalledObjects(14)= "Scripting.FileSystemObject"  'scrrun.dll
-		theInstalledObjects(15)= "Scripting.Dictionary"        'scrrun.dll
+		theInstalledObjects(10) = array("ADOX.Catalog","msadox.dll","")
+		theInstalledObjects(11)= array("JRO.JetEngine","msjro.dll","")
+		theInstalledObjects(12)= array("ADODB.Connection","msado15.dll","")
+		theInstalledObjects(13)= array("ADODB.Stream","scrrun.dll","")
+		theInstalledObjects(14)= array("Scripting.FileSystemObject","scrrun.dll","")
+		theInstalledObjects(15)= array("Scripting.Dictionary","scrrun.dll","")
 		'邮件
-		theInstalledObjects(16)= "CDO.Message"                 'cdosys.dll
-		theInstalledObjects(17)= "JMail.Message"               'jmail.dll
+		theInstalledObjects(16)= array("CDO.Message","cdosys.dll","")
+		theInstalledObjects(17)= array("JMail.Message","jmail.dll","")
 		'图片
-		theInstalledObjects(18)= "WIA.ImageFile"               'wiaaut.dll
-		theInstalledObjects(19)= "Persits.Jpeg"
+		theInstalledObjects(18)= array("WIA.ImageFile","wiaaut.dll","")
+		theInstalledObjects(19)= array("Persits.Jpeg"," aspjpeg.dll","")
 		'压缩
-		theInstalledObjects(20)= "Dyy.Zipsvr"                  'dyy.dll
+		theInstalledObjects(20)= array("Dyy.Zipsvr","dyy.dll","")
 		'XML
-		theInstalledObjects(21)= "Microsoft.XMLDOM"            'msxml.dll
-		theInstalledObjects(22)= "MSXML2.DOMDocument"
-		theInstalledObjects(23)= "MSXML2.DOMDocument.3.0"      'msxml3.dll 
-		theInstalledObjects(24)= "MSXML2.DOMDocument.4.0"
-		theInstalledObjects(25)= "MSXML2.DOMDocument.5.0"
-		theInstalledObjects(26)= "MSXML2.DOMDocument.6.0"      'msxml6.dll
+		theInstalledObjects(21)= array("Microsoft.XMLDOM","msxml.dll","")
+		theInstalledObjects(22)= array("MSXML2.DOMDocument","","")
+		theInstalledObjects(23)= array("MSXML2.DOMDocument.3.0","msxml3.dll","")
+		theInstalledObjects(24)= array("MSXML2.DOMDocument.4.0","","")
+		theInstalledObjects(25)= array("MSXML2.DOMDocument.5.0","","")
+		theInstalledObjects(26)= array("MSXML2.DOMDocument.6.0","msxml6.dll","")
 		'HTTP
-		theInstalledObjects(27)= "MSXML2.ServerXMLHTTP"        'msxml2.dll
+		theInstalledObjects(27)= array("MSXML2.ServerXMLHTTP","msxml2.dll","")
         '引擎
-		theInstalledObjects(28)= "MSScriptControl.ScriptControl"
+		theInstalledObjects(28)= array("MSScriptControl.ScriptControl","","")
 		'应用
-		theInstalledObjects(29)= "InternetExplorer.Application"
-		theInstalledObjects(30)= "Excel.Application"
+		theInstalledObjects(29)= array("InternetExplorer.Application","","")
+		theInstalledObjects(30)= array("Excel.Application","","")
 		'##
 		'生成表格
 		str="<table border=1>"
-		str=str&"<tr><td>组件名称</td><td>支持及版本</td></tr>"
+		str=str&"<tr><td>组件名称</td><td>支持</td><td>版本</td><td>DLL</td><td>说明</td></tr>"
 		For i=0 to ubound(theInstalledObjects)
-			If theInstalledObjects(i)<>"" then
-				str=str&"<TR class=tr_southidc><TD>" & theInstalledObjects(i) & "</td><td>"
-				If Not wts.fun.IsObjInstalled(theInstalledObjects(i)) Then
-				   str=str&"<font class='red'><b>×</b></font>"
+			If theInstalledObjects(i)(0)<>"" then
+				str=str&"<tr class=tr_southidc>" 
+				str=str&"<td>"& theInstalledObjects(i)(0) & "</td>"
+				version=IsObjInstalled(theInstalledObjects(i)(0))
+				If version = "" Then
+				   str=str&"<td><b>×</b></td>"
+				   str=str&"<td></td>"
 				Else
-				   str=str&"<b>√</b> " 
+				   str=str&"<td><b>√</b></td>" 
+				   str=str&"<td>"&version&"</td>"
 				End If
-				str=str&"</td></TR>" & vbCrLf
+				str=str&"<td>" & theInstalledObjects(i)(1) & "</td>"
+				str=str&"<td>"& theInstalledObjects(i)(2) & "</td>"
+				str=str&"</tr>" & vbCrLf
 			End If
 		Next
 		str=str&"</table>"
@@ -206,6 +212,22 @@ Class Control_Install
         wts.responses.SetOutput str
 		
     End Sub
+
+	Private Function IsObjInstalled(strClass)
+		On Error Resume Next
+		Dim xTestObj
+		Set xTestObj = Server.CreateObject(strClass)
+		If Err Then
+		   Err.Clear
+		Else
+		   IsObjInstalled = xTestObj.Version
+		   If Err Then 
+		      IsObjInstalled = "-"
+		      Err.Clear
+		   End If
+		   Set xTestObj = Nothing
+		End If
+	End Function
 
 End Class
 %>
