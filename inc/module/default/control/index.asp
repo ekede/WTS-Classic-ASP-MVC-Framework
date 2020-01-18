@@ -47,8 +47,8 @@ Class Control_Index
 	   tag_mail = wts.route.ReWrite(wts.site.config("base_url"),"index.asp?route=index/mail")
 	   wts.template.SetVal "tag_mail",tag_mail
 	   '
-	   tag_zip = wts.route.ReWrite(wts.site.config("base_url"),"index.asp?route=index/zip")
-	   wts.template.SetVal "tag_zip",tag_zip
+	   tag_pack = wts.route.ReWrite(wts.site.config("base_url"),"index.asp?route=index/pack")
+	   wts.template.SetVal "tag_pack",tag_pack
 	   
        '渲染模板
        moban = wts.template.Fetch("index.htm")
