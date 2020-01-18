@@ -1,9 +1,9 @@
 ﻿<script language="javascript" runat="server">
 /*
-'@title: Class_Js
+'@title: Js
 '@author: ekede.com
 '@date: 2020-01-18
-'@description: include预加载,不支持loader,补充VB的不足
+'@description: include预加载,不支持loader,Javascript补充Vbscript的不足
 */
 
 Array.prototype.get = function(x)
