@@ -114,15 +114,12 @@ Class Control_Crypt
 		privatekey_csharp="<RSAKeyValue><Modulus>u8CS+voY3IVwm2QjJFg4uyU4TX/H/cCuG+8UgGr0qsvX6OUnxKu8YG18hKGB/7y/nBwlc0mYH8PSkDmT2SGR50LMz2e/r7yBkvazlykul0zqVTwJHAOrtXDVK8QZMH/vFzRPZrvr1SbwCMPrJ5ZGRtffPmT/7MVk8yWQo9XlAq2ABz62axwO1FC6TZc3PpmE+8pr18+AnzEai0TCjq3NaC28QWr3LGJDO/fGtT/bWz0uBrYPhCAxeYyWsDokiX0NU0ixUB2PulGqvsztjrxZYQPsZIIgZ1lMz/43rrfHGkrtmOeCS25+U/blzfZSRF6WDVIhTwBK1cFRb4tVgd107w==</Modulus><Exponent>AQAB</Exponent><P>9C9bAbM87egP+dLaA8IQA2lJEBG6b5pJidw40lm0E2Ey1v2NMCEhd3stEUSrS0QfVN9S0N0aPZmsBNkbm7P7nSviq53n2Qo/mEP06dhx7+MI1nKlmTrgqH0HvCYK7+55vxojZsuvj9E9Q7tE5KXJsKZ8syLrWbLPvrPPF4TVwjc=</P><Q>xNY0H25RbMJGFUaZ/a4b6/yPXECdFX7LeFxFAiJ4ds+zavenRMacm4MNjY91m90t7p0UZYvytk39YeX2/J6x0C2U/gQE3VS5ER+NAOqrl9UgBxZeb0e5Cz3TcU4w/zT+sQedYqG4p/ldT4UnBKXleI/+l6H86Qnix1O9Xae25wk=</Q><DP>d46YKITx2Co/aDpstFpYLNNoCo4jknEggHdq+tMg8DwvAES01FPkZvPQZRwSIpAAJzYQ/mLDblXHe7gxZFMDZzkNiqmN0x7JdGwRhk2Lu8CVmyoXGqdRSC2vk9eskz1YLtFFdBdWpjv0my0d1jW2Qt/BPpRiV1DNlrnDM+i+IJE=</DP><DQ>muDs7FpSaWBH4s/FtSz9PWdhqjYRI+u7z/3SMsbKwLnXM/Cfxeb9LQQmct+Rq82SKbGhbfF7TeT53cEj4UxBH0vucxzYcwsJ/6Yyvajo0bRZ2hnIvojR2j2QlRPwS674RHV4ajZT5J+6wypDNE4QzBeJPOix5u/nZ+3FD986dHk=</DQ><InverseQ>KPlNyd7bdTwL3eJ9MzSbOXHdUSKUvjWVtLekiIAGJX4KOT971ipiYR2TDAKTyDaYuYFibNEKcJMIlsQ5ou7hg8ja/WpuCjdZxOmh23bHteyQA8LyLgpvsj1vWQy8VdCXEyUsZji7PskpLOnnyNrl0VXZvivUqUR3rHggsX05PgQ=</InverseQ><D>sRhXS2bGNpOjgN82ipywfk4ASpGiGcc6M10S8IJyX/xAnwwvs8HtwOLlFdGl5oyqC908sf8T/7pdDe9RdvjEP+fxeh05YNElQ3NyOL3+lXZWfqlPSl5oA4/3cv3YaLfz1OZhktzk+TxuI0Zxs/h6N259w8PO5w3WR8cCJJeoGRngb8WnwiZob0RjYp1nrlwNQc9vHvzqgjhT9RhxDYFh3m2MfQDZZVedrU6TpDPnWBLmHyl6faBrbgVmfki4aCb1ldVGMlcfXpuYvP0HGPuodWaTIBRTA1B6W8aeakXQkp8++znKHJq8w+oScDHDC/ekaQ1idgVu9fvPfzuZbL/2MQ==</D></RSAKeyValue>"
 		'
 		Set r1= loader.loadClass("Crypt/Rsa")
-		
 			r1.Privatekey=privatekey_csharp
-		
 			a="Hello WTS"
 			b=r1.Encrypt(a)
 			c=r1.Decrypt(b)
 			d=r1.SignData(a,"SHA1")
 			e=r1.VerifyData(a,"SHA1",d)
-
 		Set r1=Nothing
         '##
 		
