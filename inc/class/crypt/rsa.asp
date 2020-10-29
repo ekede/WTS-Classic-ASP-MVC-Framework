@@ -1,188 +1,159 @@
 ﻿<% 
-'@title: Crypt/Rsa
-'@author: aspboy@263.net 
-'@date: 2017-02-13
-'@description: RSA Encryption Class,实现rsa加密与解密的vbs类文件
+'@title: Class_Crypt_Rsa
+'@author: ekede.com
+'@date: 2020-10-28
+'@description: RSA 公钥加密->私钥解密 , 私钥签名->公钥验签
 
 Class Class_Crypt_Rsa
 
-    '@PrivateKey: Your personal private key.  Keep this hidden. 
+		Private TAsc,objRsa
+		Private PrivateKey_,PublicKey_
 
-    Public PrivateKey 
-	
-    '@PublicKey: Key for others to encrypt data with.
-	
-    Public PublicKey
-	
-    '@Modulus: Used with both public and private keys when encrypting and decrypting data. 
-	
-    Public Modulus 
-	
-    '@GenKey(): Creates Public/Private key set and Modulus.
+        '@PrivateKey: Your personal private key.  Keep this hidden. Need C# format.
 
-    Public Sub GenKey() 
-        Dim lLngPhi 
-        Dim q 
-        Dim p 
+		Public Property Get PrivateKey
+			PrivateKey = PrivateKey_
+		End Property
 
-        Randomize 
+		Public Property Let PrivateKey(Value)
+			PrivateKey_ = Value
+			objRsa.FromXmlString (PrivateKey_)
+            PublicKey_ = objRsa.ToXmlString(False)
+		End Property
 
-        Do 
-            Do 
+        '@PublicKey: Key for others to encrypt data with.
 
-                ' 2 random primary numbers (0 to 1000) 
-                Do 
-                    p = Rnd * 1000 \ 1 
-                Loop While Not IsPrime(p) 
+		Public Property Get PublicKey
+			PublicKey = PublicKey_
+		End Property
 
-                Do 
-                    q = Rnd * 1000 \ 1 
-                Loop While Not IsPrime(q) 
+		Public Property Let PublicKey(Value)
+			PublicKey_ = Value
+			objRsa.FromXmlString (PublicKey_)
+		End Property
 
-                 
-                ' n = product of 2 primes 
-                Modulus = p * q \ 1 
+		Private Sub Class_Initialize()
+			Set TAsc = Server.CreateObject("System.Text.UTF8Encoding")
+			Set objRsa = Server.CreateObject("System.Security.Cryptography.RSACryptoServiceProvider")
+			CreateKey()
+		End Sub
 
-                ' random decryptor (2 to n) 
-                PrivateKey = Rnd * (Modulus - 2) \ 1 + 2 
+		Private Sub Class_Terminate()
+			Set objRsa = Nothing
+			Set TAsc = Nothing
+		End Sub
 
-                lLngPhi = (p - 1) * (q - 1) \ 1 
-                PublicKey = Euler(lLngPhi, PrivateKey) 
+		Public Sub CreateKey()
+			PrivateKey_ = objRsa.ToXmlString(True)
+			PublicKey_ = objRsa.ToXmlString(False)
+		End Sub
 
-            Loop While PublicKey = 0 Or PublicKey = 1 
+		'@Encrypt(ByRef Str): 公钥加密
 
-        ' Loop if we can't crypt/decrypt a byte     
-        Loop While Not TestCrypt(255) 
+		Public Function Encrypt(ByRef Str)
+			Dim Bytes
+			Bytes = TAsc.GetBytes_4(Str)
+			Encrypt = Bytes2Base64(RsaEncrypt((Bytes)))
+		End Function
 
-    End Sub 
+		Private Function RsaEncrypt(ByRef Bytes)
+			RsaEncrypt = objRsa.Encrypt((Bytes),False)
+		End Function
 
-    Private Function TestCrypt(ByRef pBytData) 
-        Dim lStrCrypted 
-        lStrCrypted = Crypt(pBytData, PublicKey) 
-        TestCrypt = Crypt(lStrCrypted, PrivateKey) = pBytData 
-    End Function 
+		'@Decrypt(ByRef Bytes): 私钥解密
 
-    Private Function Euler(ByRef pLngPHI, ByRef pLngKey) 
+		Public Function Decrypt(ByRef Str)
+			Dim Bytes
+			Bytes=RsaDecrypt(Base642Bytes(Str))
+			Decrypt = TAsc.GetString((Bytes))
+		End Function
 
-        Dim lLngR(3) 
-        Dim lLngP(3) 
-        Dim lLngQ(3) 
+		Private Function RsaDecrypt(ByRef Bytes)
+			 RsaDecrypt = objRsa.Decrypt((Bytes), False)
+		End Function
 
-        Dim lLngCounter 
-        Dim lLngResult 
+		'@SignData(ByRef Str,ByRef Hash): 私钥签名 Hash(MD5 SHA1 SHA256)
 
-        Euler = 0 
+		Public Function SignData(ByRef Str,ByRef Hash)
+			Dim Bytes
+			Bytes = TAsc.GetBytes_4(Str)
+			SignData = Bytes2Base64(SignHash(Bytes, Hash))
+		End Function
 
-        lLngR(1) = pLngPHI: lLngR(0) = pLngKey 
-        lLngP(1) = 0: lLngP(0) = 1 
-        lLngQ(1) = 2: lLngQ(0) = 0 
+		Private Function SignHash(ByRef Bytes,ByRef Hash)
+			Dim MapNameToOID
+			If Hash="MD5" Then
+				MapNameToOID = "1.2.840.113549.2.5"
+				Bytes = Md5(Bytes)
+				SignHash = objRsa.SignHash((Bytes),MapNameToOID)
+			End If
+			If Hash="SHA1" Then
+				MapNameToOID = "1.3.14.3.2.26"
+				Bytes = SHA1(Bytes)
+				SignHash = objRsa.SignHash((Bytes),MapNameToOID)
+			End If
+			If Hash="SHA256" Then
+				MapNameToOID = "2.16.840.1.101.3.4.2.1"
+				Bytes = SHA256(Bytes)
+				SignHash = objRsa.SignHash((Bytes),MapNameToOID)
+			End If
+		End Function
 
-        lLngCounter = -1 
+		'@VerifyData(ByRef str,ByRef Hash,ByRef StrSign): 公钥验签
 
-        Do Until lLngR(0) = 0 
+		Public Function VerifyData(ByRef str,ByRef Hash,ByRef StrSign)
+			Dim Bytes,BytesSign
+			Bytes = TAsc.GetBytes_4(Str)
+			BytesSign = Base642Bytes(StrSign)
+			VerifyData = objRsa.VerifyData((Bytes),Hash,(BytesSign))
+		End Function
 
-            lLngR(2) = lLngR(1): lLngR(1) = lLngR(0) 
-            lLngP(2) = lLngP(1): lLngP(1) = lLngP(0) 
-            lLngQ(2) = lLngQ(1): lLngQ(1) = lLngQ(0) 
+		'Hash
 
-            lLngCounter = lLngCounter + 1 
+		Public Function Md5(ByRef Bytes)
+			Dim En
+			Set En = Server.CreateObject("System.Security.Cryptography.MD5CryptoServiceProvider")
+			Md5 = En.ComputeHash_2((Bytes))
+			Set En = Nothing
+		End Function
 
-            lLngR(0) = lLngR(2) Mod lLngR(1) 
-            lLngP(0) = ((lLngR(2)\lLngR(1)) * lLngP(1)) + lLngP(2) 
-            lLngQ(0) = ((lLngR(2)\lLngR(1)) * lLngQ(1)) + lLngQ(2) 
+		Public Function SHA1(ByRef Bytes)
+			Dim En
+			Set En = Server.CreateObject("System.Security.Cryptography.SHA1CryptoServiceProvider")
+			SHA1 = En.ComputeHash_2((Bytes))
+			Set En = Nothing
+		End Function
 
-        Loop 
+		Public Function SHA256(ByRef Bytes)
+			Dim En
+			Set En = Server.CreateObject("System.Security.Cryptography.SHA256CryptoServiceProvider")
+			SHA256 = En.ComputeHash_2((Bytes))
+			Set En = Nothing
+		End Function
 
-        lLngResult = (pLngKey * lLngP(1)) - (pLngPHI * lLngQ(1)) 
+		'Base64
 
-        If lLngResult > 0 Then 
-            Euler = lLngP(1) 
-        Else 
-            Euler = Abs(lLngP(1)) + pLngPHI 
-        End If 
+		Public Function Base642Bytes(str)
+			Dim objXML, objXMLNode
+			Set objXML = Server.CreateObject("msxml2.domdocument")
+			Set objXMLNode = objXML.createelement("b64")
+				objXMLNode.datatype = "bin.base64"
+				objXMLNode.text = str
+				Base642Bytes = objXMLNode.nodetypedvalue
+			Set objXMLNode = Nothing
+			Set objXML = Nothing
+		End Function
 
-    End Function
-	
-    '@Crypt(pLngMessage, pLngKey): Encrypts/Decrypts message and returns as a string. 
+		Public Function Bytes2Base64(bytes)
+			Dim objXML, objXMLNode
+			Set objXML = Server.CreateObject("msxml2.domdocument")
+			Set objXMLNode = objXML.createelement("b64")
+				objXMLNode.datatype = "bin.base64"
+				objXMLNode.nodetypedvalue = bytes
+				Bytes2Base64 = objXMLNode.text
+			Set objXMLNode = Nothing
+			Set objXML = Nothing
+		End Function
 
-    Public Function Crypt(pLngMessage, pLngKey) 
-        On Error Resume Next 
-        Dim lLngMod 
-        Dim lLngResult 
-        Dim lLngIndex 
-        If pLngKey Mod 2 = 0 Then 
-            lLngResult = 1 
-            For lLngIndex = 1 To pLngKey / 2 
-                lLngMod = (pLngMessage ^ 2) Mod Modulus 
-                ' Mod may error on key generation 
-                lLngResult = (lLngMod * lLngResult) Mod Modulus  
-                If Err Then Exit Function 
-            Next 
-        Else 
-            lLngResult = pLngMessage 
-            For lLngIndex = 1 To pLngKey / 2 
-                lLngMod = (pLngMessage ^ 2) Mod Modulus 
-                On Error Resume Next 
-                ' Mod may error on key generation 
-                lLngResult = (lLngMod * lLngResult) Mod Modulus 
-                If Err Then Exit Function 
-            Next 
-        End If 
-        Crypt = lLngResult 
-    End Function 
-
-    Private Function IsPrime(ByRef pLngNumber) 
-        Dim lLngSquare 
-        Dim lLngIndex 
-        IsPrime = False 
-        If pLngNumber < 2 Then Exit Function 
-        If pLngNumber Mod 2 = 0 Then Exit Function 
-        lLngSquare = Sqr(pLngNumber) 
-        For lLngIndex = 3 To lLngSquare Step 2 
-            If pLngNumber Mod lLngIndex = 0 Then Exit Function 
-        Next 
-        IsPrime = True 
-    End Function
-	
-    '@Encode(pStrMessage): Encrypts message and returns in double-hex format 
-
-    Public Function Encode(ByVal pStrMessage) 
-        Dim lLngIndex 
-        Dim lLngMaxIndex 
-        Dim lBytAscii 
-        Dim lLngEncrypted 
-        lLngMaxIndex = Len(pStrMessage) 
-        If lLngMaxIndex = 0 Then Exit Function 
-        For lLngIndex = 1 To lLngMaxIndex 
-            lBytAscii = Asc(Mid(pStrMessage, lLngIndex, 1)) 
-            lLngEncrypted = Crypt(lBytAscii, PublicKey) 
-            Encode = Encode & NumberToHex(lLngEncrypted, 4) 
-        Next 
-    End Function 
-	
-    '@Decode(pStrMessage): Decrypts message from double-hex format and returns a string 
-
-    Public Function Decode(ByVal pStrMessage) 
-        Dim lBytAscii 
-        Dim lLngIndex 
-        Dim lLngMaxIndex 
-        Dim lLngEncryptedData 
-        Decode = "" 
-        lLngMaxIndex = Len(pStrMessage) 
-        For lLngIndex = 1 To lLngMaxIndex Step 4 
-            lLngEncryptedData = HexToNumber(Mid(pStrMessage, lLngIndex, 4)) 
-            lBytAscii = Crypt(lLngEncryptedData, PrivateKey) 
-            Decode = Decode & Chr(lBytAscii) 
-        Next 
-    End Function 
-
-    Private Function NumberToHex(ByRef pLngNumber, ByRef pLngLength) 
-        NumberToHex = Right(String(pLngLength, "0") & Hex(pLngNumber), pLngLength) 
-    End Function 
-
-    Private Function HexToNumber(ByRef pStrHex) 
-        HexToNumber = CLng("&h" & pStrHex) 
-    End Function 
-
-End Class 
+End Class
 %> 
