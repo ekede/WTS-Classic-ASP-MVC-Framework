@@ -15,7 +15,7 @@ Class Control_Crypt
     '@Index_Action(): 
     
 	Sub Index_Action()
-        Call Test10
+        Call Test5
     End Sub
 	
 	'散列,哈西
