@@ -127,8 +127,6 @@ Class Control_Crypt
         '##
 		
 		s=""
-		s=s+"private = "+r1.PrivateKey+Chr(10)+Chr(10)
-		s=s+"publickey = "+r1.PublicKey+Chr(10)+Chr(10)
 		s=s+"a = "+a+Chr(10)+Chr(10)
 		s=s+"b = Encrypt(a) : "+Chr(10)+b+Chr(10)+Chr(10)
 		s=s+"c = Decrypt(b) :"+Chr(10)+c+Chr(10)+Chr(10)
