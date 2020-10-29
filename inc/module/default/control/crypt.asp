@@ -136,6 +136,5 @@ Class Control_Crypt
 
 	End Sub
 
-	
 End Class
 %>
