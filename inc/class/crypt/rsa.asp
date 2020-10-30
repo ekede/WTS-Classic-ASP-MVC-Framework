@@ -72,7 +72,7 @@ Class Class_Crypt_Rsa
 			 RsaDecrypt = objRsa.Decrypt((Bytes), False)
 		End Function
 
-		'@SignData(ByRef Str,ByRef Hash): 私钥签名 Hash(MD5 SHA1 SHA256)
+		'@SignData(ByRef Str,ByRef Hash): 私钥签名 MD5 SHA1 SHA256
 
 		Public Function SignData(ByRef Str,ByRef Hash)
 			Dim Bytes
