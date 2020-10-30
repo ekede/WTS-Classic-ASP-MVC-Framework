@@ -46,15 +46,15 @@ Class Class_Response
         Set headers_ = Nothing
     End Sub
 	
-    '@SetHeader(outs): 设置header
+    '@SetHeader(ByRef names,ByRef content): 设置header
 
-    Public Function SetHeader(names, content)
+    Public Function SetHeader(ByRef names,ByRef content)
         headers_(names) = content
     End Function
 	
-    '@SetOutput(outs): 设置内容
+    '@SetOutput(ByRef outs): 设置内容
 
-    Public Function SetOutput(outs)
+    Public Function SetOutput(ByRef outs)
         output_ = outs
     End Function
 
@@ -84,39 +84,39 @@ Class Class_Response
         End If
     End Sub
 
-    '@Transfer(path): 转向包含
+    '@Transfer(ByRef path): 转向包含
 
-    Public Sub Transfer(path)
+    Public Sub Transfer(ByRef path)
         Response.ContentType = ContentType_
         Response.Status = Status_
         Server.transfer(path)
     End Sub
 
-    '@Direct(Url): 跳转
+    '@Direct(ByRef Url): 跳转
 
-    Public Sub Direct(Url)
+    Public Sub Direct(ByRef Url)
         response.redirect(Replace(Url, "&amp;", "&"))
     End Sub
 
-    '@Direct301(Url): 301跳转
+    '@Direct301(ByRef Url): 301跳转
 
-    Public Sub Direct301(Url)
+    Public Sub Direct301(ByRef Url)
         Response.Status = GetStatus(301)
         Response.AddHeader "Location", Url
         Response.End
     End Sub
 	
-    '@Die(str): 中断
+    '@Die(ByRef str): 中断
 	
-	Public Sub Die(str)
+	Public Sub Die(ByRef str)
 	    Response.Charset = charset_
 	    Response.write str
 		Response.End
 	End Sub
 	
-    '@GetStatus(n): 根据状态码取http状态字符串
+    '@GetStatus(ByRef n): 根据状态码取http状态字符串
 	
-    Public Function GetStatus(n)
+    Public Function GetStatus(ByRef n)
         Select Case n
             Case 301
                 GetStatus = "301 Moved Permanently"
@@ -131,9 +131,9 @@ Class Class_Response
         End Select
 	End Function
 
-    '@GetContentType(ext): 根据扩展名取Content-Type(Mime-Type)字符串
+    '@GetContentType(ByRef ext): 根据扩展名取Content-Type(Mime-Type)字符串
 	
-    Public Function GetContentType(ext)
+    Public Function GetContentType(ByRef ext)
 		Dim e,s
 		e=LCase(replace(ext,".",""))
 		Select Case e

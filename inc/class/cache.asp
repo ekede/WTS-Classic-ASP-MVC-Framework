@@ -12,20 +12,20 @@ Class Class_Cache
 
 	'@fso: fso对象依赖
 
-    Public Property Let fso(Value)
-        Set fso_ = Value
+    Public Property Let fso(Values)
+        Set fso_ = Values
     End Property
 	
 	'@cacheTime: 缓存时间
 
-    Public Property Let cacheTime(Value)
-        cacheTime_ = Value
+    Public Property Let cacheTime(Values)
+        cacheTime_ = Values
     End Property
 	
 	'@dataPath: 数据缓存路径, 根据需要叠加全局缓存因子 PATH_DATA/cache/default/site_id/language_id/currency_id/usergroup_id ...
 
-    Public Property Let dataPath(Value)
-        cacheDataPath_ = PATH_ROOT&Value
+    Public Property Let dataPath(Values)
+        cacheDataPath_ = PATH_ROOT&Values
     End Property
 
     Private Sub Class_Initialize()
@@ -35,9 +35,9 @@ Class Class_Cache
     Private Sub Class_Terminate()
     End Sub
 
-    '@GetCache(names): 读
+    '@GetCache(ByRef names): 读
 
-    Public Function GetCache(names)
+    Public Function GetCache(ByRef names)
         Dim paths, str
         paths = cacheDataPath_&names
         '
@@ -50,9 +50,9 @@ Class Class_Cache
         End If
     End Function
 	
-	'@SetCache(names, content): 写
+	'@SetCache(ByRef names,ByRef content): 写
 
-    Public Function SetCache(names, content)
+    Public Function SetCache(ByRef names,ByRef content)
         Dim paths
         Dim fpath, fname
         Dim i, arr
@@ -70,15 +70,15 @@ Class Class_Cache
         SetCache = fso_.Writes(fso_.getmappath(paths), content, "UTF-8")
     End Function
 	
-	'@DelCache(names): 删 
+	'@DelCache(ByRef names): 删 
 
-    Public Function DelCache(names)
+    Public Function DelCache(ByRef names)
         DelCache = fso_.DeleteAFile(fso_.GetMapPath(cacheDataPath_&names))
     End Function
 	
-	'@ExpireCache(names): 过期
+	'@ExpireCache(ByRef names): 过期
 
-    Public Function ExpireCache(names)
+    Public Function ExpireCache(ByRef names)
         Dim paths, transtime
         paths = cacheDataPath_&names
         Transtime = fso_.ShowFileAccessInfo(fso_.getmappath(paths), 3)
@@ -96,9 +96,9 @@ Class Class_Cache
 
     '****** Value -> cache
 	
-	'@GetValue(names): 内存读
+	'@GetValue(ByRef names): 内存读
 
-    Public Function GetValue(names)
+    Public Function GetValue(ByRef names)
         Dim str
         str = Application("cache_"&cacheDataPath_&names)
         If IsArray(str) Then
@@ -109,21 +109,21 @@ Class Class_Cache
         GetValue = str
     End Function
 	
-	'@SetValue(names, Content): 内存写 支持数组
+	'@SetValue(ByRef names,ByRef Content): 内存写 支持数组
 
-    Public Function SetValue(names, Content)
+    Public Function SetValue(ByRef names,ByRef Content)
         Application.Contents("cache_"&cacheDataPath_&names) = Content
     End Function
 	
 	'@DelValue(names): 内存删
 
-    Public Function DelValue(names)
+    Public Function DelValue(ByRef names)
         Application.Contents.Remove("cache_"&cacheDataPath_&names)
     End Function
 	
 	'@ExpireValue(names): 内存过期
 
-    Public Function ExpireValue(names)
+    Public Function ExpireValue(ByRef names)
     End Function
 	
 	'@ClearValue(): 内存清

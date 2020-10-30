@@ -33,7 +33,6 @@ Class Control_Start_Route_Key
     '@DeWrite(ByVal r_path): 解码
 	
     Public Sub DeWrite(ByVal r_path)
-		dim r
         If tempkeys_.Exists(r_path) Then
             r_path = tempkeys_(r_path)
 			'调用SLASH路由
@@ -88,13 +87,13 @@ Class Control_Start_Route_Key
 
     '@SetUrlKey(Keys, values): 设置编码键值
 
-    Public Sub SetUrlKey(keys, values)
+    Public Sub SetUrlKey(Byref keys,Byref values)
         tempKeys_(keys) = values
     End Sub
 	
-    '@SetDUrlKey(Keys, values): 设置解码键值
+    '@SetDUrlKey(Byref Keys,Byref values): 设置解码键值
 	
-    Public Sub SetDUrlKey(Keys, values)
+    Public Sub SetDUrlKey(Byref Keys,Byref values)
         tempDKeys_(keys) = values
     End Sub
 

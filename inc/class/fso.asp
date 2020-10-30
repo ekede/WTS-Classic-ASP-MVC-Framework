@@ -16,9 +16,9 @@ Class Class_Fso
         Set objFSO = Nothing
     End Sub
 
-    '@GetMapPath(path): 获取物理路径
+    '@GetMapPath(ByRef path): 获取物理路径
 
-    Public Function GetMapPath(path)
+    Public Function GetMapPath(ByRef path)
         If StrCheck(path) Then
             GetMapPath = -1
         Else
@@ -26,9 +26,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@GetRealPath(path): 相对路径判断文件是否存在,并返回物理路径
+    '@GetRealPath(ByRef path): 相对路径判断文件是否存在,并返回物理路径
 
-    Public Function GetRealPath(path)
+    Public Function GetRealPath(ByRef path)
         Dim msg, real
         real = GetMapPath(path)
         If real = -1 Then
@@ -43,7 +43,7 @@ Class Class_Fso
     End Function
 	
 	'判断是否包含路径非法字符
-	Private Function StrCheck(str)
+	Private Function StrCheck(ByRef str)
 		Dim i, arrays
 		StrCheck = False
 		If IsNull(str) Or Trim(str) = Empty Then Exit Function
@@ -59,9 +59,9 @@ Class Class_Fso
 
     '=======文件操作========
 	
-    '@ReportFileStatus(fileName): 文件是否存在？
+    '@ReportFileStatus(ByRef fileName): 文件是否存在？
 
-    Public Function ReportFileStatus(fileName)
+    Public Function ReportFileStatus(ByRef fileName)
         Dim msg
         msg = -1
         If (objFSO.FileExists(fileName)) Then
@@ -72,15 +72,15 @@ Class Class_Fso
         ReportFileStatus = msg
     End Function
 	
-    '@GetFileObject(fileName): 文件转换为对象
+    '@GetFileObject(ByRef fileName): 文件转换为对象
 
-    Public Function GetFileObject(fileName)
+    Public Function GetFileObject(ByRef fileName)
         Set GetFileObject = objFSO.GetFile(fileName)
     End Function
 
-    '@DeleteAFile(fileSpec): 文件删除
+    '@DeleteAFile(ByRef fileSpec): 文件删除
 
-    Public Function DeleteAFile(fileSpec)
+    Public Function DeleteAFile(ByRef fileSpec)
         If ReportFileStatus(FileSpec) = 1 Then
             objFSO.DeleteFile(fileSpec)
             DeleteAFile = 1
@@ -89,9 +89,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@CopyAFile(sourceFile, destinationFile): 文件复制
+    '@CopyAFile(ByRef sourceFile,ByRef destinationFile): 文件复制
 
-    Public Function CopyAFile(sourceFile, destinationFile)
+    Public Function CopyAFile(ByRef sourceFile,ByRef destinationFile)
         Dim MyFile
         If ReportFileStatus(sourceFile) = 1 Then
             Set MyFile = objFSO.GetFile(sourceFile)
@@ -102,9 +102,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@MoveAFile(sourceFile, destinationFileOrPath): 文件移动
+    '@MoveAFile(ByRef sourceFile,ByRef destinationFileOrPath): 文件移动
 
-    Public Function MoveAFile(sourceFile, destinationFileOrPath)
+    Public Function MoveAFile(ByRef sourceFile,ByRef destinationFileOrPath)
         If ReportFileStatus(sourceFile) = 1 And ReportFileStatus(destinationFileOrPath) = -1 Then
             objFSO.MoveFile sourceFile, destinationFileOrPath
             MoveAFile = 1
@@ -113,9 +113,9 @@ Class Class_Fso
         End If
     End Function
 	
-    '@GetFileSize(fileName): 取文件大小
+    '@GetFileSize(ByRef fileName): 取文件大小
 
-    Public Function GetFileSize(fileName)
+    Public Function GetFileSize(ByRef fileName)
         Dim f
         If ReportFileStatus(fileName) = 1 Then
             Set f = objFSO.GetFile(fileName)
@@ -125,9 +125,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@ShowDatecreated(fileSpec): 文件创建日期
+    '@ShowDatecreated(ByRef fileSpec): 文件创建日期
 
-    Public Function ShowDatecreated(fileSpec)
+    Public Function ShowDatecreated(ByRef fileSpec)
         Dim f
         If ReportFileStatus(fileSpec) = 1 Then
             Set f = objFSO.GetFile(fileSpec)
@@ -137,9 +137,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@GetAttributes(fileSpec): 文件属性
+    '@GetAttributes(ByRef fileSpec): 文件属性
 
-    Public Function GetAttributes(fileName)
+    Public Function GetAttributes(ByRef fileName)
         Dim f
         Dim strFileAttributes
         If ReportFileStatus(fileName) = 1 Then
@@ -160,9 +160,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@ShowFileAccessInfo(fileName, infoType): 显示文件创建时信息
+    '@ShowFileAccessInfo(ByRef fileName,ByRef infoType): 显示文件创建时信息
 
-    Public Function ShowFileAccessInfo(fileName, infoType)
+    Public Function ShowFileAccessInfo(ByRef fileName,ByRef infoType)
         '// 1 -----创建时间
         '// 2 -----上次访问时间
         '// 3 -----上次修改时间
@@ -196,9 +196,9 @@ Class Class_Fso
 	
     '=======文本文件操作========
 
-    '@CreateTxtFile(fileName, textStr): 文本文件创建
+    '@CreateTxtFile(ByRef fileName,ByRef textStr): 文本文件创建
 
-    Public Function CreateTxtFile(fileName, textStr)
+    Public Function CreateTxtFile(ByRef fileName,ByRef textStr)
         Dim f
         If ReportFileStatus(fileName) = 1 Then
             CreateTxtFile = -1
@@ -209,9 +209,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@WriteTxtFile(fileName, textStr, writeORAppendType): 写文本文件
+    '@WriteTxtFile(ByRef fileName,ByRef textStr,ByRef writeORAppendType): 写文本文件
 
-    Public Function WriteTxtFile(fileName, textStr, writeORAppendType)
+    Public Function WriteTxtFile(ByRef fileName,ByRef textStr,ByRef writeORAppendType)
         Const ForReading = 1, ForWriting = 2 , ForAppending = 8
         Dim f, m
         Select Case writeORAppendType
@@ -245,9 +245,9 @@ Class Class_Fso
         End Select
     End Function
 
-    '@ReadTxtFile(fileName): 读文本文件
+    '@ReadTxtFile(ByRef fileName): 读文本文件
 
-    Public Function ReadTxtFile(fileName)
+    Public Function ReadTxtFile(ByRef fileName)
         Const ForReading = 1, ForWriting = 2
         Dim f, m
         If ReportFileStatus(fileName) = 1 Then
@@ -262,9 +262,9 @@ Class Class_Fso
 
     '=======目录操作========
 	
-    '@ReportFolderStatus(folder): 判断目录是否存在
+    '@ReportFolderStatus(ByRef folder): 判断目录是否存在
 
-    Public Function ReportFolderStatus(folder)
+    Public Function ReportFolderStatus(ByRef folder)
         Dim msg
         msg = -1
         If (objFSO.FolderExists(folder)) Then
@@ -275,15 +275,15 @@ Class Class_Fso
         ReportFolderStatus = msg
     End Function
 	
-    '@GetFolderObject(folder): 目录转换为对象
+    '@GetFolderObject(ByRef folder): 目录转换为对象
 
-    Public Function GetFolderObject(folder)
+    Public Function GetFolderObject(ByRef folder)
         Set GetFolderObject = objFSO.GetFolder(folder)
     End Function
 
-    '@GetFolderSize(folderName): 取目录大小
+    '@GetFolderSize(ByRef folderName): 取目录大小
 
-    Public Function GetFolderSize(folderName)
+    Public Function GetFolderSize(ByRef folderName)
         Dim f
         If ReportFolderStatus(folderName) = 1 Then
             Set f = objFSO.GetFolder(folderName)
@@ -293,9 +293,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@CreateAFolder(folderSpec): 创建的文件夹
+    '@CreateAFolder(ByRef folderSpec): 创建的文件夹
 
-    Public Function CreateAFolder(folderSpec)
+    Public Function CreateAFolder(ByRef folderSpec)
         On Error Resume Next
         Dim f
         If ReportFolderStatus(folderSpec) = 1 Then
@@ -306,9 +306,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@CreateFolders(folderSpec): 创建多级文件夹
+    '@CreateFolders(ByRef folderSpec): 创建多级文件夹
 
-    Public Function CreateFolders(folderSpec)
+    Public Function CreateFolders(ByRef folderSpec)
         Dim f
         If ReportFolderStatus(folderSpec) = 1 Then
             CreateFolders = -1
@@ -325,9 +325,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@DeleteAFolder(folderSpec): 目录删除
+    '@DeleteAFolder(ByRef folderSpec): 目录删除
 
-    Public Function DeleteAFolder(folderSpec)
+    Public Function DeleteAFolder(ByRef folderSpec)
         If ReportFolderStatus(folderSpec) = 1 Then
             objFSO.DeleteFolder (folderSpec)
             DeleteAFolder = 1
@@ -336,9 +336,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@ShowFolderList(folderSpec): 目录列表
+    '@ShowFolderList(ByRef folderSpec): 目录列表
 
-    Public Function ShowFolderList(folderSpec)
+    Public Function ShowFolderList(ByRef folderSpec)
         Dim f, f1, fc, s, i
         If ReportFolderStatus(folderSpec) = 1 Then
             Set f = objFSO.GetFolder(folderSpec)
@@ -358,9 +358,9 @@ Class Class_Fso
         End If
     End Function
 	
-    '@ShowFileList(folderSpec): 显示文件列表
+    '@ShowFileList(ByRef folderSpec): 显示文件列表
 
-    Public Function ShowFileList(folderSpec)
+    Public Function ShowFileList(ByRef folderSpec)
         Dim f, f1, fc, s
         If ReportFolderStatus(folderSpec) = 1 Then
             Set f = objFSO.GetFolder(folderSpec)
@@ -380,17 +380,17 @@ Class Class_Fso
         End If
     End Function
 
-    '@CopyAFolder(sourceFolder, destinationFolder): 目录复制
+    '@CopyAFolder(ByRef sourceFolder,ByRef destinationFolder): 目录复制
 
-    Public Function CopyAFolder(sourceFolder, destinationFolder)
+    Public Function CopyAFolder(ByRef sourceFolder,ByRef destinationFolder)
         objFSO.CopyFolder sourceFolder, destinationFolder
         CopyAFolder = 1
         CopyAFolder = -1
     End Function
 
-    '@MoveAFolder(sourcePath, destinationPath): 目录进行移动
+    '@MoveAFolder(ByRef sourcePath,ByRef destinationPath): 目录进行移动
 
-    Public Function MoveAFolder(sourcePath, destinationPath)
+    Public Function MoveAFolder(ByRef sourcePath,ByRef destinationPath)
         If ReportFolderStatus(sourcePath) = 1 And ReportFolderStatus(destinationPath) = 0 Then
             objFSO.MoveFolder sourcePath, destinationPath
             MoveAFolder = 1
@@ -399,9 +399,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@ShowFolderAccessInfo(folderName, infoType): 目录时间,名称,大小,类型,父目录,根目录
+    '@ShowFolderAccessInfo(ByRef folderName,ByRef infoType): 目录时间,名称,大小,类型,父目录,根目录
 
-    Public Function ShowFolderAccessInfo(folderName, infoType)
+    Public Function ShowFolderAccessInfo(ByRef folderName,ByRef infoType)
         '//功能：显示目录创建时信息
         '//形参：目录名,信息类别
         '// 1 -----创建时间
@@ -433,9 +433,9 @@ Class Class_Fso
         End If
     End Function
 
-    '@DisplayLevelDepth(pathSpec): 遍历目录
+    '@DisplayLevelDepth(ByRef pathSpec): 遍历目录
 
-    Public Function DisplayLevelDepth(folderSpec)
+    Public Function DisplayLevelDepth(ByRef folderSpec)
         Dim f, n , path
         If  ReportFolderStatus(folderSpec) = 1 Then
             Set f = objFSO.GetFolder(folderSpec)
@@ -458,9 +458,9 @@ Class Class_Fso
 
     '========磁盘操作========
 
-    '@ReportDriveStatus(drv): 驱动器是否存在？
+    '@ReportDriveStatus(ByRef drv): 驱动器是否存在？
 
-    Public Function ReportDriveStatus(drv)
+    Public Function ReportDriveStatus(ByRef drv)
         Dim msg
         msg = -1
         If objFSO.DriveExists(drv) Then
@@ -471,9 +471,9 @@ Class Class_Fso
         ReportDriveStatus = msg
     End Function
 
-    '@ShowFileSystemType(drvspec): 可用的返回类型包括 FAT、NTFS 和 CDFS。
+    '@ShowFileSystemType(ByRef drvspec): 可用的返回类型包括 FAT、NTFS 和 CDFS。
 
-    Public Function ShowFileSystemType(drvspec)
+    Public Function ShowFileSystemType(ByRef drvspec)
         Dim d
         If ReportDriveStatus(drvspec) = 1 Then
             Set d = objFSO.GetDrive(drvspec)
@@ -485,9 +485,9 @@ Class Class_Fso
 	
     '=======Stream操作========
 
-    '@Reads(fileName, cset): Stream 读文件 文本 cset空为二进制
+    '@Reads(ByRef fileName,ByRef cset): Stream 读文件 文本 cset空为二进制
 
-    Public Function Reads(fileName, cset)
+    Public Function Reads(ByRef fileName,ByRef cset)
         If ReportFileStatus(fileName) = 1 Then
             Set objStream = Server.CreateObject("ADODB.Stream")
             ObjStream.Type = 1
@@ -509,7 +509,7 @@ Class Class_Fso
         End If
     End Function
 
-    '@Writes(fileName, content, cset): Stream 写文件 cset空为二进制
+    '@Writes(ByRef fileName,ByRef content,ByRef cset): Stream 写文件 cset空为二进制
 
     Public Function Writes(fileName, content, cset)
         On Error Resume Next
@@ -540,9 +540,9 @@ Class Class_Fso
         End If
     End Function
 
-	'@Iconv(inCset,OutCset,content): Stream 编码转换UTF-8,GB2312
+	'@Iconv(ByRef inCset,ByRef OutCset,ByRef content): Stream 编码转换UTF-8,GB2312
 
-	Public Function Iconv(inCset,OutCset,content)
+	Public Function Iconv(ByRef inCset,ByRef OutCset,ByRef content)
 		Dim objStream
 		Set objStream = server.CreateObject("Adodb.Stream")
 			objStream.Charset = inCset
@@ -558,9 +558,9 @@ Class Class_Fso
 		set objStream = nothing
 	End Function
 	
-	'@Bytes2Str(body,cset): Stream 字节流转字符串 body字节数组,cset编码格式
+	'@Bytes2Str(ByRef body,ByRef cset): Stream 字节流转字符串 body字节数组,cset编码格式
 	
-	Function Bytes2Str(body,cset)
+	Function Bytes2Str(ByRef body,ByRef cset)
 		dim objStream
 		set objStream = Server.CreateObject("adodb.stream")
 			objStream.Type = 1 '以二进制模式打开
@@ -576,9 +576,9 @@ Class Class_Fso
 		set objStream = nothing
 	End Function
 	
-	'@Str2Bytes(text,cset): Stream 字符串转字节流 Text字符窜,cset编码格式
+	'@Str2Bytes(ByRef text,ByRef cset): Stream 字符串转字节流 Text字符窜,cset编码格式
 	
-	Function Str2Bytes(text,cset)
+	Function Str2Bytes(ByRef text,ByRef cset)
 		dim objStream
 		set objStream = Server.CreateObject("adodb.stream")
 			objStream.Charset = cset

@@ -15,8 +15,8 @@ Class Class_DB
         Set conn = conn_
     End Property
 
-    Public Property Let conn(Value)
-        Set conn_ = Value
+    Public Property Let conn(Values)
+        Set conn_ = Values
     End Property
 
     '初始化
@@ -34,7 +34,7 @@ Class Class_DB
 	
     '@OpenConn(db_type, db_path,db_version, db_name, db_user, db_pass): 打开数据库连接
 
-    Public Sub OpenConn(db_type, db_version, db_path, db_name, db_user, db_pass)
+    Public Sub OpenConn(ByRef db_type,ByRef db_version,ByRef db_path,ByRef db_name,ByRef db_user,ByRef db_pass)
         on error resume next
         Dim dpath, TempStr
 
@@ -87,11 +87,11 @@ Class Class_DB
         Set conn_ = Nothing
     End Sub
 
-    '@Query(sTable, sFileds, sWhere, sOrder, sGroup, sCursorType, sLockType): 查 - 返回Recordset对象
+    '@Query(ByRef sTable,ByRef sFileds,ByRef sWhere,ByRef sOrder,ByRef sGroup,ByRef sCursorType,ByRef sLockType): 查 - 返回Recordset对象
 	'如果单单是读取，不涉及更新操作，那就用1，1
 	'如果涉及读取及更新操作，可以用1,3 或3,2
 
-    Public Function Query(sTable, sFileds, sWhere, sOrder, sGroup, sCursorType, sLockType)
+    Public Function Query(ByRef sTable,ByRef sFileds,ByRef sWhere,ByRef sOrder,ByRef sGroup,ByRef sCursorType,ByRef sLockType)
         On Error Resume Next
         Dim sql, rs
         sql = SqlQuery(sTable, sFileds, sWhere, sOrder, sGroup)
@@ -107,9 +107,9 @@ Class Class_DB
         End If
     End Function
 
-    '@Add(sTable, sFileds, sValues): 增 - 返回id
+    '@Add(ByRef sTable,ByRef sFileds,ByRef sValues): 增 - 返回id
 
-    Public Function Add(sTable, sFileds, sValues)
+    Public Function Add(ByRef sTable,ByRef sFileds,ByRef sValues)
         On Error Resume Next
         Dim sql
         sql = SqlAdd(sTable, sFileds, sValues)
@@ -124,9 +124,9 @@ Class Class_DB
         End If
     End Function
 
-    '@Edit(sTable, sFileds, sValues, sWhere): 改 - 返回状态
+    '@Edit(ByRef sTable,ByRef sFileds,ByRef sValues,ByRef sWhere): 改 - 返回状态
 
-    Public Function Edit(sTable, sFileds, sValues, sWhere)
+    Public Function Edit(ByRef sTable,ByRef sFileds,ByRef sValues,ByRef sWhere)
         On Error Resume Next
         Dim sql
         sql = SqlEdit(sTable, sFileds, sValues, sWhere)
@@ -142,9 +142,9 @@ Class Class_DB
         End If
     End Function
 
-    '@Del(sTable, sWhere): 删 - 返回状态
+    '@Del(ByRef sTable,ByRef sWhere): 删 - 返回状态
 
-    Public Function Del(sTable, sWhere)
+    Public Function Del(ByRef sTable,ByRef sWhere)
         On Error Resume Next
         Dim sql
         sql = SqlDel(sTable, sWhere)
@@ -159,9 +159,9 @@ Class Class_DB
         End If
     End Function
 	
-    '@AutoId(ByVal TableName):自动ID
+    '@AutoId(ByRef TableName):自动ID
 
-    Public Function AutoId(ByVal TableName)
+    Public Function AutoId(ByRef TableName)
         On Error Resume Next
         Dim rs, Sql, TempNo
         Set rs = Server.CreateObject("adodb.recordset")
@@ -187,33 +187,33 @@ Class Class_DB
 
     End Function
 	
-	'@SqlQuery(sTable, sFileds, sWhere, sOrder, sGroup): sql语句查询
+	'@SqlQuery(ByRef sTable,ByRef sFileds,ByRef sWhere,ByRef sOrder,ByRef sGroup): sql语句查询
 
-    Public Function SqlQuery(sTable, sFileds, sWhere, sOrder, sGroup)
+    Public Function SqlQuery(ByRef sTable,ByRef sFileds,ByRef sWhere,ByRef sOrder,ByRef sGroup)
 	    SqlQuery = SqlBuild("select", sTable, sFileds, "", sWhere, sOrder, sGroup)
 	End Function
 	
-	'@SqlAdd(sTable, sFileds, sValues): sql语句添加
+	'@SqlAdd(ByRef sTable,ByRef sFileds,ByRef sValues): sql语句添加
 	
-    Public Function SqlAdd(sTable, sFileds, sValues)
+    Public Function SqlAdd(ByRef sTable,ByRef sFileds,ByRef sValues)
         SqlAdd = SqlBuild("insert", sTable, sFileds, sValues, "", "", "")
     End Function
 	
-	'@SqlEdit(sTable, sFileds, sValues, sWhere): sql语句修改
+	'@SqlEdit(ByRef sTable,ByRef sFileds,ByRef sValues,ByRef sWhere): sql语句修改
 	
-    Public Function SqlEdit(sTable, sFileds, sValues, sWhere)
+    Public Function SqlEdit(ByRef sTable,ByRef sFileds,ByRef sValues,ByRef sWhere)
         SqlEdit = SqlBuild("update", sTable, sFileds, sValues, sWhere, "", "")
     End Function
 	
-	'@SqlDel(sTable, sWhere): sql语句删除
+	'@SqlDel(ByRef sTable,ByRef sWhere): sql语句删除
 	
-    Public Function SqlDel(sTable, sWhere)
+    Public Function SqlDel(ByRef sTable,ByRef sWhere)
         SqlDel = SqlBuild("delete", sTable, "", "", sWhere, "", "")
     End Function
 	
     'sql语句生成
 
-    Private Function SqlBuild(sType, sTable, sFileds, sValues, sWhere, sOrder, sGroup)
+    Private Function SqlBuild(ByRef sType,ByRef sTable,ByRef sFileds,ByRef sValues,ByRef sWhere,ByRef sOrder,ByRef sGroup)
         Dim TempStr
         '主语句
         Select Case sType
@@ -241,7 +241,7 @@ Class Class_DB
 	
 	'@SqlExecute(sql): sql语句执行
 	
-	Public Function SqlExecute(sql)
+	Public Function SqlExecute(ByRef sql)
 	    On Error Resume Next
 	    If  left(lcase(sql),6)="select" Then
 		    Set SqlExecute = conn_.Execute(sql)
@@ -257,9 +257,9 @@ Class Class_DB
 		End If
 	End Function
 	
-	'@CreateAccess(db_path,db_name): 创建Access数据库
+	'@CreateAccess(ByRef db_name): 创建Access数据库
 	
-    Public Sub CreateAccess(db)
+    Public Sub CreateAccess(ByRef db)
         on error resume Next
 		Dim adox
 		Set adox= Server.CreateObject("ADOX.Catalog") 
@@ -268,9 +268,9 @@ Class Class_DB
         If Err Then OutErr("can't create access"&chr(10)&Err.Description)
     End Sub
 	
-	'@CompactAccess(db1,db2): 压缩Access数据库
+	'@CompactAccess(ByRef db1,ByRef db2): 压缩Access数据库
 	
-    Public Sub CompactAccess(db1,db2)
+    Public Sub CompactAccess(ByRef db1,ByRef db2)
         on error resume next
 		Set Engine = CreateObject("JRO.JetEngine")
 			Engine.CompactDatabase _
@@ -282,7 +282,7 @@ Class Class_DB
 	
 	'错误提示
 
-	Public Sub OutErr(ErrMsg)
+	Public Sub OutErr(ByRef ErrMsg)
 	    Err.Clear
 		If isDebug_ = true Then
 			Response.charset = "utf-8"

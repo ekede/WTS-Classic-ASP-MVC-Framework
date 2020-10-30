@@ -15,8 +15,8 @@ Class Control_Start_Route_Reg
 
     '@route: route对象依赖
 
-    Public Property Let route(Value)
-        Set route_ = Value
+    Public Property Let route(Values)
+        Set route_ = Values
     End Property
 	
     Private Sub Class_Initialize()
@@ -59,9 +59,9 @@ Class Control_Start_Route_Reg
     Public Function ReWrite(ByVal str)
     End Function
 	
-    '@SetRegKey(keys, values): 设置正则
+    '@SetRegKey(Byref keys,Byref values): 设置正则
 	
-    Public Sub SetRegKey(keys, values)
+    Public Sub SetRegKey(Byref keys,Byref values)
         tempKeys_(keys) = values
     End Sub
 

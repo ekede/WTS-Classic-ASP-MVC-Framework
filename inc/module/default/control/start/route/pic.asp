@@ -11,8 +11,8 @@ Class Control_Start_Route_Pic
 
     '@route: route对象依赖
 
-    Public Property Let route(Value)
-        Set route_ = Value
+    Public Property Let route(Values)
+        Set route_ = Values
     End Property
 	
     Private Sub Class_Initialize()
@@ -93,9 +93,9 @@ Class Control_Start_Route_Pic
     Public Function ReWrite(ByVal str)
     End Function
 	
-    '@ReWritePic(base, pic_name, pic_width, pic_height, picdefault): 编码图片
+    '@ReWritePic(Byref base,Byref pic_name,Byref pic_width,Byref pic_height,Byref picdefault): 编码图片
 
-    Public Function ReWritePic(base, pic_name, pic_width, pic_height, picdefault)
+    Public Function ReWritePic(Byref base,Byref pic_name,Byref pic_width,Byref pic_height,Byref picdefault)
         Dim str, pic_ext
         If IsNull(pic_name) Then pic_name = ""
         If pic_name = "" Then
@@ -111,7 +111,7 @@ Class Control_Start_Route_Pic
         ReWritePic = base&PATH_PIC&ReWrite_P(str, pic_width, pic_height)
     End Function
 	
-    Private Function ReWrite_P(pic_name, pic_width, pic_height)
+    Private Function ReWrite_P(Byref pic_name,Byref pic_width,Byref pic_height)
         Dim str, pic_ext
         str = pic_name
         If IsNumeric(pic_width) And IsNumeric(pic_height) Then
@@ -122,9 +122,9 @@ Class Control_Start_Route_Pic
         ReWrite_P = str
     End Function
 	
-    '@ReWriteStatic(base, names): 编码static文件
+    '@ReWriteStatic(Byref base,Byref names): 编码static文件
 	
-    Public Function ReWriteStatic(base, names)
+    Public Function ReWriteStatic(Byref base,Byref names)
         ReWriteStatic = base&names
     End Function
 	

@@ -19,56 +19,56 @@ Class Class_Load
 
 	'@isDebug: 开启调试
 
-	Public Property Let isDebug(Value)
-		isDebug_ = Value
+	Public Property Let isDebug(Values)
+		isDebug_ = Values
 	End Property
 	
 	'@frameworkPath: 框架根路径
 
-	Public Property Let frameworkPath(Value)
-		frameworkPath_ = Value
+	Public Property Let frameworkPath(Values)
+		frameworkPath_ = Values
 	End Property
 	
 	'@classPath: 类库根路径
 
-	Public Property Let classPath(Value)
-		classPath_ = Value
+	Public Property Let classPath(Values)
+		classPath_ = Values
 	End Property
 	
 	'@modelPath: 模型根路径
 
-	Public Property Let modelPath(Value)
-		modelPath_ = Value
+	Public Property Let modelPath(Values)
+		modelPath_ = Values
 	End Property
 	
 	'@controlPath: 控制器根路径
 
-	Public Property Let controlPath(Value)
-		controlPath_ = Value
+	Public Property Let controlPath(Values)
+		controlPath_ = Values
 	End Property
 	
 	'@languageDefaultPath: 语言包默认根路径
 	
-	Public Property Let languageDefaultPath(Value)
-		languageDefaultPath_ = Value
+	Public Property Let languageDefaultPath(Values)
+		languageDefaultPath_ = Values
 	End Property
 	
 	'@languagePath: 语言包根路径
 
-	Public Property Let languagePath(Value)
-		languagePath_ = Value
+	Public Property Let languagePath(Values)
+		languagePath_ = Values
 	End Property
 	
 	'@templateDefaultPath: 模板默认根路径
 
-	Public Property Let templateDefaultPath(Value)
-		templateDefaultPath_ = Value
+	Public Property Let templateDefaultPath(Values)
+		templateDefaultPath_ = Values
 	End Property
 	
 	'@templatePath: 模板根路径
 
-	Public Property Let templatePath(Value)
-		templatePath_ = Value
+	Public Property Let templatePath(Values)
+		templatePath_ = Values
 	End Property
 
 	Private Sub Class_Initialize()
@@ -85,9 +85,9 @@ Class Class_Load
 		Set includeCount_ = nothing
 	End Sub
 	
-	'@LoadFile(fileName): 加载文件并缓存
+	'@LoadFile(ByRef fileName): 加载文件并缓存
 
-	Public Function LoadFile(fileName)
+	Public Function LoadFile(ByRef fileName)
 		Dim str, rpath
 		'
 		If PATH_APP <> "" Then
@@ -133,9 +133,9 @@ Class Class_Load
 	
 	'Include 代码块动态包含,包含文件路径-永远是相对根目录路径 PATH_ROOT:回根,filePath相对根目录+文件名
 	
-	'@Include(filePath): 包含并执行,全局
+	'@Include(ByRef filePath): 包含并执行,全局
 	
-	Public Sub Include(filePath)
+	Public Sub Include(ByRef filePath)
 		On Error Resume Next
 		Dim str,k
 		k="in_"&lcase(filePath)
@@ -147,9 +147,9 @@ Class Class_Load
 		End If
 	End Sub
 	
-	'@IncludeL(filePath): 包含并执行,变量全局, 函数,类局部
+	'@IncludeL(ByRef filePath): 包含并执行,变量全局, 函数,类局部
 
-	Public Sub IncludeL(filePath)
+	Public Sub IncludeL(ByRef filePath)
 		On Error Resume Next
 		Dim str
 		str = LoadFile(filePath&".asp")
@@ -157,9 +157,9 @@ Class Class_Load
 		If Err Then OutErr("IncludeL:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Sub
 
-	'@IncludeS(filePath): 包含不执行,返回内容
+	'@IncludeS(ByRef filePath): 包含不执行,返回内容
 	
-	Public Function IncludeS(filePath)
+	Public Function IncludeS(ByRef filePath)
 		On Error Resume Next
 		Dim str
 		str = LoadFile(filePath&".asp")
@@ -169,9 +169,9 @@ Class Class_Load
 	
 	'Include使用 加载框架,类库,控制器,模型,语言包,视图等
 	
-	'@LoadFrameWork(filePath):加载框架对象
+	'@LoadFrameWork(ByRef filePath):加载框架对象
 
-	Public Function LoadFramework(filePath)
+	Public Function LoadFramework(ByRef filePath)
 		On Error Resume Next
 		Include(frameworkPath_&filePath)
 		Set LoadFramework = Eval("new framework_"&filePath)
@@ -179,9 +179,9 @@ Class Class_Load
 		If Err Then OutErr("LoadFramework:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 
-	'@LoadClass(filePath):加载类库对象
+	'@LoadClass(ByRef filePath):加载类库对象
 
-	Public Function LoadClass(filePath)
+	Public Function LoadClass(ByRef filePath)
 		On Error Resume Next
 		Dim cname
 		Include(classPath_&filePath)
@@ -195,9 +195,9 @@ Class Class_Load
 		If Err Then OutErr("LoadClass:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 
-	'@LoadControl(filePath): 加载控制器对象
+	'@LoadControl(ByRef filePath): 加载控制器对象
 
-	Public Function LoadControl(filePath)
+	Public Function LoadControl(ByRef filePath)
 		On Error Resume Next
 		Dim cname
 		Include(controlPath_&filePath)
@@ -211,9 +211,9 @@ Class Class_Load
 		If Err Then OutErr("LoadControl:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 
-	'@LoadModel(filePath): 加载模型对象
+	'@LoadModel(ByRef filePath): 加载模型对象
 
-	Public Function LoadModel(filePath)
+	Public Function LoadModel(ByRef filePath)
 		On Error Resume Next
 		Dim cname
 		Include(modelPath_&filePath)
@@ -227,9 +227,9 @@ Class Class_Load
 		If Err Then OutErr("LoadModel:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 
-	'@LoadLanguage(filePath): 语言包
+	'@LoadLanguage(ByRef filePath): 语言包
 
-	Public Function LoadLanguage(filePath)
+	Public Function LoadLanguage(ByRef filePath)
 		On Error Resume Next
 		'
 		Dim Str
@@ -245,9 +245,9 @@ Class Class_Load
 		If Err Then OutErr("LoadLanguage:"&filePath&":"&Err.Number&":"&Err.Description)
 	End Function
 
-	'@LoadView(mb_name, mb_data):渲染视图
+	'@LoadView(ByRef mb_name,ByRef mb_data):渲染视图
 
-	Public Function LoadView(mb_name, mb_data)
+	Public Function LoadView(ByRef mb_name,ByRef mb_data)
 		Dim tem
 		Set tem = LoadClass("template")
 		tem.loader = Me
@@ -258,7 +258,7 @@ Class Class_Load
 		Set tem = Nothing
 	End Function
 
-	'@LoadControlAction(col, act, para): 分发执行，返回执行状态 Dispatch
+	'@LoadControlAction(ByRef col,ByRef act,ByRef para): 分发执行，返回执行状态 Dispatch
 
 	Public Function LoadControlAction(byval col, byval act, byval para)
 		If act<>"" Then
@@ -270,9 +270,9 @@ Class Class_Load
 		LoadControlAction=LoadControlAct(col, act, para, 0)
 	End Function
 
-	'@LoadControlAct(col, act, para, obj): 实例化对象并执行 控制器,方法,参数,返回值类型
+	'@LoadControlAct(ByRef col, ByRef act, ByRef para, Byval obj): 实例化对象并执行 控制器,方法,参数,返回值类型
 
-	Public Function LoadControlAct(Byval col, Byval act, Byval para, Byval obj)
+	Public Function LoadControlAct(ByRef col, ByRef act, ByRef para, Byval obj)
 		On Error Resume Next
 		'参数核对
 		If col = "" Then Exit Function
@@ -322,9 +322,9 @@ Class Class_Load
 		IncludeReplace = str
 	End Function
 	
-	'@ReadUTF(fileName): 读文件 UTF-8
+	'@ReadUTF(ByRef fileName): 读文件 UTF-8
 	
-	Public Function ReadUTF(fileName)
+	Public Function ReadUTF(ByRef fileName)
 		On Error Resume Next
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		ObjStream.Type = 2 '1二进制, 2文本
@@ -342,9 +342,9 @@ Class Class_Load
 		End if
 	End Function
 	
-	'@GetMapPath(path): 获取物理路径
+	'@GetMapPath(ByRef path): 获取物理路径
 	
-	Public Function GetMapPath(path)
+	Public Function GetMapPath(ByRef path)
 		If  StrCheck(path) Then
 			GetMapPath = -1
 		Else
@@ -353,7 +353,7 @@ Class Class_Load
 	End Function
 	
 	'判断是否包含路径非法字符
-	Private Function StrCheck(str)
+	Private Function StrCheck(ByRef str)
 		Dim i, arrays
 		StrCheck = False
 		If IsNull(str) Or Trim(str) = Empty Then Exit Function
@@ -369,7 +369,7 @@ Class Class_Load
 
 	'错误提示
 
-	Public Sub OutErr(ErrMsg)
+	Public Sub OutErr(ByRef ErrMsg)
 		If isDebug_ = true Then
 			Response.charset = "utf-8"
 			Response.Write ErrMsg

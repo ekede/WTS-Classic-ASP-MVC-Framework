@@ -14,8 +14,8 @@ Class Class_Error
 	
     '@loader: Loader对象依赖
 
-    Public Property Let loader(Value)
-        Set loader_ = Value
+    Public Property Let loader(Values)
+        Set loader_ = Values
     End Property
 
     Private Sub Class_Initialize()
@@ -25,9 +25,9 @@ Class Class_Error
     Private Sub class_terminate()
     End Sub
 
-    '@AddMsg(msg): 添加错误
+    '@AddMsg(ByRef msg): 添加错误
 
-    Public Sub AddMsg(msg)
+    Public Sub AddMsg(ByRef msg)
 	    foundErr = True
 		'
         If errMsg_ = "" Then

@@ -136,7 +136,7 @@ Class Class_Request
 	
     '调用 - collection转换dictionary
 
-    Public Sub ColDic(col, dic)
+    Public Sub ColDic(ByRef col,ByRef dic)
         For Each Keys in col
             dic(Keys) = col(Keys)
         Next

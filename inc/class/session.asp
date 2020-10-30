@@ -23,39 +23,39 @@ Class Class_Session
     Private Sub Class_Terminate()
     End Sub
 
-    '@SetS(k, v): 写
+    '@SetS(ByRef k,ByRef v): 写
 
-    Public Sub SetS(k, v)
+    Public Sub SetS(ByRef k,ByRef v)
         Session.Contents(k) = v
     End Sub
 
-    '@GetS(k): 读
+    '@GetS(ByRef k): 读
 
-    Public Function GetS(k)
+    Public Function GetS(ByRef k)
         GetS = Session(k)
     End Function
 
-    '@GetAllS(k): 读集合
+    '@GetAllS(ByRef k): 读集合
 
-    Public Function GetAllS(k)
+    Public Function GetAllS(ByRef k)
         GetS = Session.Contents
     End Function
 
-    '@DelS(k):  删
+    '@DelS(ByRef k):  删
 
-    Public Sub DelS(k)
+    Public Sub DelS(ByRef k)
         Session.Contents.Remove(k)
     End Sub
 
-    '@DelAllS(k): RemoveAll
+    '@DelAllS(ByRef k): RemoveAll
 
-    Public Sub DelAllS(k)
+    Public Sub DelAllS(ByRef k)
         Session.Contents.RemoveAll()
     End Sub
 
-    '@CleanS(k): Abandon
+    '@CleanS(ByRef k): Abandon
 
-    Public Sub CleanS(k)
+    Public Sub CleanS(ByRef k)
         Session.Abandon()
     End Sub
 

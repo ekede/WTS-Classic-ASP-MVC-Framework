@@ -19,20 +19,20 @@ Class Class_Cookie
 	
 	'@domain: cookie域名
 
-    Public Property Let domain(Value)
-        Set domain_ = Value
+    Public Property Let domain(Values)
+        Set domain_ = Values
     End Property
 	
 	'@expire: cookie过期时间
 	
-    Public Property Let expire(Value)
-        Set expire_ = Value
+    Public Property Let expire(Values)
+        Set expire_ = Values
     End Property
 
 	'@encode: cookie加密
 	
-    Public Property Let encode(Value)
-        encode_ = Value
+    Public Property Let encode(Values)
+        encode_ = Values
     End Property
 
     Private Sub Class_Initialize()
@@ -47,7 +47,7 @@ Class Class_Cookie
 	
     '@GetC(k1,k2): 读
 
-    Public Function GetC(k1,k2)
+    Public Function GetC(ByRef k1,ByRef k2)
 	    Dim v
 	    If k2  = "" Then
            v = Request.Cookies(k1)
@@ -61,9 +61,9 @@ Class Class_Cookie
 		End If
     End Function
 	
-    '@SetC(k1,k2,v,d,p,e): 写 -key1,key2,Value,Domain,Path,Expires
+    '@SetC(ByRef k1,ByRef k2,ByVal v,ByVal d,ByVal p,ByVal e): 写 -key1,key2,Value,Domain,Path,Expires
 
-    Public Sub SetC(k1,k2,ByVal v,ByVal d,ByVal p,ByVal e)
+    Public Sub SetC(ByRef k1,ByRef k2,ByVal v,ByVal d,ByVal p,ByVal e)
 		If encode_ = True Then v = EncodeC(v)
 		'
 	    If  k2 = "" Then
@@ -82,9 +82,9 @@ Class Class_Cookie
 		If e<>"" Then Response.Cookies(k1).Expires = e
     End Sub
 
-    '@DelC(k1,k2,d,p): 删
+    '@DelC(ByRef k1,ByRef k2,ByRef d,ByRef p): 删
 
-    Public Sub DelC(k1,k2,d,p)
+    Public Sub DelC(ByRef k1,ByRef k2,ByRef d,ByRef p)
 	     If k2 <> "" Then
             SetC k1,k2,"",d,p,""
 	     Else
@@ -92,9 +92,9 @@ Class Class_Cookie
 		 End If
     End Sub
 
-    '@CleanC(d,p): 清
+    '@CleanC(ByRef d,ByRef p): 清
 
-    Public Sub CleanC(d,p)
+    Public Sub CleanC(ByRef d,ByRef p)
         For Each k In Request.Cookies
 		    DelC k,"",d,p
         Next
@@ -102,7 +102,7 @@ Class Class_Cookie
 
 	'编码cookies, 编码处理后的信息，字符以"a"隔开
 
-	Private Function EncodeC(contentStr)
+	Private Function EncodeC(ByRef contentStr)
 		Dim i,returnStr
 		For i = Len(contentStr) to 1 Step -1
 			returnStr = returnStr & Ascw(Mid(contentStr,i,1))
@@ -113,7 +113,7 @@ Class Class_Cookie
 
 	'解码cookies ,解码处理后的信息
 
-	Private Function DecodeC(contentStr)
+	Private Function DecodeC(ByRef contentStr)
 		Dim i
 		Dim StrArr,StrRtn
 		StrArr = Split(contentStr,"a")

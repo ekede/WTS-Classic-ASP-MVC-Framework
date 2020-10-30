@@ -15,26 +15,26 @@ Class Class_Template
 	
     '@path_tpl: 模板根地址
 
-    Public Property Let path_tpl(Value)
-        path_tpl_ = LCase(Value)
+    Public Property Let path_tpl(Values)
+        path_tpl_ = LCase(Values)
     End Property
 	
     '@pathD_tpl: 模板默认根地址
 	
-    Public Property Let pathD_tpl(Value)
-        pathD_tpl_ = LCase(Value)
+    Public Property Let pathD_tpl(Values)
+        pathD_tpl_ = LCase(Values)
     End Property
 	
     '@loader: loader对象依赖
 
-    Public Property Let loader(Value)
-        Set loader_ = Value
+    Public Property Let loader(Values)
+        Set loader_ = Values
     End Property
 	
     '@tempdata: 模板标签存放字典
 
-    Public Property Let tempdata(Value) '替换字典
-        If VarType(Value) = 9 Then Set tempdata_ = Value
+    Public Property Let tempdata(Values) '替换字典
+        If VarType(Values) = 9 Then Set tempdata_ = Values
     End Property
 
     Private Sub Class_Initialize()
@@ -56,9 +56,9 @@ Class Class_Template
         Set regEx_ = Nothing
     End Sub
 
-    '@SetVal(keys, values): set value
+    '@SetVal(ByRef keys,ByRef values): set value
 
-    Public Function SetVal(keys, values)
+    Public Function SetVal(ByRef keys,ByRef values)
         Dim tempArray, k
         SetVal = true
         If InStr(keys, "/")>0 Then
@@ -85,15 +85,15 @@ Class Class_Template
         End If
     End Function
 
-    '@GetVal(keys): get value
+    '@GetVal(ByRef keys): get value
 
-    Public Function GetVal(keys)
+    Public Function GetVal(ByRef keys)
         GetVal = tempdata_(keys)
     End Function
 
-    '@SetVali(keys, i, values): set value table
+    '@SetVali(ByRef keys,ByRef i,ByRef values): set value table
 
-    Public Function SetVali(keys, i, values)
+    Public Function SetVali(ByRef keys,ByRef i,ByRef values)
         If i>= 0 Then
             tempdata_(keys&"/"&i) = values
             SetVali = true
@@ -102,15 +102,15 @@ Class Class_Template
         End If
     End Function
 
-    '@GetVali(keys, i): get value table
+    '@GetVali(ByRef keys,ByRef i): get value table
 
-    Public Function GetVali(keys, i)
+    Public Function GetVali(ByRef keys,ByRef i)
         GetVali = tempdata_(keys&"/"&i)
     End Function
 
-    '@UpdVal(keys): update value
+    '@UpdVal(ByRef keys): update value
 
-    Public Function UpdVal(keys)
+    Public Function UpdVal(ByRef keys)
         UpdVal = true
         If tempdata_.Exists(keys) Then
             If IsNumeric(tempdata_(keys)) Then
@@ -123,9 +123,9 @@ Class Class_Template
         End If
     End Function
 	
-    '@Fetch(mb_name): Fetch Template
+    '@Fetch(ByRef mb_name): Fetch Template
 
-    Public Function Fetch(mb_name)
+    Public Function Fetch(ByRef mb_name)
         Dim str
         str = ReadTpl(mb_name)
         str = ReplaceIF(str)
@@ -139,7 +139,7 @@ Class Class_Template
 
     'Read Tpl
 
-    Private Function ReadTpl(ByVal mb_name)
+    Private Function ReadTpl(ByRef mb_name)
         On Error Resume Next
         Dim str
         str = loader_.LoadFile(path_tpl_&mb_name)
@@ -435,7 +435,7 @@ Class Class_Template
 	
 	'错误提示
 
-	Public Sub OutErr(ErrMsg)
+	Public Sub OutErr(ByRef ErrMsg)
 		If isDebug_ = true Then
 			Response.charset = "utf-8"
 			Response.Write ErrMsg

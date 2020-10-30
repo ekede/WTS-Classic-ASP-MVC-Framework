@@ -20,8 +20,8 @@ Class Class_PageList
 	
     '@tempdata: 内容存放容器
 
-    Public Property Let tempdata(Value)
-        If VarType(Value) = 9 Then Set tempdata_ = Value
+    Public Property Let tempdata(Values)
+        If VarType(Values) = 9 Then Set tempdata_ = Values
     End Property
 
     Private Sub Class_Initialize
@@ -35,9 +35,9 @@ Class Class_PageList
         Set tempdata_ = Nothing
     End Sub
 
-    '@List(keys, Rs): 计算分页,将rs二维表抽象为一维存入dictionary对象,返回当前页条数
+    '@List(ByRef keys,ByRef Rs): 计算分页,将rs二维表抽象为一维存入dictionary对象,返回当前页条数
 
-    Public Function List(keys, Rs)
+    Public Function List(ByRef keys,ByRef Rs)
         Dim n
         '
         If keys = "" Then Exit Function
@@ -69,9 +69,9 @@ Class Class_PageList
         list = n
     End Function
 
-    '@Plist(byref route, byval base, byval url): 生成翻页链接,保存在dictionary对象中,供模板loop读取
+    '@Plist(ByRef route, ByRef base, ByRef url): 生成翻页链接,保存在dictionary对象中,供模板loop读取
 
-    Public Function Plist(byref route, byval base, byval url)
+    Public Function Plist(ByRef route, ByRef base, ByRef url)
         Dim i,n
 		n = 0
         '
@@ -125,7 +125,7 @@ Class Class_PageList
 
     'link
 
-    Private Function PageUrl(route, base, url, i, navi, selected, n)
+    Private Function PageUrl(ByRef route,ByRef base,ByRef url,ByRef i,ByRef navi,ByRef selected,ByRef n)
         link = route.ReWrite(base,url&"&page="&i)
 		tempdata_(pageKey_&"_page/link/"&n)=link
 		tempdata_(pageKey_&"_page/num/"&n)=navi

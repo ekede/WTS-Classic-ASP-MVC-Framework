@@ -11,14 +11,14 @@ Class Class_Log
 	
 	'@fso: fso对象依赖
 
-    Public Property Let fso(Value)
-        Set fso_ = Value
+    Public Property Let fso(Values)
+        Set fso_ = Values
     End Property
 	
 	'@logPath: 日志根路径
 
-    Public Property Let logPath(Value)
-        logPath_ = PATH_ROOT&Value
+    Public Property Let logPath(Values)
+        logPath_ = PATH_ROOT&Values
     End Property
 
     Private Sub Class_Initialize()
@@ -27,9 +27,9 @@ Class Class_Log
     Private Sub Class_Terminate()
     End Sub
 
-    '@GetLog(names): 取日志
+    '@GetLog(ByRef names): 取日志
 
-    Public Function GetLog(names)
+    Public Function GetLog(ByRef names)
         Dim paths, str
         paths = LogPath_&names
         str = fso_.ReadTxtFile(fso_.GetMapPath(paths))
@@ -40,9 +40,9 @@ Class Class_Log
         End If
     End Function
 	
-    '@SetLog(names, content): 写日志
+    '@SetLog(ByRef names,ByRef content): 写日志
 
-    Public Function SetLog(names, content)
+    Public Function SetLog(ByRef names,ByRef content)
         Dim paths
         paths = logPath_&names
         '
@@ -50,9 +50,9 @@ Class Class_Log
         SetLog = fso_.WriteTxtFile(fso_.GetMapPath(paths), content, 3)
     End Function
 	
-    '@DelLog(names): 删日志
+    '@DelLog(ByRef names): 删日志
 
-    Public Function DelLog(names)
+    Public Function DelLog(ByRef names)
         delLog = fso_.DeleteAFile(fso_.GetMapPath(logPath_&names))
     End Function
 

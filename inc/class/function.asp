@@ -11,9 +11,9 @@ Class Class_Function
     Private Sub Class_Terminate()
     End Sub
 	
-	'@HtmlEncodes(str): 字符串 - Html编码
+	'@HtmlEncodes(ByRef str): 字符串 - Html编码
 	
-	Public Function HtmlEncodes(str)
+	Public Function HtmlEncodes(ByRef str)
 		Dim fString
 		fString = Replace(str, ">", "&gt;")
 		fString = Replace(fString, "<", "&lt;")
@@ -26,9 +26,9 @@ Class Class_Function
 		HtmlEncodes = fString
 	End Function
 	
-	'@HtmlDncodes(str): 字符串 - Html解码
+	'@HtmlDncodes(ByRef str): 字符串 - Html解码
 	
-	Public Function HtmlDecodes(str)
+	Public Function HtmlDecodes(ByRef str)
 		Dim fString
 		fString = Replace(str, "&gt;", ">")
 		fString = Replace(fString, "&lt;", "<")
@@ -44,9 +44,9 @@ Class Class_Function
 	'**************************************************
 	'对String对象编码以便它们能在所有计算机上可读,所有空格、标点、重音符号以及其他非ASCII字符都用%xx编码代替其中xx等于表示该字符的十六进制数
 	
-	'@UrlEncodes(ByVal str): 字符串 - URL编码
+	'@UrlEncodes(ByRef str): 字符串 - URL编码
 	
-	Public Function UrlEncodes(ByVal str)
+	Public Function UrlEncodes(ByRef str)
 		If str = "" Then Exit Function
 		UrlEncodes = server.URLEncode(str)
 	End Function
@@ -54,7 +54,6 @@ Class Class_Function
 	'@UrlDecodes(ByVal str): 字符串 - URL解码
 
 	Public Function UrlDecodes(ByVal str)
-	    die str
 		Dim start,final,length,char,i,butf8,pass
 		Dim leftstr,rightstr,finalstr
 		Dim b0,b1,bx,blength,position,u,utf8
@@ -155,15 +154,15 @@ Class Class_Function
 	
 	'@AddSlashes(ByVal str): 字符串 - 单引号转义
 	
-	Public Function AddSlashes(ByVal str)
+	Public Function AddSlashes(ByRef str)
 		AddSlashes = Replace(str, "'", "''")
 	End Function
 	
 	'**************************************************
 	
-	'@StrLength(str): 字符串 - 长度
+	'@StrLength(ByRef str): 字符串 - 长度
 	
-	Public Function StrLength(str)
+	Public Function StrLength(ByRef str)
 		On Error Resume Next
 		Dim WINNT_CHINESE
 		WINNT_CHINESE = (Len("中国") = 2)
@@ -186,9 +185,9 @@ Class Class_Function
 		If Err.Number<>0 Then Err.Clear
 	End Function
 	
-	'@StrReplace(str, str1, str2): 字符串 - 替换,解决Null空值出错的问题
+	'@StrReplace(ByRef str,ByRef str1,ByRef str2): 字符串 - 替换,解决Null空值出错的问题
 
-	Public Function StrReplace(str, str1, str2)
+	Public Function StrReplace(ByRef str,ByRef str1,ByRef str2)
 		If IsNull(str2) Or IsNull(str1) Then
 			StrReplace = str
 			Exit Function
@@ -200,9 +199,9 @@ Class Class_Function
 		StrReplace = Replace(str, str1, str2)
 	End Function
 	
-	'@StrLeft(Byval str, strLeng, strExt): 字符串 - 截字符串
+	'@StrLeft(Byval str,ByRef strLeng,ByRef strExt): 字符串 - 截字符串
 
-	Public Function StrLeft(Byval str, strLeng, strExt)
+	Public Function StrLeft(Byval str,ByRef strLeng,ByRef strExt)
 		str = ReplaceExp(str, "(<[^>]*>|\r\n|\r|\n)", "") '去掉html符号,换行符
 		If strLeng > 0 Then Str = Left(str, strLeng)
 		If strExt = "point" Then
@@ -213,24 +212,24 @@ Class Class_Function
 		StrLeft = str
 	End Function
 	
-	'@StrBr(str): 字符串 - 替换换行符
+	'@StrBr(ByRef str): 字符串 - 替换换行符
 	
-	Public Function StrBr(str)
+	Public Function StrBr(ByRef str)
 		StrBr = Replace(str, Chr(10), "<br/>")
 		'strbr=replace(strbr,chr(13),"<br/>")
 	End Function
 	
 	'@StripTags(str): 字符串 - 去除html标签和Asp标签
 	
-	Function StripTags(str) 
+	Function StripTags(ByRef str) 
 		StripTags = ReplaceExp(str,"<(.[^>]*)>","")
 	End Function
 	
 	'**************************************************
 	
-	'@StrChars(str, ByVal chars): 字符串 - 搜索字符（字符串str是否由字符集chars组成）
+	'@StrChars(ByRef str, ByVal chars): 字符串 - 搜索字符（字符串str是否由字符集chars组成）
 	
-	Public Function StrChars(str, ByVal chars)
+	Public Function StrChars(ByRef str, ByVal chars)
 		Dim i,u
 		StrChars = True
 		If  IsNull(str) Or IsEmpty(str) Then Exit Function
@@ -245,9 +244,9 @@ Class Class_Function
 		Next
 	End Function
 	
-	'@StrCheck(str, ByVal chars): 字符串 - 搜索字符 (字符串str是否包含指定字符集chars）
+	'@StrCheck(ByRef str, ByVal chars): 字符串 - 搜索字符 (字符串str是否包含指定字符集chars）
 	
-	Public Function StrCheck(str, ByVal chars)
+	Public Function StrCheck(ByRef str, ByVal chars)
 		Dim i, u
 		StrCheck = False
 		If  IsNull(str) Or IsEmpty(str) Then Exit Function
@@ -262,9 +261,9 @@ Class Class_Function
 		Next
 	End Function
 	
-	'@StrEqual(str, strs, ge): 字符串 - 搜索单词
+	'@StrEqual(ByRef str,ByRef strs,ByRef ge): 字符串 - 搜索单词
 	
-	Public Function StrEqual(str, strs, ge)
+	Public Function StrEqual(ByRef str,ByRef strs,ByRef ge)
 		Dim arr, i
 		StrEqual = False
 		If  IsNull(str) Or IsEmpty(str) Then Exit Function
@@ -280,9 +279,9 @@ Class Class_Function
 		Next
 	End Function
 	
-	'@StrCompare(a, t, b): 字符串 - 比较两个字符串的大小,区分大小写
+	'@StrCompare(ByRef a,ByRef t,ByRef b): 字符串 - 比较两个字符串的大小,区分大小写
 	
-	Public Function StrCompare(a, t, b)
+	Public Function StrCompare(ByRef a,ByRef t,ByRef b)
 		Dim isStr, b_comp
 		isStr = False
 		If VarType(a) = 8 Or VarType(b) = 8 Then
@@ -312,9 +311,9 @@ Class Class_Function
 	
 	'**************************************************
 	
-	'@TrimBoth(str1, str2): 字符串 - 去掉头尾指定字符
+	'@TrimBoth(ByRef str1,ByRef str2): 字符串 - 去掉头尾指定字符
 	
-	Public Function TrimBoth(str1, str2)
+	Public Function TrimBoth(ByRef str1,ByRef str2)
 		Dim str, strLeng
 		str = TrimVBcrlf(str1) '去空白
 		'
@@ -326,15 +325,15 @@ Class Class_Function
 		TrimBoth = str
 	End Function
 	
-	'@TrimVBcrlf(str): 字符串 - 去掉头尾连续空白字符
+	'@TrimVBcrlf(ByRef str): 字符串 - 去掉头尾连续空白字符
 	
-	Public Function TrimVBcrlf(str)
+	Public Function TrimVBcrlf(ByRef str)
 		TrimVBcrlf = RTrimVBcrlf(LTrimVBcrlf(str))
 	End Function
 	
-	'@LTrimVBcrlf(str): 字符串 - 去掉开头空白字符
+	'@LTrimVBcrlf(ByRef str): 字符串 - 去掉开头空白字符
 	
-	Public Function LTrimVBcrlf(str)
+	Public Function LTrimVBcrlf(ByRef str)
 		Dim pos, isBlankChar
 		pos = 1
 		isBlankChar = true
@@ -354,9 +353,9 @@ Class Class_Function
 		LTrimVBcrlf = Right(str, Len(str) - pos + 1)
 	End Function
 	
-	'@RTrimVBcrlf(str): 字符串 - 去掉末尾空白字符
+	'@RTrimVBcrlf(ByRef str): 字符串 - 去掉末尾空白字符
 	
-	Public Function RTrimVBcrlf(str)
+	Public Function RTrimVBcrlf(ByRef str)
 		Dim pos, isBlankChar
 		pos = Len(str)
 		isBlankChar = true
@@ -378,9 +377,9 @@ Class Class_Function
 
 	'**************************************************
 
-	'@GetRandomizeCode(num): 字符串 - 生成序列号
+	'@GetRandomizeCode(ByRef num): 字符串 - 生成序列号
 	
-	Public Function GetRandomizeCode(num)
+	Public Function GetRandomizeCode(ByRef num)
 		Randomize
 		Dim strRandArray, intRandlen, strRandomize, i
 		strRandArray = Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
@@ -402,9 +401,9 @@ Class Class_Function
 	
 	'**************************************************
 	
-	'@GetDomain(url): 字符串 - 取域名
+	'@GetDomain(ByRef url): 字符串 - 取域名
 	
-	Public Function GetDomain(url)
+	Public Function GetDomain(ByRef url)
 		Dim str, num
 		If url = "" Then Exit Function
 		str = url
@@ -418,26 +417,26 @@ Class Class_Function
 		End If
 	End Function
 
-	'@GetExt(fileName): 字符串 - 取扩展名
+	'@GetExt(ByRef fileName): 字符串 - 取扩展名
 	
-	Public Function GetExt(fileName)
+	Public Function GetExt(ByRef fileName)
 		If InStr(fileName, ".") = 0 Then Exit Function
 		GetExt = Mid(fileName, InStrRev(fileName, "."))
 	End Function
 
 	'**************************************************
 	
-	'@IIF(a,b,c): 字符串 - 三元运算 a？b：c
+	'@IIF(ByRef a,ByRef b,ByRef c): 字符串 - 三元运算 a？b：c
 	
-	Public Function IIF(a,b,c)
+	Public Function IIF(ByRef a,ByRef b,ByRef c)
 		If a Then IIF = b Else IIF = c
 	End Function
 	
 	'**************************************************
 	
-	'@CheckExp(strng,patrn): 正则 - 查找字符串是否存在
+	'@CheckExp(ByRef strng,ByRef patrn): 正则 - 查找字符串是否存在
 	
-	Public Function CheckExp(strng,patrn)
+	Public Function CheckExp(ByRef strng,ByRef patrn)
 		Dim regEx
 		Set regEx = New RegExp
 			regEx.Pattern = patrn
@@ -447,9 +446,9 @@ Class Class_Function
 		Set regEx = Nothing
 	End Function
 	
-	'@MatchesExp(strng,patrn): 正则 - 匹配字符串,返回匹配集合
+	'@MatchesExp(ByRef strng,ByRef patrn): 正则 - 匹配字符串,返回匹配集合
 	
-	Public Function MatchesExp(strng,patrn)
+	Public Function MatchesExp(ByRef strng,ByRef patrn)
 		Dim regEx
 			Set regEx = New RegExp
 			regEx.Pattern = patrn
@@ -459,9 +458,9 @@ Class Class_Function
 		set regEx=nothing
 	End Function
 	
-	'@ReplaceExp(strng, patrn, replaces): 正则 - 替换字符串
+	'@ReplaceExp(ByRef strng,ByRef patrn,ByRef replaces): 正则 - 替换字符串
 	
-	Public Function ReplaceExp(strng, patrn, replaces)
+	Public Function ReplaceExp(ByRef strng,ByRef patrn,ByRef replaces)
 		Dim regEx
 		Set regEx = New RegExp
 			regEx.Pattern = patrn
@@ -475,9 +474,9 @@ Class Class_Function
 		Set regEx = Nothing
 	End Function
 	
-    '@IsValid(act, strng): 正则 - 验证更多 email,username,password,telephone,mobile,number,ip,date,zip
+    '@IsValid(ByRef act,ByRef strng): 正则 - 验证更多 email,username,password,telephone,mobile,number,ip,date,zip
 
-    Public Function IsValid(act, strng)
+    Public Function IsValid(ByRef act,ByRef strng)
         Dim Pattern
         isvalid = False
         '
@@ -515,9 +514,9 @@ Class Class_Function
 	'CDbl() 双精度 精度15位。负值 - 2.23E - 308 到 -1.79E + 308，正值 2.23E - 308 到 1.79E + 308，也可以为 0。
 	'CCur() 货币 -922,337,203,685,477.5808 至922,337,203,685,477.5807
 	
-	'@StrClng(ByVal str): 数字 - 将数字串转为长整型数值,Fix向零方向取整
+	'@StrClng(ByRef str): 数字 - 将数字串转为长整型数值,Fix向零方向取整
 	
-	Public Function StrClng(ByVal str)
+	Public Function StrClng(ByRef str)
 		If IsNumeric(str) Then
 			StrClng = Fix(CDbl(str))
 		Else
@@ -525,9 +524,9 @@ Class Class_Function
 		End If
 	End Function
 	
-	'@StrClngf(ByVal str, n): 数字 - 将数字串转为长整型数值,Round四舍无入
+	'@StrClngf(ByRef str,ByRef n): 数字 - 将数字串转为长整型数值,Round四舍无入
 	
-	Public Function StrClngf(ByVal str, n)
+	Public Function StrClngf(ByRef str,ByRef n)
 		If IsNumeric(Str) Then
 			StrClngf = round(CDbl(str), n)
 		Else
@@ -535,9 +534,9 @@ Class Class_Function
 		End If
 	End Function
 	
-	'@FormatNum(num, n): 数字 - 取小数点后几位,小于1整数位自动添零
+	'@FormatNum(ByVal num,ByRef n): 数字 - 取小数点后几位,小于1整数位自动添零
 	
-	Public Function FormatNum(num, n)
+	Public Function FormatNum(ByVal num,ByRef n)
 		If num<1 Then
 			num = "0"&CStr(FormatNumber(num, n))
 		Else
@@ -548,9 +547,9 @@ Class Class_Function
 	
 	'**************************************************
 	
-    '@FormatDate(dateAndTime, para): 日期 - 格式化
+    '@FormatDate(ByRef dateAndTime,ByRef para): 日期 - 格式化
 
-    Public Function FormatDate(dateAndTime, para)
+    Public Function FormatDate(ByRef dateAndTime,ByRef para)
         Dim y, m, d, h, mi, s, strDateTime
         FormatDate = dateAndTime
         If Not IsNumeric(para) Then Exit Function
@@ -589,9 +588,9 @@ Class Class_Function
 
 	'**************************************************
 	
-	'@OpenURL(act, url, param, res): 文档 - 读取远端文件 Ajax,Get,Post
+	'@OpenURL(ByRef act,ByRef url,ByRef param,ByRef res): 文档 - 读取远端文件 Ajax,Get,Post
 	
-	Public Function OpenURL(act, url, param, res)
+	Public Function OpenURL(ByRef act,ByRef url,ByRef param,ByRef res)
 		On Error Resume Next
 		Dim http
 		Set http = server.CreateObject("Msxml2.ServerXMLHTTP")
@@ -630,7 +629,7 @@ Class Class_Function
 	
     '@DownLoad(path): 文档 - 读服务器文件，缓存流输出到浏览器
 
-    Public Function DownLoad(path)
+    Public Function DownLoad(ByRef path)
         Dim fso, f, strFileName, intFileLength
 		Download = False
 		'
@@ -667,9 +666,9 @@ Class Class_Function
         Download = True
     End Function
 	
-	'@XmlTrans(ByVal strXml,ByVal strXsl): 文档 - 合并XML XSLT
+	'@XmlTrans(ByRef strXml,ByRef strXsl): 文档 - 合并XML XSLT
 	
-	Public Function XmlTrans(ByVal strXml,ByVal strXsl)
+	Public Function XmlTrans(ByRef strXml,ByVal strXsl)
 		On Error Resume Next
 		dim xml,xsl
 		if  strXml = "" or strXsl = "" Then Exit Function
@@ -690,8 +689,8 @@ Class Class_Function
 	
 	'**************************************************
 	
-	'@IsObjInstalled(strClass): 检查组件是否已经安装
-	Function IsObjInstalled(strClass)
+	'@IsObjInstalled(ByRef strClass): 检查组件是否已经安装
+	Function IsObjInstalled(ByRef strClass)
 		On Error Resume Next
 		IsObjInstalled = False
 		Err = 0
@@ -706,9 +705,9 @@ Class Class_Function
 		End If
 	End Function
 	
-	'@IsEmptys(arg): 调试 - 判断是否为空,包括数值型和引用型
+	'@IsEmptys(ByRef arg): 调试 - 判断是否为空,包括数值型和引用型
 	
-	Function IsEmptys(arg)	
+	Function IsEmptys(ByRef arg)	
 		if isArray(arg) Then
 			if ubound(arg)<0 Then IsEmptys = true : exit Function
 		end if
@@ -736,7 +735,7 @@ Class Class_Function
 	
     '获取打印集合字符串
 
-    Private Function ToStr(sets)
+    Private Function ToStr(ByRef sets)
 	    On Error Resume Next
         Dim x, y ,na ,str
 		t=Typename(sets)
@@ -803,9 +802,9 @@ Class Class_Function
 		ToStr = str
 	End Function
 	
-	'@Print(str): 调试 - 输出变量
+	'@Print(ByRef str): 调试 - 输出变量
 	
-	Public Sub Print(str)
+	Public Sub Print(ByRef str)
 		response.charset = "utf-8"
 		response.write ToStr(str)
 	End Sub

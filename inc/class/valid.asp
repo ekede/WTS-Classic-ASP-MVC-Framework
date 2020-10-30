@@ -10,8 +10,8 @@ Class Class_Valid
 	
 	'@errs: 依赖errors对象
 
-    Public Property Let errs(Value)
-        Set errs_ = Value
+    Public Property Let errs(Values)
+        Set errs_ = Values
     End Property
 
     Private Sub Class_Initialize()
@@ -20,15 +20,15 @@ Class Class_Valid
     Private Sub Class_Terminate()
     End Sub
 
-    'SaveErr(message): 保存错误
+    'SaveErr(ByRef message): 保存错误
 
-    Private Sub SaveErr(message)
+    Private Sub SaveErr(ByRef message)
         errs_.AddMsg message
     End Sub
 
-    '@Text(ByVal values, ByVal start, ByVal length, ByVal message): 验证字符串长度,并自动截取
+    '@Text(ByVal values, ByRef start, ByRef length, ByRef message): 验证字符串长度,并自动截取
 
-    Public Function Text(ByVal values, ByVal start, ByVal length, ByVal message)
+    Public Function Text(ByVal values, ByRef start, ByRef length, ByRef message)
         If IsNull(values) Then values = ""
         If length<>0 And start<>0 Then '上限和下限
             If Len(values)>length Or Len(values)<start Then
@@ -48,9 +48,9 @@ Class Class_Valid
         End If
     End Function
 
-    '@Num(ByVal values, ByVal start, ByVal length, ByVal message): 验证数字大小
+    '@Num(ByVal values, ByRef start, ByRef length, ByRef message): 验证数字大小
 
-    Public Function Num(ByVal values, ByVal start, ByVal length, ByVal message)
+    Public Function Num(ByVal values, ByRef start, ByRef length, ByRef message)
         If IsNumeric(values) = False Then
             Num = start
             If message<>"" Then SaveErr message
@@ -75,15 +75,15 @@ Class Class_Valid
         End If
     End Function
 
-    '@IntNum(ByVal values, ByVal start, ByVal length, ByVal message): 验证整形数字大小
+    '@IntNum(ByRef values, ByRef start, ByRef length, ByRef message): 验证整形数字大小
 
-    Public Function IntNum(ByVal values, ByVal start, ByVal length, ByVal message)
+    Public Function IntNum(ByRef values, ByRef start, ByRef length, ByRef message)
         IntNum = Fix(num(values, start, length, message))
     End Function
 
-    '@Bool(ByVal values, ByVal message): 验证布尔值 0,1
+    '@Bool(ByRef values, ByRef message): 验证布尔值 0,1
 
-    Public Function Bool(ByVal values, ByVal message)
+    Public Function Bool(ByRef values, ByRef message)
         If IsNumeric(values) = False Then
             Bool = 0
             If message<>"" Then SaveErr message
@@ -94,9 +94,9 @@ Class Class_Valid
         End If
     End Function
 
-    '@Email(ByVal values,ByVal message): 验证邮箱
+    '@Email(ByRef values,ByRef message): 验证邮箱
 
-    Public Function Email(ByVal values,ByVal message)
+    Public Function Email(ByRef values,ByRef message)
         If IsValidEmail (values) = False Then
             Email = ""
             If message<>"" Then SaveErr message
@@ -105,7 +105,7 @@ Class Class_Valid
         End If
     End Function
 
-    '@VerifyCode(ByVal values, ByVal message): 验证码
+    '@VerifyCode(ByRef values, ByRef message): 验证码
 
     Public Function VerifyCode(ByVal values, ByVal message)
         Dim ver
@@ -119,9 +119,9 @@ Class Class_Valid
         End If
     End Function
 
-    '@Times(ByVal values, ByVal start, ByVal length, ByVal message): 验证时间
+    '@Times(ByRef values, ByRef start, ByRef length, ByRef message): 验证时间
 
-    Public Function Times(ByVal values,ByVal start, ByVal length, ByVal message)
+    Public Function Times(ByRef values,ByRef start, ByRef length, ByRef message)
         If values<>"" And IsDate(values) = true Then
             times = CDate(values)
         Else
@@ -137,9 +137,9 @@ Class Class_Valid
         Safe = Replace(values, "'", "")
     End Function
 	
-	'@Safes(ByVal values): 验证sql注入
+	'@Safes(ByRef values): 验证sql注入
 	
-	Public Function Safes(ByVal values)
+	Public Function Safes(ByRef values)
 		dim inj_data,inj_arr,str,i
 		str = lcase(values&"")
 		inj_data = "'|and|exec|insert|select|delete|update|count|*|%|chr|mid|master|truncate|char|declare"
@@ -152,7 +152,7 @@ Class Class_Valid
 
     '验证邮箱
 
-    Private Function IsValidEmail(email)
+    Private Function IsValidEmail(ByRef email)
         Dim wname, Name, i, c
         IsValidEmail = true
         wname = Split(email, "@")

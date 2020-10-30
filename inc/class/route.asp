@@ -15,8 +15,8 @@ Class Class_Route
 	
     '@loader: loader对象依赖
 
-    Public Property Let loader(Value)
-        Set loader_ = Value
+    Public Property Let loader(Values)
+        Set loader_ = Values
     End Property
 	
     Public Property Get loader
@@ -25,8 +25,8 @@ Class Class_Route
 	
     '@fun: fun对象依赖
 
-    Public Property Let fun(Value)
-        Set fun_ = Value
+    Public Property Let fun(Values)
+        Set fun_ = Values
     End Property
 	
     Public Property Get fun
@@ -35,8 +35,8 @@ Class Class_Route
 	
     '@requests: requests对象依赖
 
-    Public Property Let requests(Value)
-        Set requests_ = Value
+    Public Property Let requests(Values)
+        Set requests_ = Values
     End Property
 	
     Public Property Get requests
@@ -45,10 +45,10 @@ Class Class_Route
 	
 	'@routers: 路由集合
 
-    Public Property Let routers(Value)
+    Public Property Let routers(Values)
 		Dim arr
 		'其他路由
-		arr=Split(cstr(Value),",")
+		arr=Split(cstr(Values),",")
 		For i = 0 to UBOUND(arr)
 		    If  arr(i)<>"" Then
 				Set s_(arr(i)) = loader_.LoadControl("start/route/"&arr(i))
@@ -193,9 +193,9 @@ Class Class_Route
 	
 	'--------------------------------------2 设置根目录,计算路由地址
 	
-	'@SetBaseAddr(str): 指定网页baseAddr,得到routeAddr路由
+	'@SetBaseAddr(ByRef str): 指定网页baseAddr,得到routeAddr路由
 	
-    Public Sub SetBaseAddr(str)
+    Public Sub SetBaseAddr(ByRef str)
 	    baseAddr = str
 		'
 	    dim tmp_standardAddr,tmp_baseAddr
@@ -208,9 +208,9 @@ Class Class_Route
 		End if
     End Sub
 	
-	'@SetBasePicAddr(str): 指定图片basePicAddr,得到routePicAddr路由
+	'@SetBasePicAddr(ByRef str): 指定图片basePicAddr,得到routePicAddr路由
 	
-    Public Sub SetBasePicAddr(str)
+    Public Sub SetBasePicAddr(ByRef str)
 	    basePicAddr = str
 	    '
 	    dim tmp_standardAddr,tmp_basePicAddr
@@ -227,7 +227,7 @@ Class Class_Route
 	
     ' 路由对象0
 
-    Private Sub DeWrite_Ask(r_path,p_path)
+    Private Sub DeWrite_Ask(ByRef r_path,ByRef p_path)
         If InStr(r_path, "?")>0 Then
             temp_array = Split(r_path, "?")
             r_path = temp_array(0)
@@ -241,7 +241,7 @@ Class Class_Route
         End If
     End Sub
 	
-    Private Function Add_Query(byval Web_Query)
+    Private Function Add_Query(ByRef Web_Query)
         Dim i, j, arr, arr_j
         arr = Split(Web_Query, "&")
         For i = 0 To UBound(arr)
@@ -270,9 +270,9 @@ Class Class_Route
 	
     '-------------------------------------- 编码，解码
 
-    '@ReWrite(base, r_path): 路由编码
+    '@ReWrite(ByRef base,ByRef r_path): 路由编码
 
-    Public Function ReWrite(base, r_path)
+    Public Function ReWrite(ByRef base,ByRef r_path)
 	    On Error Resume Next
         Dim str
 		
@@ -333,9 +333,9 @@ Class Class_Route
         OutErr("no control")
     End Sub
 	
-	'@GetBieUrl(url): 去https,http,端口，用于对比网址
+	'@GetBieUrl(ByRef url): 去https,http,端口，用于对比网址
 	
-	Public Function GetBieUrl(url)
+	Public Function GetBieUrl(ByRef url)
 		dim tmp
 		tmp=split(url,"://")
 		if instr(tmp(1),":")>0 then
@@ -347,7 +347,7 @@ Class Class_Route
 	
 	'错误提示
 
-	Public Sub OutErr(ErrMsg)
+	Public Sub OutErr(ByRef ErrMsg)
 	    Err.Clear
 		If isDebug_ = true Then
 			Response.charset = "utf-8"
