@@ -115,14 +115,14 @@ Class Control_Crypt
 		'#RSA 演示:
 		'c# Rsa Key Format : PEM PKCS1 -> PEM PKCS8 -> C# key
 		'privatekey_csharp = "xxx"
-		Set r1= loader.loadClass("Crypt/Rsa")
+		set r1= loader.loadClass("Crypt/Rsa")
 			r1.Privatekey=privatekey_csharp
 			a="Hello WTS"
 			b=r1.Encrypt(a)
 			c=r1.Decrypt(b)
 			d=r1.SignData(a,"SHA1")
 			e=r1.VerifyData(a,"SHA1",d)
-		Set r1=Nothing
+		set r1=Nothing
         '##
 		
 		s=""
