@@ -140,7 +140,7 @@ Class Class_Ext_Http
         End If
     End Sub
 
-    '@SetHeader(key, Value): 设置头信息
+    '@SetHeader(ByRef key,ByRef Value): 设置头信息
 
     Public Sub SetHeader(ByRef key, ByRef Values)
         header_(key) = Values

@@ -45,7 +45,7 @@ Class Class_Cookie
 
 	'--------------------------------- Server cookie
 	
-    '@GetC(k1,k2): 读
+    '@GetC(ByRef k1,ByRef k2): 读
 
     Public Function GetC(ByRef k1,ByRef k2)
 	    Dim v

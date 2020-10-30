@@ -14,7 +14,7 @@ Class Class_Route_Module
         Set route_ = Value
     End Property
 	
-    '@GetModule(r): 根据Requests对象参数做特殊模块判断
+    '@GetModule(ByRef r): 根据Requests对象参数做特殊模块判断
 
     Public Function GetModule(ByRef r)
         GetModule = False

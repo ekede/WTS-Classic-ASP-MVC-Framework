@@ -2,7 +2,7 @@
 '@title: Class_Ext_zip
 '@author: ekede.com
 '@date: 2018-07-16
-'@description: zip压缩,解压缩类
+'@description: dyy.zipsvr压缩,解压缩类
 
 Class Class_Ext_zip
 
@@ -31,7 +31,7 @@ Class Class_Ext_zip
 		Set fSvrZip=nothing
     End Sub
 
-    '@Zip(p, f): Place To File
+    '@Zip(ByRef p,ByRef f): Place To File
 
     Public Function Zip(ByRef p,ByRef f)
 	

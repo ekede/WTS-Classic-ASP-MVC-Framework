@@ -94,7 +94,7 @@ Class Class_Ext_Pack
         Set fso = Nothing
     End Sub
 
-    '@UnPack(pathFile, pathDir): 将pathFile解包到pathDir
+    '@UnPack(ByRef pathFile,ByRef pathDir): 将pathFile解包到pathDir
 
     Public Sub UnPack(ByRef pathFile,ByRef pathDir)
         On Error Resume Next

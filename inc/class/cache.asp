@@ -115,13 +115,13 @@ Class Class_Cache
         Application.Contents("cache_"&cacheDataPath_&names) = Content
     End Function
 	
-	'@DelValue(names): 内存删
+	'@DelValue(ByRef names): 内存删
 
     Public Function DelValue(ByRef names)
         Application.Contents.Remove("cache_"&cacheDataPath_&names)
     End Function
 	
-	'@ExpireValue(names): 内存过期
+	'@ExpireValue(ByRef names): 内存过期
 
     Public Function ExpireValue(ByRef names)
     End Function

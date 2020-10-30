@@ -85,7 +85,7 @@ Class Control_Start_Route_Key
         End If
     End Function
 
-    '@SetUrlKey(Keys, values): 设置编码键值
+    '@SetUrlKey(ByRef Keys,ByRef values): 设置编码键值
 
     Public Sub SetUrlKey(Byref keys,Byref values)
         tempKeys_(keys) = values

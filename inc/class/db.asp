@@ -239,7 +239,7 @@ Class Class_DB
         SqlBuild = TempStr
     End Function
 	
-	'@SqlExecute(sql): sql语句执行
+	'@SqlExecute(ByRef sql): sql语句执行
 	
 	Public Function SqlExecute(ByRef sql)
 	    On Error Resume Next
