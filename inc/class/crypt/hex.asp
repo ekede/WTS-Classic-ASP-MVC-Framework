@@ -6,9 +6,9 @@
 
 Class Class_Crypt_Hex
 
-	'@Hex2Bytes(Str): Hex2Bytes
+	'@Hex2Bytes(ByRef Str): Hex2Bytes
 	
-	Function Hex2Bytes(Str)
+	Function Hex2Bytes(ByRef Str)
 		Set objXML = Server.CreateObject("Msxml2.DOMDocument")
 		Set objXMLNode = objXML.createElement("a")
 		objXMLNode.DataType = "bin.hex"
@@ -19,9 +19,9 @@ Class Class_Crypt_Hex
 		Hex2Bytes=Bytes
 	End Function
 
-	'@Bytes2Hex(Bytes): Bytes2Hex
+	'@Bytes2Hex(ByRef Bytes): Bytes2Hex
 	
-	Function Bytes2Hex(Bytes)
+	Function Bytes2Hex(ByRef Bytes)
 		Set objXML = Server.CreateObject("Msxml2.DOMDocument")
 		Set objXMLNode = objXML.createElement("a")
 		objXMLNode.DataType = "bin.hex"

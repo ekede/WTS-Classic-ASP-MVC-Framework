@@ -6,9 +6,9 @@
 
 Class Class_Crypt_Base64
 	
-	'@Base642Bytes(str): Base642Bytes
+	'@Base642Bytes(ByRef str): Base642Bytes
 	
-	Public Function Base642Bytes(str)
+	Public Function Base642Bytes(ByRef str)
         Dim objXML, objXMLNode
         Set objXML = server.CreateObject("msxml2.domdocument")
         Set objXMLNode = objXML.createelement("b64")
@@ -19,9 +19,9 @@ Class Class_Crypt_Base64
         Set objXML = Nothing
 	End Function
 	
-	'@Bytes2Base64(bytes): Bytes2Base64
+	'@Bytes2Base64(ByRef bytes): Bytes2Base64
 	
-	Public Function Bytes2Base64(bytes)
+	Public Function Bytes2Base64(ByRef bytes)
         Dim objXML, objXMLNode
         Set objXML = server.CreateObject("msxml2.domdocument")
         Set objXMLNode = objXML.createelement("b64")

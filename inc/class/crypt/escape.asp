@@ -6,9 +6,9 @@
 
 Class Class_Crypt_Escape
 
-    '@Escape(ByVal Str): 编码
+    '@Escape(ByRef Str): 编码
 
-	Public Function Escape(ByVal Str)
+	Public Function Escape(ByRef Str)
 		dim i,s,c,a
 		s = ""
 		For i = 1 To Len(Str)
@@ -29,9 +29,9 @@ Class Class_Crypt_Escape
 		Escape = s
 	End Function
 	
-    '@UnEscape(ByVal Str): 解码
+    '@UnEscape(ByRef Str): 解码
 	
-	Public Function UnEscape(ByVal Str)
+	Public Function UnEscape(ByRef Str)
 		dim i,s,c
 		s = ""
 		For i = 1 To Len(Str)

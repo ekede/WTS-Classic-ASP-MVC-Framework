@@ -16,11 +16,11 @@ Class Class_Crypt_Aes
 	    Set TAsc = Nothing
     End Sub
 
-    '@AESEncrypt(ByVal Str,ByVal Key): 加密
+    '@AESEncrypt(ByRef Str,ByRef Key): 加密
 
 	'Mode 1 : cbc , 2 : ecb , 4 : cfb
 	'Padding 2 : pkcs5 , 4 : ansix923
-	Public Function AESEncrypt(ByVal Str,ByVal Key)
+	Public Function AESEncrypt(ByRef Str,ByRef Key)
 		Dim Enc,BytesText,Bytes,Outstr
 		'Borrow some objects from .NET (supported from 1.1 onwards)
 		Set Enc = Server.CreateObject("System.Security.Cryptography.RijndaelManaged")
@@ -36,11 +36,11 @@ Class Class_Crypt_Aes
 		Set Enc = Nothing
 	End Function
 
-    '@AESDecrypt(ByVal Bytes,ByVal Key): 解密
+    '@AESDecrypt(ByRef Bytes,ByRef Key): 解密
 
 	'Mode 1 : cbc , 2 : ecb , 4 : cfb
 	'Padding 2 : pkcs5 , 4 : ansix923
-	Public Function AESDecrypt(ByVal Bytes,ByVal Key)
+	Public Function AESDecrypt(ByRef Bytes,ByRef Key)
 		Dim Enc,BytesText,Outstr
 		'Borrow some objects from .NET (supported from 1.1 onwards)
 		Set Enc = Server.CreateObject("System.Security.Cryptography.RijndaelManaged")

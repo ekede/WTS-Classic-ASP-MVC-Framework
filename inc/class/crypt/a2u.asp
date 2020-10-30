@@ -26,9 +26,9 @@
 
 Class Class_Crypt_A2U
 
-    '@Encode(str): 将字符串中字符转UNICODE字符代码
+    '@Encode(ByRef str): 将字符串中字符转UNICODE字符代码
 
-    Public Function Encode(str) 'AscW()
+    Public Function Encode(ByRef str) 'AscW()
         Dim a,s
         For i = 1 To Len(str)
             a = AscW(Mid(str, i, 1))
@@ -38,9 +38,9 @@ Class Class_Crypt_A2U
         Encode = s
     End Function
 
-    '@Decode(str): 将字符串中UNICODE字符代码转字符
+    '@Decode(ByRef str): 将字符串中UNICODE字符代码转字符
 
-    Public Function Decode(str) 'ChrW()
+    Public Function Decode(ByRef str) 'ChrW()
         If InStr(str, "&#")>0 Then
             Dim arr, s
             arr = Split(str, "&#")

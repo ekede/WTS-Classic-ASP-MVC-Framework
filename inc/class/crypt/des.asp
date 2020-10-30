@@ -16,11 +16,11 @@ Class Class_Crypt_Des
 	    Set TAsc = Nothing
     End Sub
 	
-	'@DESEncrypt(ByVal Str,ByVal Key): 加密
+	'@DESEncrypt(ByRef Str,ByRef Key): 加密
 	
 	'Mode 1 : cbc , 2 : ecb , 4 : cfb
 	'Padding 2 : pkcs5 , 4 : ansix923
-	Public Function DESEncrypt(ByVal Str,ByVal Key)
+	Public Function DESEncrypt(ByRef Str,ByRef Key)
 		Dim Enc,BytesText,Outstr
 		'Borrow some objects from .NET (supported from 1.1 onwards)
 		Set Enc = Server.CreateObject("System.Security.Cryptography.DESCryptoServiceProvider")
@@ -40,7 +40,7 @@ Class Class_Crypt_Des
 	
 	'Mode 1 : cbc , 2 : ecb , 4 : cfb
 	'Padding 2 : pkcs5 , 4 : ansix923
-	Public Function DESDecrypt(ByVal Bytes,ByVal Key)
+	Public Function DESDecrypt(ByRef Bytes,ByRef Key)
 		Dim Enc,BytesText,Outstr
 		'Borrow some objects from .NET (supported from 1.1 onwards)
 		Set Enc = Server.CreateObject("System.Security.Cryptography.DESCryptoServiceProvider")

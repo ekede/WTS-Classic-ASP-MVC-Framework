@@ -133,7 +133,7 @@ Class Class_Crypt_Rsa
 
 		'Base64
 
-		Public Function Base642Bytes(str)
+		Public Function Base642Bytes(ByRef str)
 			Dim objXML, objXMLNode
 			Set objXML = Server.CreateObject("msxml2.domdocument")
 			Set objXMLNode = objXML.createelement("b64")
@@ -144,7 +144,7 @@ Class Class_Crypt_Rsa
 			Set objXML = Nothing
 		End Function
 
-		Public Function Bytes2Base64(bytes)
+		Public Function Bytes2Base64(ByRef bytes)
 			Dim objXML, objXMLNode
 			Set objXML = Server.CreateObject("msxml2.domdocument")
 			Set objXMLNode = objXML.createelement("b64")
