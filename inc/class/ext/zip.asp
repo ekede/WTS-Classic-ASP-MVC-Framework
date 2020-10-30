@@ -11,8 +11,8 @@ Class Class_Ext_zip
 	
     '@isDebug: 是否设置为调试模式
 	
-    Public Property Let isDebug(Value) 
-        isDebug_ = Value
+    Public Property Let isDebug(Values)
+        isDebug_ = Values
     End Property
 	
     Private Sub Class_Initialize()
@@ -33,7 +33,7 @@ Class Class_Ext_zip
 
     '@Zip(p, f): Place To File
 
-    Public Function Zip(p, f)
+    Public Function Zip(ByRef p,ByRef f)
 	
 		Set fzip=fSvrZip.ZipCom
 			fzip.fileName = f
@@ -44,9 +44,9 @@ Class Class_Ext_zip
 		
     End Function
 	
-	'@UnZip(f, p): File To Place
+	'@UnZip(ByRef f,ByRef p): File To Place
 
-    Public Function UnZip(f, p)
+    Public Function UnZip(ByRef f,ByRef p)
 	
 		Set funzip=fSvrZip.UnZipCom
 			funzip.fileName = f
@@ -59,7 +59,7 @@ Class Class_Ext_zip
 	
     '错误提示
 
-    Private Sub OutErr(str)
+    Private Sub OutErr(ByRef str)
 		Response.charSet = "utf-8"
 		Response.Write str
 		Response.End

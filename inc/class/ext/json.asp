@@ -35,7 +35,7 @@ Class Class_Ext_Json
 
     '@setKind: 设置对象类型 0 = object, 1 = array
 
-    Public Property Let setKind(ByVal fpKind)
+    Public Property Let setKind(fpKind)
         Select Case LCase(fpKind)
             Case "object"
                 kind = 0
@@ -74,7 +74,7 @@ Class Class_Ext_Json
 		collection.RemoveAll
 	End Sub
 	
-	Public Sub Remove(vProp)
+	Public Sub Remove(ByRef vProp)
 		collection.Remove vProp
 	End Sub
 	
@@ -82,7 +82,7 @@ Class Class_Ext_Json
 	
 	' encoding
 	
-	Public Function JsEncode(Str)
+	Public Function JsEncode(ByRef Str)
 		Dim i, j, aL1, aL2, c, p
 	
 		aL1 = Array(&h22, &h5C, &h2F, &h08, &h0C, &h0A, &h0D, &h09)
@@ -112,7 +112,7 @@ Class Class_Ext_Json
 	
 	' converting
 	
-	Public Function ToJSON(vPair)
+	Public Function ToJSON(ByRef vPair)
 		Select Case VarType(vPair)
 			Case 1 ' Null
 				ToJSON = "null"
@@ -150,7 +150,7 @@ Class Class_Ext_Json
 		End Select
 	End Function
 	
-	Public Function MultiArray(aBD, iBC, sPS, ByRef sPT) ' Array BoDy, Integer BaseCount, String PoSition
+	Public Function MultiArray(ByRef aBD,ByRef iBC,ByRef sPS, ByRef sPT) ' Array BoDy, Integer BaseCount, String PoSition
 		Dim iDU, iDL, i ' Integer DimensionUBound, Integer DimensionLBound
 		On Error Resume Next
 		iDL = LBound(aBD, iBC)
@@ -192,7 +192,7 @@ Class Class_Ext_Json
 		Set Clone = ColClone(Me)
 	End Function
 	
-	Private Function ColClone(core)
+	Private Function ColClone(ByRef core)
 		Dim jsc, i
 		Set jsc = New Class_Ext_Json
 		jsc.kind = core.kind

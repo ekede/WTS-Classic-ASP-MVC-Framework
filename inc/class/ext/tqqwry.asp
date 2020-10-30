@@ -41,7 +41,7 @@ Class Class_Ext_Tqqwry
 
     ' IP地址转换成整数 ip
 
-    Function IPToInt(IP)
+    Function IPToInt(ByRef IP)
         If InStr(IP, ":")>0 Then IP = "127.0.0.1" '当IP地址是::1这样的地址时返回本机地址
         Dim IPArray, i
         IPArray = Split(IP, ".", -1)
@@ -55,7 +55,7 @@ Class Class_Ext_Tqqwry
 
     ' 整数逆转IP地址
 
-    Function IntToIP(IntValue)
+    Function IntToIP(ByRef IntValue)
         p4 = IntValue - Fix(IntValue / 256) * 256
         IntValue = (IntValue - p4) / 256
         p3 = IntValue - Fix(IntValue / 256) * 256
@@ -68,7 +68,7 @@ Class Class_Ext_Tqqwry
 
     ' 获取开始IP位置
 
-    Private Function GetStartIP(RecNo)
+    Private Function GetStartIP(ByRef RecNo)
         OffSet = FirstStartIP + RecNo * 7
         Stream.Position = OffSet
         Buf = Stream.Read(7)
@@ -90,7 +90,7 @@ Class Class_Ext_Tqqwry
 
     ' 获取地域信息，包含国家和和省市
 
-    Private Sub GetCountry(IP)
+    Private Sub GetCountry(ByRef IP)
         If (CountryFlag = 1 Or CountryFlag = 2) Then
             Country = GetFlagStr(EndIPOff + 4)
             If CountryFlag = 1 Then
@@ -116,7 +116,7 @@ Class Class_Ext_Tqqwry
 
     ' 获取IP地址标识符
 
-    Private Function GetFlagStr(OffSet)
+    Private Function GetFlagStr(ByRef OffSet)
         Dim Flag
         Flag = 0
         Do While (True)
@@ -167,7 +167,7 @@ Class Class_Ext_Tqqwry
 	
 	'@QQWry(DotIP): 核心函数，执行IP搜索
 	
-	Public Function QQWry(DotIP)
+	Public Function QQWry(ByRef DotIP)
 	    On Error Resume Next
 		
 		Dim IP, nRet

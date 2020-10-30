@@ -182,9 +182,9 @@ Class Class_Ext_Md5
         Next
     End Function
 	
-    '@MD5(sMessage, stype): 32位，16位
+    '@MD5(ByRef sMessage,ByRef stype): 32位，16位
     
-    Public Function MD5(sMessage, stype)
+    Public Function MD5(ByRef sMessage,ByRef stype)
         m_lOnBits(0) = CLng(1)
         m_lOnBits(1) = CLng(3)
         m_lOnBits(2) = CLng(7)

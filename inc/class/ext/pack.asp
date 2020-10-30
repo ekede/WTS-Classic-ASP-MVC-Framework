@@ -8,9 +8,9 @@ Class Class_Ext_Pack
 
     Private pathDir_
 
-    '@Pack(pathDir,pathFile): 将目录pathDir打包成pathFile
+    '@Pack(ByRef pathDir,ByRef pathFile): 将目录pathDir打包成pathFile
 
-    Public Sub Pack(pathDir,pathFile)
+    Public Sub Pack(ByRef pathDir,ByRef pathFile)
 	   '创建一个空的XML文件，为写入文件作准备
         Dim XmlDoc, Root
         Set XmlDoc = Server.CreateObject("Microsoft.XMLDOM")
@@ -30,7 +30,7 @@ Class Class_Ext_Pack
 
     '遍历目录内的所有文件以及文件夹
 
-    Private Sub LoadData(pathDir, pathFile)
+    Private Sub LoadData(ByRef pathDir,ByRef pathFile)
         Dim XmlDoc
         Dim fso 'fso对象
         Dim objFolder '文件夹对象
@@ -96,7 +96,7 @@ Class Class_Ext_Pack
 
     '@UnPack(pathFile, pathDir): 将pathFile解包到pathDir
 
-    Public Sub UnPack(pathFile, pathDir)
+    Public Sub UnPack(ByRef pathFile,ByRef pathDir)
         On Error Resume Next
         Dim objXmlFile
         Dim objNodeList

@@ -512,7 +512,7 @@ Class Class_Ext_Array
 	
 	'this function will return array with "iElements" elements, each of them is random
 
-	Private Function RandomNoDuplicates (iMin, iMax, iElements)	
+	Private Function RandomNoDuplicates ( ByRef iMin,ByRef iMax,ByRef iElements )	
 		on error resume next		
 
 		If (iMax-iMin+1)<iElements Then

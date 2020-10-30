@@ -73,9 +73,9 @@ Class Class_Ext_Cart
         GetIds = str
     End Function
 
-    '@GetById(productId): 取产品数量
+    '@GetById(ByRef productId): 取产品数量
 
-    Public Function GetById(productId)
+    Public Function GetById(ByRef productId)
         If cart.Exists(product_id) Then
             GetById = cart.Item(productId)
         Else
@@ -83,9 +83,9 @@ Class Class_Ext_Cart
         End If
     End Function
 
-    '@Add(productId, productNum): 添加购物车
+    '@Add(ByRef productId,ByRef productNum): 添加购物车
 
-    Public Function Add(productId, productNum)
+    Public Function Add(ByRef productId,ByRef productNum)
         If Not cart.Exists(productId) Then
             cart.Add productId, CInt(productNum)
         Else
@@ -94,9 +94,9 @@ Class Class_Ext_Cart
         Set Session(cartName) = cart
     End Function
 
-    '@Edit(productId, productNum): 修改购物车
+    '@Edit(ByRef productId, ByRef productNum): 修改购物车
 
-    Public Function Edit(productId, productNum)
+    Public Function Edit(ByRef productId, ByRef productNum)
         If cart.Exists(productId) Then
             cart.Item(productId) = CInt(productNum)
         Else
@@ -105,9 +105,9 @@ Class Class_Ext_Cart
         Set Session(cartName) = cart
     End Function
 
-    '@Remove(productId): 移除购物车产品
+    '@Remove(ByRef productId): 移除购物车产品
 
-    Public Function Remove(productId)
+    Public Function Remove(ByRef productId)
         cart.Remove(productId)
         Set Session(cartName) = cart
     End Function
@@ -119,9 +119,9 @@ Class Class_Ext_Cart
         Set Session(cartName) = cart
     End Function
 	
-	'@CurrencyPrice(prices, currencys, decimals): 公式 - 汇率计算
+	'@CurrencyPrice(ByRef prices, ByRef currencys, ByRef decimals): 公式 - 汇率计算
 	
-	Public Function CurrencyPrice(prices, currencys, decimals)
+	Public Function CurrencyPrice(ByRef prices, ByRef currencys, ByRef decimals)
 		If IsNull(prices) Then
 			CurrencyPrice = 0
 		Else
@@ -132,7 +132,7 @@ Class Class_Ext_Cart
     '@BuyDiscount(discount, discounts, quatity): 公式 - 折扣表计算 
 	'10:9.5,20:9,30:8.5,40:8
 
-    Public Function BuyDiscount(discount, discounts, quatity)
+    Public Function BuyDiscount(ByRef discount, ByRef discounts, ByRef quatity)
         Dim i, discount_array, unit_array
         BuyDiscount = 10
         If discount>0 And discount<10 Then
@@ -150,10 +150,10 @@ Class Class_Ext_Cart
         End If
     End Function
 	
-    '@ShipWeight(country_code, sum_weight, table_fee): 公式 - 重量运费表计算 
+    '@ShipWeight(ByRef country_code, ByRef sum_weight, ByRef table_fee): 公式 - 重量运费表计算 
 	'us,gb,es|1:2,2:3,10:100
 	
-    Public Function ShipWeight(country_code, sum_weight, table_fee)
+    Public Function ShipWeight(ByRef country_code, ByRef sum_weight, ByRef table_fee)
         Dim i, j, k
         Dim line_array, country_array, fee_array, unit_array
         ShipWeight = -1

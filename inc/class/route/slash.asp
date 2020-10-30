@@ -79,9 +79,9 @@ Class Class_Route_Slash
         If route_.control<>"" Then route_.dewrite_on = true
     End Sub
 	
-    '@ReWrite(ByVal str): 编码
+    '@ReWrite(ByRef str): 编码
 
-    Public Function ReWrite(ByVal str)
+    Public Function ReWrite(ByRef str)
         If InStr(str, "?")>0 Then
             ReWrite = Add_Slash(Right(str, Len(str) - InStr(str, "?")))
         Else
@@ -89,7 +89,7 @@ Class Class_Route_Slash
         End If
     End Function
 
-    Private Function Add_Slash(byval Web_Query)
+    Private Function Add_Slash(ByRef Web_Query)
         Dim i, j, arr, arr_j, str, str_route
         arr = Split(Web_Query, "&")
         For i = 0 To UBound(arr)

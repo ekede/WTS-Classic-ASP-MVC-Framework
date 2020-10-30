@@ -58,9 +58,9 @@ Class Class_Ext_Wia
         Set v = Nothing
     End Sub
 
-    '@BuildPic(ByVal originalPath, Byval buildBasePath, Byval maxWidth, Byval maxHeight): 生成图片
+    '@BuildPic(ByRef originalPath, ByRef buildBasePath, ByRef maxWidth, ByRef maxHeight): 生成图片
 
-    Public Function BuildPic(ByVal originalPath, Byval buildBasePath, Byval maxWidth, Byval maxHeight)
+    Public Function BuildPic(ByRef originalPath, ByRef buildBasePath, ByRef maxWidth, ByRef maxHeight)
         On Error Resume Next
 		Dim i:i=0
         If originalPath = "" Then Exit Function
@@ -146,7 +146,7 @@ Class Class_Ext_Wia
 
     '命名图片
 
-    Private Function MakeName(Byval originalPath, Byval maxWidth, Byval maxHeight)
+    Private Function MakeName(ByRef originalPath, ByRef maxWidth, ByRef maxHeight)
         Dim pos, oName, oExt
         pos = InStrRev(originalPath, "/") + 1
         oName = Mid(originalPath, pos)
@@ -157,7 +157,7 @@ Class Class_Ext_Wia
 	
 	'删除已存在图片
 	
-	Private Function DeleteFile(Byval path)
+	Private Function DeleteFile(ByRef path)
 		Dim fso
 		Set fso=Server.CreateObject("Scripting.FileSystemObject") 
 		If fso.FileExists(path) Then

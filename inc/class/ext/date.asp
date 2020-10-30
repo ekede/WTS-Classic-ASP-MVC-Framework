@@ -46,25 +46,25 @@ Class Class_Ext_Date
 	
     '@ToUnixTime(t): 0时区日期t 转 时间戳
 
-    Public Function ToUnixTime(t)
+    Public Function ToUnixTime(ByRef t)
         ToUnixTime = DateDiff("s", "1970-1-1 0:0:0", t)
     End Function
 
     '@FromUnixTime(t, z): 时间戳t 转 0时区日期
 
-    Public Function FromUnixTime(t)
+    Public Function FromUnixTime(ByRef t)
 		FromUnixTime = DateAdd("s", t, "1970-1-1 0:0:0")
     End Function
 
     '@LocalTime(fz, tz, t): 转换时区时间 fz->tz
 
-    Public Function LocalTime(fz, tz, t)
+    Public Function LocalTime(ByRef fz, ByRef tz, ByRef t)
         LocalTime = DateAdd("h", (tz - fz), t) '时区相减
     End Function
 
     '@Week(d): 星期
 
-    Public Function Week(d)
+    Public Function Week(ByRef d)
         temp = "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday"
         temp = Split(temp, ",")
         Week = temp(Weekday(d) -1)
@@ -72,7 +72,7 @@ Class Class_Ext_Date
 
     '@Zodiac(d): 生肖
 
-    Public Function Zodiac(d)
+    Public Function Zodiac(ByRef d)
         If IsDate(d) Then
             birthyear = Year(d)
             ZodiacList = Array("猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊")
@@ -82,7 +82,7 @@ Class Class_Ext_Date
 
     '@Constellation(d): 星座
 
-    Public Function Constellation(d)
+    Public Function Constellation(ByRef d)
         If IsDate(d) Then
             ConstellationMon = Month(d)
             ConstellationDay = Day(d)

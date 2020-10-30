@@ -13,8 +13,8 @@ Class Class_Ext_Mail
 	
     '@isDebug: 是否设置为调试模式
 	
-    Public Property Let isDebug(Value) 
-        isDebug_ = Value
+    Public Property Let isDebug(Values) 
+        isDebug_ = Values
     End Property
 
     Private Sub Class_Initialize
@@ -38,9 +38,9 @@ Class Class_Ext_Mail
         Set mailObject_ = Nothing
     End Sub
 	
-    '@Setting(mServer,mPort,mSSL,mUserName,mPassword): 配置服务器
+    '@Setting(ByRef mServer,ByRef mPort,ByRef mSSL,ByRef mUserName,ByRef mPassword): 配置服务器
 
-    Public Function Setting(mServer,mPort,mSSL,mUserName,mPassword)
+    Public Function Setting(ByRef mServer,ByRef mPort,ByRef mSSL,ByRef mUserName,ByRef mPassword)
 		With fields_
 			.Item("http://schemas.microsoft.com/cdo/configuration/sendusing") = 2 '使用网络服务器还是本地服务
 			.Item("http://schemas.microsoft.com/cdo/configuration/smtpserver") = mServer '服务器地址
@@ -55,9 +55,9 @@ Class Class_Ext_Mail
 		Set mailObject_.Configuration = objConfig_
     End Function
 
-    '@Send(toMail, toName, subject, body, fromName, fromMail, priority): 发送邮件
+    '@Send(ByRef toMail,ByRef toName,ByRef subject,ByRef body,ByRef fromName,ByRef fromMail,ByRef priority): 发送邮件
 
-    Public Function Send(toMail, toName, subject, body, fromName, fromMail, priority)
+    Public Function Send(ByRef toMail,ByRef toName,ByRef subject,ByRef body,ByRef fromName,ByRef fromMail,ByRef priority)
         On Error Resume Next
 		Send = True
         If fromName <> "" Then

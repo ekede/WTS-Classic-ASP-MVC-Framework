@@ -20,17 +20,17 @@ Class Class_Ext_Xml
 		Set objXml = Nothing
 	End Sub
 
-	'@CreateNew(sName): 建立一个新的XML文档
+	'@CreateNew(ByRef sName): 建立一个新的XML文档
 	
-	Public Function CreateNew(sName)
+	Public Function CreateNew(ByRef sName)
 		Set tmpNode = objXml.createElement(sName)
 		objXml.appendChild(tmpNode)
 		Set CreateNew = tmpNode
 	End Function
 	
-	'@OpenXml(sPath): 从外部读入XML文档
+	'@OpenXml(ByRef sPath): 从外部读入XML文档
 	
-	Public Function OpenXml(sPath)
+	Public Function OpenXml(ByRef sPath)
 		OpenXml=False
 		sPath=Server.MapPath(sPath)
 		'Response.Write(sPath)
@@ -41,38 +41,38 @@ Class Class_Ext_Xml
 	    End If
 	End Function
 	
-	'@LoadXml(sStr): 从外部读入XML字符串
+	'@LoadXml(ByRef sStr): 从外部读入XML字符串
 	
-	Public Sub LoadXml(sStr)
+	Public Sub LoadXml(ByRef sStr)
 		objXml.loadXML(sStr)
 		Set xmlDoc = objXml.documentElement
 	End Sub
 	
-	'@InceptXml(xObj): 从外部读入XML对象
+	'@InceptXml(ByRef xObj): 从外部读入XML对象
 	
-	Public Sub InceptXml(xObj)
+	Public Sub InceptXml(ByRef xObj)
 		Set objXml = xObj
 		Set xmlDoc = xObj.documentElement
 	End Sub
 
-	'@AddNode(sNode,rNode): 新增一个节点, sNode STRING 节点名称, rNode OBJECT 增加节点的上级节点引用 
+	'@AddNode(ByRef sNode,ByRef rNode): 新增一个节点, sNode STRING 节点名称, rNode OBJECT 增加节点的上级节点引用 
 
-	Public Function AddNode(sNode,rNode)
+	Public Function AddNode(ByRef sNode,ByRef rNode)
 		Dim TmpNode
 		Set TmpNode = objXml.createElement(sNode)
 		rNode.appendChild TmpNode
 		Set AddNode = TmpNode
 	End Function
 	
-	'@AddAttribute(sName,sValue,oNode): sName STRING 属性名称, sValue STRING 属性值, oNode OBJECT 增加属性的对象
+	'@AddAttribute(ByRef sName,ByRef sValue,ByRef oNode): sName STRING 属性名称, sValue STRING 属性值, oNode OBJECT 增加属性的对象
 	
-	Public Function AddAttribute(sName,sValue,oNode)
+	Public Function AddAttribute(ByRef sName,ByRef sValue,ByRef oNode)
 		oNode.setAttribute sName,sValue
 	End Function
 	
-	'@AddText(FStr,cdBool,oNode): 新增节点内容
+	'@AddText(ByRef FStr,ByRef cdBool,ByRef oNode): 新增节点内容
 	
-	Public Function AddText(FStr,cdBool,oNode)
+	Public Function AddText(ByRef FStr,ByRef cdBool,ByRef oNode)
 		Dim tmpText
 		If cdBool Then
 		   Set tmpText = objXml.createCDataSection(FStr)
@@ -82,60 +82,60 @@ Class Class_Ext_Xml
 		oNode.appendChild tmpText
 	End Function
 
-	'@GetAtt(aName,oNode): 取得节点指定属性的值, aName STRING 属性名称, oNode OBJECT 节点引用
+	'@GetAtt(ByRef aName,ByRef oNode): 取得节点指定属性的值, aName STRING 属性名称, oNode OBJECT 节点引用
 	
-	Public Function GetAtt(aName,oNode)
+	Public Function GetAtt(ByRef aName,ByRef oNode)
 		dim tmpValue
 		tmpValue = oNode.getAttribute(aName)
 		GetAtt = tmpValue
 	End Function
 	
-	'@GetNodeName(oNode): 取得节点名称, oNode OBJECT 节点引用
+	'@GetNodeName(ByRef oNode): 取得节点名称, oNode OBJECT 节点引用
 	
-	Public Function GetNodeName(oNode)
+	Public Function GetNodeName(ByRef oNode)
 		GetNodeName = oNode.nodeName
 	End Function
 	
-	'@Function GetNodeText(oNode): 取得节点内容, oNode OBJECT 节点引用
+	'@Function GetNodeText(ByRef oNode): 取得节点内容, oNode OBJECT 节点引用
 	
-	Public Function GetNodeText(oNode)
+	Public Function GetNodeText(ByRef oNode)
 	    GetNodeText = oNode.childNodes(0).nodeValue
 	End Function
 	
-	'@GetNodeType(oNode): 取得节点类型, oNode OBJECT 节点引用
+	'@GetNodeType(ByRef oNode): 取得节点类型, oNode OBJECT 节点引用
 	
-	Public Function GetNodeType(oNode)
+	Public Function GetNodeType(ByRef oNode)
 		GetNodeType = oNode.nodeType
 	End Function
 	
-	'@FindNodes(sNode): 查找节点名相同的所有节点
+	'@FindNodes(ByRef sNode): 查找节点名相同的所有节点
 	
-	Public Function FindNodes(sNode)
+	Public Function FindNodes(ByRef sNode)
 		Dim tmpNodes
 		Set tmpNodes = objXml.getElementsByTagName(sNode)
 		Set FindNodes = tmpNodes
 	End Function
 	
-	'@FindNode(sNode): 查找一个相同节点
+	'@FindNode(ByRef sNode): 查找一个相同节点
 	
-	Public Function FindNode(sNode)
+	Public Function FindNode(ByRef sNode)
 		Dim TmpNode
 		Set TmpNode=objXml.selectSingleNode(sNode)
 		Set FindNode = TmpNode
 	End Function
 	
-	'@DelNode(sNode): 删除一个节点
+	'@DelNode(ByRef sNode): 删除一个节点
 	
-	Public Function DelNode(sNode)
+	Public Function DelNode(ByRef sNode)
 		Dim TmpNodes,Nodesss
 		Set TmpNodes=objXml.selectSingleNode(sNode)
 		Set Nodesss=TmpNodes.parentNode
 		Nodesss.removeChild(TmpNodes)
 	End Function
 	
-	'@ReplaceNode(sNode,sText,cdBool): 替换一个节点
+	'@ReplaceNode(ByRef sNode,ByRef sText,ByRef cdBool): 替换一个节点
 	
-	Public Function ReplaceNode(sNode,sText,cdBool)
+	Public Function ReplaceNode(ByRef sNode,ByRef sText,ByRef cdBool)
 		'replaceChild
 		Dim TmpNodes,tmpText
 		Set TmpNodes=objXml.selectSingleNode(sNode)
@@ -165,9 +165,9 @@ Class Class_Ext_Xml
 		objXml.save(xmlPath)
 	End Function
 	
-	'@SaveAsXML(sPath): 另存XML文档
+	'@SaveAsXML(ByRef sPath): 另存XML文档
 	
-	Public Function SaveAsXML(sPath)
+	Public Function SaveAsXML(ByRef sPath)
 		ProcessingInstruction()
 		objXml.save(sPath)
 	End Function

@@ -131,9 +131,9 @@ Class Class_Ext_WebStat
         Next
     End Function
 
-    '@GetSearchKeyword(str): 关键词_
+    '@GetSearchKeyword(ByRef str): 关键词_
 
-    Public Function GetSearchKeyword(str)
+    Public Function GetSearchKeyword(ByRef str)
         Dim v_soft, msm
         '
         v_soft = str
@@ -148,9 +148,9 @@ Class Class_Ext_WebStat
         End If
     End Function
 
-    '@GetPage(str): 排名_
+    '@GetPage(ByRef str): 排名_
 
-    Public Function GetPage(str)
+    Public Function GetPage(ByRef str)
         Dim v_soft
         '
         v_soft = LCase(str)
@@ -165,9 +165,9 @@ Class Class_Ext_WebStat
         End If
     End Function
 
-    '@GetEngine(str): 搜索引擎_
+    '@GetEngine(ByRef str): 搜索引擎_
 
-    Public Function GetEngine(str)
+    Public Function GetEngine(ByRef str)
         Dim v_soft, strEngine
         '
         v_soft = LCase(str)
@@ -228,9 +228,9 @@ Class Class_Ext_WebStat
         Next
     End Function
 
-    '@GetCountry(str): 标准国家_
+    '@GetCountry(ByRef str): 标准国家_
 
-    Public Function GetCountry(str)
+    Public Function GetCountry(ByRef str)
         Dim strProvince, strCountry, i
         If str = "" Then Exit Function
         '根据省份判断中国
@@ -296,9 +296,9 @@ Class Class_Ext_WebStat
 	End Function
 
 
-    '@GetLangChs(strLang): 标准语言
+    '@GetLangChs(ByRef strLang): 标准语言
 
-    Private Function GetLangChs(strLang)
+    Private Function GetLangChs(ByRef strLang)
         Select Case strLang
             Case "af"
                 outStr = "南非荷兰语"
@@ -596,14 +596,14 @@ Class Class_Ext_WebStat
 	
 	'查找字符串是否存在
 	
-	Private Function CheckExp(strng,patrn)
+	Private Function CheckExp(ByRef strng,ByRef patrn)
 			regEx_.Pattern = patrn
 			CheckExp = regEx_.Test(strng)
 	End Function
 
     '正则返回第一个匹配结果的第一个值
 
-    Private Function GetExp(strng,pattern)
+    Private Function GetExp(ByRef strng,ByRef pattern)
         On Error Resume Next
         Dim a, b, j
         regEx_.Pattern = pattern

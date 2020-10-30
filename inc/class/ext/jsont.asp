@@ -19,18 +19,18 @@ Class Class_Ext_JsonT
 	    Set sc4Json = nothing
     End Sub
 	
-	'@GetJSONObject(strJSON): Json字符串转对象
+	'@GetJSONObject(ByRef strJSON): Json字符串转对象
 	
-	Function GetJSONObject(strJSON)    
+	Function GetJSONObject(ByRef strJSON)
 		sc4Json.AddCode "var jsonObject = " & strJSON    
 		Set getJSONObject = sc4Json.CodeObject.jsonObject    
 	End Function 
 	
-	'@GetJSArrayItem(objJSArray,index): 数组对象索引取值
+	'@GetJSArrayItem(ByRef objJSArray,ByRef indexs): 数组对象索引取值
 	
-	Function GetJSArrayItem(objJSArray,index)    
+	Function GetJSArrayItem(ByRef objJSArray,ByRef indexs)
 		On Error Resume Next    
-		sc4Json.Run "getJSArray",objJSArray, index    
+		sc4Json.Run "getJSArray",objJSArray, indexs
 		Set GetJSArrayItem = sc4Json.CodeObject.itemTemp    
 		If Err.number=0 Then Exit Function    
 		GetJSArrayItem = sc4Json.CodeObject.itemTemp    

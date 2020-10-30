@@ -16,7 +16,7 @@ Class Class_Route_Module
 	
     '@GetModule(r): 根据Requests对象参数做特殊模块判断
 
-    Public Function GetModule(r)
+    Public Function GetModule(ByRef r)
         GetModule = False
        'route_.module = "default"
     End Function

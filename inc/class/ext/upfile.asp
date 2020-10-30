@@ -93,9 +93,9 @@ Class Class_Ext_UpFile
         Set File = Nothing
     End Sub
 
-    '@GetData (MaxSize): 分析上传的数据
+    '@GetData (ByRef MaxSize): 分析上传的数据
 
-    Public Sub GetData (MaxSize)
+    Public Sub GetData (ByRef MaxSize)
         '定义变量
         On Error Resume Next
         If isGetData_ = false Then
@@ -214,21 +214,21 @@ Class Class_Ext_UpFile
         End If
     End Sub
 
-    '@SaveToFile(Item, Path): 保存到文件,自动覆盖已存在的同名文件
+    '@SaveToFile(ByRef Item,ByRef Path): 保存到文件,自动覆盖已存在的同名文件
 
-    Public Function SaveToFile(Item, Path)
+    Public Function SaveToFile(ByRef Item,ByRef Path)
         SaveToFile = SaveToFileEx(Item, Path, True)
     End Function
 
     '@AutoSave(Item, Path): 保存到文件,自动设置文件名
 
-    Public Function AutoSave(Item, Path)
+    Public Function AutoSave(ByRef Item,ByRef Path)
         AutoSave = SaveToFileEx(Item, Path, false)
     End Function
 
     '保存到文件,OVER为真时,自动覆盖已存在的同名文件,否则自动把文件改名保存
 
-    Private Function SaveToFileEx(Item, Path, Over)
+    Private Function SaveToFileEx(ByRef Item,ByRef Path,ByRef Over)
         On Error Resume Next
         Dim FileExt
         If File.Exists(Item) Then
@@ -283,7 +283,7 @@ Class Class_Ext_UpFile
 
     '取得文件数据
 
-    Public Function FileData(Item)
+    Public Function FileData(ByRef Item)
         isErr_ = 0
         If File.Exists(Item) Then
             If isAllowExt(File(Item).FileExt) Then
@@ -304,7 +304,7 @@ Class Class_Ext_UpFile
 
     '取得文件路径
 
-    Public Function GetFilePath(FullPath)
+    Public Function GetFilePath(ByRef FullPath)
         If FullPath <> "" Then
             GetFilePath = Left(FullPath, InStrRev(FullPath, "\"))
         Else
@@ -314,7 +314,7 @@ Class Class_Ext_UpFile
 
     '取得文件名
 
-    Public Function GetFileName(FullPath)
+    Public Function GetFileName(ByRef FullPath)
         If FullPath <> "" Then
             GetFileName = Mid(FullPath, InStrRev(FullPath, "\") + 1)
         Else
@@ -324,7 +324,7 @@ Class Class_Ext_UpFile
 
     '取得文件的后缀名
 
-    Public Function GetFileExt(FullPath)
+    Public Function GetFileExt(ByRef FullPath)
         If FullPath <> "" Then
             GetFileExt = LCase(Mid(FullPath, InStrRev(FullPath, ".") + 1))
         Else
@@ -344,7 +344,7 @@ Class Class_Ext_UpFile
         GetNewFileName = Year(dtNow) & Right("0" & Month(dtNow), 2) & Right("0" & Day(dtNow), 2) & Right("0" & Hour(dtNow), 2) & Right("0" & Minute(dtNow), 2) & Right("0" & Second(dtNow), 2) & ranNum
     End Function
 
-    Public Function isAllowExt(Ext)
+    Public Function isAllowExt(ByRef Ext)
         If noAllowExt = "" Then
             isAllowExt = CBool(InStr(1, ";"&allowExt&";", LCase(";"&Ext&";")))
         Else
@@ -354,7 +354,7 @@ Class Class_Ext_UpFile
 
     '错误提示
 
-    Public Sub OutErr(ErrMsg)
+    Public Sub OutErr(ByRef ErrMsg)
         If isDebug_ = true Then
             Response.charset = "utf-8"
             Response.Write ErrMsg

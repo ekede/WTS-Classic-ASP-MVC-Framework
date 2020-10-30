@@ -33,9 +33,9 @@ Class Class_Ext_JMail
         Set mailObject_ = Nothing
     End Sub
 	
-    '@Setting(mServer,mPort,mSSL,mUserName,mPassword): 配置服务器
+    '@Setting(ByRef mServer,ByRef mPort,ByRef mSSL,ByRef mUserName,ByRef mPassword): 配置服务器
 
-    Public Function Setting(mServer,mPort,mSSL,mUserName,mPassword)
+    Public Function Setting(ByRef mServer,ByRef mPort,ByRef mSSL,ByRef mUserName,ByRef mPassword)
 		mailObject_.Charset="utf-8"                          '邮件编码
 		mailObject_.silent=true
 		mailObject_.ContentType = "text/html"                '邮件正文格式
@@ -47,9 +47,9 @@ Class Class_Ext_JMail
 		mailObject_.MailDomain = MailDomain                  '域名（如果用“name@domain.com”这样的用户名登录时，请指明domain.com
     End Function
 
-    '@Send(toMail, toName, subject, body, fromName, fromMail, priority): 发送邮件
+    '@Send(ByRef toMail,ByRef toName,ByRef subject,ByRef body,ByRef fromName,ByRef fromMail,ByRef priority): 发送邮件
 
-    Public Function Send(toMail, toName, subject, body, fromName, fromMail, priority)
+    Public Function Send(ByRef toMail,ByRef toName,ByRef subject,ByRef body,ByRef fromName,ByRef fromMail,ByRef priority)
         On Error Resume Next
 		Dim er
 		Send = True
@@ -74,7 +74,7 @@ Class Class_Ext_JMail
 
     'Err
 
-    Private Sub OutErr(str)
+    Private Sub OutErr(ByRef str)
 		Err.clear
         If IsDebug_ = true Then
             Response.charset = "utf-8"

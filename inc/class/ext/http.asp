@@ -74,9 +74,9 @@ Class Class_Ext_Http
         Set http_ = Nothing
     End Sub
 
-    '@Send(method,url): 发送请求
+    '@Send(ByRef method,ByVal url): 发送请求
 
-    Public Sub Send(method,ByVal url)
+    Public Sub Send(ByRef method,ByVal url)
 	    On Error Resume Next
 	    Dim c,s
 		'Header Read
@@ -129,26 +129,26 @@ Class Class_Ext_Http
 		
     End Sub
 
-    '@AddItem(Key, Value): 添加表单键值
+    '@AddItem(ByRef Key, ByRef Value): 添加表单键值
 
-    Public Sub AddItem(Key, Value)
+    Public Sub AddItem(ByRef Key, ByRef Values)
         On Error Resume Next
         If form_ = "" Then
-            form_ = Key + "=" + Server.URLEncode(Value)
+            form_ = Key + "=" + Server.URLEncode(Values)
         Else
-            form_ = form_ + "&" + Key + "=" + Server.URLEncode(Value)
+            form_ = form_ + "&" + Key + "=" + Server.URLEncode(Values)
         End If
     End Sub
 
     '@SetHeader(key, Value): 设置头信息
 
-    Public Sub SetHeader(key, Value)
-        header_(key) = Value
+    Public Sub SetHeader(ByRef key, ByRef Values)
+        header_(key) = Values
     End Sub
 	
     '读Cookie
 	
-    Private Function GetC(url)
+    Private Function GetC(ByRef url)
 	    Dim c
         key = "cookie/"&GetDomainKey(url)&".txt"
 	    c = cache_.GetCache(key)
@@ -164,7 +164,7 @@ Class Class_Ext_Http
 
     '写Cookie
 	
-    Private Function SetC(url,str)
+    Private Function SetC(ByRef url,ByRef str)
         SetC = HeadCookie(str)
 		If SetC Then 
            key = "cookie/"&GetDomainKey(url)&".txt"
@@ -188,9 +188,9 @@ Class Class_Ext_Http
         GetCookie = str
     End Function
 	
-    '@SetCookie(str): str标准字符串 -> cookie_对象, 初始化cookie_
+    '@SetCookie(ByRef str): str标准字符串 -> cookie_对象, 初始化cookie_
 	
-    Private Sub SetCookie(str)
+    Private Sub SetCookie(ByRef str)
 		arr = Split(str,"; ")
         For i = 0 To UBound(arr)
 		    k = Left(arr(i),InStr(arr(i),"=")-1)
@@ -205,9 +205,9 @@ Class Class_Ext_Http
         cookie_.RemoveAll
     End Sub
 
-    '@HeadCookie(str): Header字符串 => Cookie_对象, 更新cookie_
+    '@HeadCookie(ByRef str): Header字符串 => Cookie_对象, 更新cookie_
 	
-    Private Function HeadCookie(str)
+    Private Function HeadCookie(ByRef str)
 	    Dim c,k,v,arr,arrr,i,s
 	    HeadCookie = False
 		Set c = MatchesExp(str,"Set-Cookie: ([^=]+)=([^;]+|);")
@@ -248,7 +248,7 @@ Class Class_Ext_Http
 
 	'查找字符串并返回集合
 	
-	Private Function MatchesExp(strng,patrn)
+	Private Function MatchesExp(ByRef strng,ByRef patrn)
 		Dim regEx
 			Set regEx = New RegExp
 			regEx.Pattern = patrn
@@ -260,7 +260,7 @@ Class Class_Ext_Http
 	
 	'取域名key,不准确凑合用
 	
-	Private Function GetDomainKey(url)
+	Private Function GetDomainKey(ByRef url)
 		Dim str, num
 		str= Replace(url, "://", "")
 		num = InStr(str, "/")
@@ -273,7 +273,7 @@ Class Class_Ext_Http
 
     'Err
 	
-    Private Sub OutErr(str)
+    Private Sub OutErr(ByRef str)
 		Err.clear
         If IsDebug_ = true Then
             Response.charset = "utf-8"

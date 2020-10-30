@@ -56,9 +56,9 @@ Class Class_Ext_Jpeg
         Set aspJpeg = Nothing
     End Sub
 
-    '@BuildPic(ByVal originalPath, Byval buildBasePath, Byval maxWidth, Byval maxHeight): 生成图片
+    '@BuildPic(ByRef originalPath, ByRef buildBasePath, ByRef maxWidth, ByRef maxHeight): 生成图片
 
-    Public Function BuildPic(ByVal originalPath, Byval buildBasePath, Byval maxWidth, Byval maxHeight)
+    Public Function BuildPic(ByRef originalPath, ByRef buildBasePath, ByRef maxWidth, ByRef maxHeight)
         On Error Resume Next
         If originalPath = "" Then Exit Function
 
@@ -88,7 +88,7 @@ Class Class_Ext_Jpeg
 
     '水印文字
 
-    Private Sub CanvasText(ByVal text)
+    Private Sub CanvasText(ByRef text)
         If text = "" Then Exit Sub
 
         Dim x, y
@@ -107,7 +107,7 @@ Class Class_Ext_Jpeg
 
     '水印图片
 
-    Private Sub CanvasImage(Byval pic)
+    Private Sub CanvasImage(ByRef pic)
         On Error Resume Next
         If pic = "" Then Exit Sub
         Dim x, y, jpeg2
@@ -123,7 +123,7 @@ Class Class_Ext_Jpeg
 
     '命名图片
 
-    Private Function MakeName(Byval originalPath, Byval maxWidth, Byval maxHeight)
+    Private Function MakeName(ByRef originalPath, ByRef maxWidth, ByRef maxHeight)
         Dim pos, oName, oExt
         pos = InStrRev(originalPath, "/") + 1
         oName = Mid(originalPath, pos)
@@ -134,7 +134,7 @@ Class Class_Ext_Jpeg
 
     '尺寸计算
 
-    Private Sub ReSize(Byval originalWidth, Byval originalHeight, Byval maxWidth, Byval maxHeight)
+    Private Sub ReSize(ByRef originalWidth, ByRef originalHeight, ByRef maxWidth, ByRef maxHeight)
         Dim div1, div2
         Dim n1, n2
         div1 = originalWidth / originalHeight
@@ -164,7 +164,7 @@ Class Class_Ext_Jpeg
 
     '错误提示
 
-    Private Sub OutErr(str)
+    Private Sub OutErr(ByRef str)
         If isDebug_ Then
             Response.charset = "utf-8"
             Response.Write str
