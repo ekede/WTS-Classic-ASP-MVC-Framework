@@ -22,31 +22,31 @@ Class Control_Crypt
 	
     Private Sub Test0()
 	    '#md5演示:
-		set c = loader.loadClass("Ext/Md5")
+		Set c = loader.loadClass("Ext/Md5")
 		    wts.responses.SetOutput "md5(""你好"") : "& c.MD5("你好",32) '中文不一致的问题
-		set c = nothing
+		Set c = Nothing
 		'##
     End Sub
 	
     Private Sub Test1()
 	    '#HMACMD5演示:
-	    set h = loader.loadClass("Crypt/Hex")
-        set c = loader.loadClass("Crypt/Md5")
+	    Set h = loader.loadClass("Crypt/Hex")
+        Set c = loader.loadClass("Crypt/Md5")
 			wts.responses.SetOutput h.Bytes2Hex(c.MD5("你好"))
 			wts.responses.SetOutput h.Bytes2Hex(c.HMACMD5("你好","123"))
-		set c = nothing
-		set h = nothing
+		Set c = Nothing
+		Set h = Nothing
 		'##
     End Sub
 	
     Private Sub Test2()
 	    '#HMACSHA1演示:
-	    set h = loader.loadClass("Crypt/Hex")
-        set c = loader.loadClass("Crypt/Sha")
+	    Set h = loader.loadClass("Crypt/Hex")
+        Set c = loader.loadClass("Crypt/Sha")
 			wts.responses.SetOutput h.Bytes2Hex(c.SHA1("你好"))
 			wts.responses.SetOutput h.Bytes2Hex(c.HMACSHA1("你好","123"))
-		set c = nothing
-		set h = nothing
+		Set c = Nothing
+		Set h = Nothing
 		'##
     End Sub
 	
@@ -54,54 +54,54 @@ Class Control_Crypt
 	
     Private Sub Test3()
 	    '#Base64演示:
-        set c = loader.loadClass("Crypt/Base64")
+        Set c = loader.loadClass("Crypt/Base64")
 			x = c.Bytes2Base64(wts.fso.Str2Bytes("Str,二进制,Base64转换","utf-8"))
 			wts.responses.SetOutput wts.fso.Bytes2Str(c.Base642Bytes(x),"utf-8")
-		set c = nothing
+		Set c = Nothing
 		'##
     End Sub
 	
     Private Sub Test4()
-        set c = loader.loadClass("Crypt/Escape")
+        Set c = loader.loadClass("Crypt/Escape")
 			x = c.Escape("Escape,UnEscape函数")
 			wts.responses.SetOutput c.UnEscape(x)
-		set c = nothing
+		Set c = Nothing
     End Sub
 	
     Private Sub Test5()
-        set c = loader.loadClass("Crypt/A2U")
+        Set c = loader.loadClass("Crypt/A2U")
 			x = c.Encode("ASCII,UNICODE转换")
 			wts.responses.SetOutput c.Decode(x)
-		set c = nothing
+		Set c = Nothing
     End Sub
 	
     Private Sub Test6()
-        set c = loader.loadClass("Crypt/Num")
+        Set c = loader.loadClass("Crypt/Num")
 			wts.responses.SetOutput c.DcH(30)
-		set c = nothing
+		Set c = Nothing
     End Sub
 	
 	Private Sub Test7()
 		Set c = loader.loadClass("Crypt/UrlDecode")
 			c.UrlDecode(server.URLEncode("url解码"))
-		Set c = nothing
+		Set c = Nothing
 	End Sub
 	
 	
 	'加密/解密-对称
 
     Private Sub Test8()
-        set c = loader.loadClass("Crypt/Des")
+        Set c = loader.loadClass("Crypt/Des")
 			x = c.DESEncrypt("DES加密,解密","12345678")
 			wts.responses.SetOutput c.DESDecrypt(x,"12345678")
-		set c = nothing
+		Set c = Nothing
     End Sub
 	
     Private Sub Test9()
-        set c = loader.loadClass("Crypt/Aes")
+        Set c = loader.loadClass("Crypt/Aes")
 			x = c.AESEncrypt("AES加密,解密","12345678ABCDEFGH")
 			wts.responses.SetOutput c.AESDecrypt(x,"12345678ABCDEFGH")
-		set c = nothing
+		Set c = Nothing
     End Sub
 	
 	'加密/解密-非对称
@@ -115,14 +115,14 @@ Class Control_Crypt
 		'#RSA 演示:
 		'c# Rsa Key Format : PEM PKCS1 -> PEM PKCS8 -> C# key
 		'privatekey_csharp = "xxx"
-		set r1= loader.loadClass("Crypt/Rsa")
+		Set r1= loader.loadClass("Crypt/Rsa")
 			r1.Privatekey=privatekey_csharp
 			a="Hello WTS"
 			b=r1.Encrypt(a)
 			c=r1.Decrypt(b)
 			d=r1.SignData(a,"SHA1")
 			e=r1.VerifyData(a,"SHA1",d)
-		set r1=Nothing
+		Set r1 = Nothing
         '##
 		
 		s=""
