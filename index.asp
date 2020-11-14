@@ -34,8 +34,14 @@ Set loader = Nothing
 '#调试程序:
 '输出变量,中断
 Public Sub Die(str)
-	response.write wts.fun.Print(str)
-	response.End
+    On Error Resume Next
+    If typename(wts) = "Framework_Wts" Then
+ 	   response.write wts.fun.Print(str)
+    Else
+ 	   response.write "Invalid Framework"
+    End If
+    If err Then response.write "No Start Framework"
+    response.End
 End Sub
 '##
 
