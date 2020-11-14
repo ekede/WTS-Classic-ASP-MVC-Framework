@@ -36,12 +36,12 @@ Set loader = Nothing
 Public Sub Die(str)
     On Error Resume Next
     If typename(wts) = "Framework_Wts" Then
- 	   response.write wts.fun.Print(str)
+ 	   Response.write wts.fun.Print(str)
     Else
- 	   response.write "Invalid Framework"
+ 	   Response.write "Invalid Framework"
     End If
-    If err Then response.write "No Start Framework"
-    response.End
+    If err Then Response.Write "No Start Framework"
+    Response.End
 End Sub
 '##
 %>
