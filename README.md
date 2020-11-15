@@ -26,6 +26,6 @@ Struct:
     app/             Rewrite "inc/" Folder
 
 Note:
-
-    Program and Data path can be changed by config.asp
+    First Copy inc/config.bak.asp inc/config.asp
+    Program and Data path can be configured by config.asp
     Class libraries and program files based on object, loading file by loader object
