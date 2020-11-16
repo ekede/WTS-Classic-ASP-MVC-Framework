@@ -7,6 +7,7 @@
 
 '#系统包含:
 '全局唯一系统包含,避免使用系统包含,去偶合
+'第一次使用,需要将inc/下的config.bak.asp手动复制为config.asp并进行配置
 %>
 <!--#include file="inc/config.asp"-->
 <!--#include file="inc/class/load.asp"-->
