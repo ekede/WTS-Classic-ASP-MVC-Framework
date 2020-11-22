@@ -9,6 +9,7 @@ Class Class_Cache
     Private fso_
     Private cacheTime_
     Private cacheDataPath_
+    Private cacheDict_
 
 	'@fso: fso对象依赖
 
@@ -26,6 +27,7 @@ Class Class_Cache
 
     Public Property Let dataPath(Values)
         cacheDataPath_ = PATH_ROOT&Values
+        set cacheDict_ = CreateDict("dict_"&cacheDataPath_) '创建容器
     End Property
 
     Private Sub Class_Initialize()
@@ -35,7 +37,7 @@ Class Class_Cache
     Private Sub Class_Terminate()
     End Sub
 
-    '@GetCache(ByRef names): 读
+    '@GetCache(ByRef names): File 读
 
     Public Function GetCache(ByRef names)
         Dim paths, str
@@ -50,7 +52,7 @@ Class Class_Cache
         End If
     End Function
 	
-	'@SetCache(ByRef names,ByRef content): 写
+	'@SetCache(ByRef names,ByRef content): File 写
 
     Public Function SetCache(ByRef names,ByRef content)
         Dim paths
@@ -70,13 +72,13 @@ Class Class_Cache
         SetCache = fso_.Writes(fso_.getmappath(paths), content, "UTF-8")
     End Function
 	
-	'@DelCache(ByRef names): 删 
+	'@DelCache(ByRef names): File 删 
 
     Public Function DelCache(ByRef names)
         DelCache = fso_.DeleteAFile(fso_.GetMapPath(cacheDataPath_&names))
     End Function
 	
-	'@ExpireCache(ByRef names): 过期
+	'@ExpireCache(ByRef names): File 过期
 
     Public Function ExpireCache(ByRef names)
         Dim paths, transtime
@@ -88,7 +90,7 @@ Class Class_Cache
         End If
     End Function
 	
-	'@ClearCache(): 清除
+	'@ClearCache(): File 清
 
     Public Function ClearCache()
         ClearCache = fso_.DeleteAFolder(fso_.GetMapPath(cacheDataPath_))
@@ -96,7 +98,7 @@ Class Class_Cache
 
     '****** Value -> cache
 	
-	'@GetValue(ByRef names): 内存读
+	'@GetValue(ByRef names): APPLICATION 读
 
     Public Function GetValue(ByRef names)
         Dim str
@@ -109,29 +111,107 @@ Class Class_Cache
         GetValue = str
     End Function
 	
-	'@SetValue(ByRef names,ByRef Content): 内存写 支持数组
+	'@SetValue(ByRef names,ByRef Content): APPLICATION 写 支持数组
 
     Public Function SetValue(ByRef names,ByRef Content)
         Application.Contents("cache_"&cacheDataPath_&names) = Content
     End Function
 	
-	'@DelValue(ByRef names): 内存删
+	'@DelValue(ByRef names): APPLICATION 删
 
     Public Function DelValue(ByRef names)
-        Application.Contents.Remove("cache_"&cacheDataPath_&names)
+        Application.Contents.Remove("cache_"&cacheDataPath_&names) '释放容器
     End Function
 	
-	'@ExpireValue(ByRef names): 内存过期
+	'@ExpireValue(ByRef names): APPLICATION 过期
 
     Public Function ExpireValue(ByRef names)
+        DelValue(names)
     End Function
 	
-	'@ClearValue(): 内存清
+	'@ClearValue(): APPLICATION 清
 
     Public Function ClearValue()
         For Each objItem in Application.Contents
             If instr(objItem, "cache_"&cacheDataPath_)>0 Then application.Contents.Remove(objItem)
         Next
+    End Function
+
+    '****** Dictionary -> cache
+
+	'@GetDict(ByRef names): Dictionary 读
+
+    Public Function GetDict(ByRef names)
+        Dim str
+        str = cacheDict_.Item(names)
+        If IsArray(str) Then
+        ElseIf IsObject(str) Then
+        ElseIf str = "" Then
+            str = -1
+        End If
+        GetDict = str
+    End Function
+	
+	'@SetDict(ByRef names,ByRef Content): Dictionary 写
+
+    Public Function SetDict(ByRef names,ByRef Content)
+        cacheDict_.Item(names) = Content
+    End Function
+	
+	'@DelDict(ByRef names): Dictionary 删
+
+    Public Function DelDict(ByRef names)
+        If cacheDict_.Exists(names) Then cacheDict_.Remove(names)
+    End Function
+	
+	'@ExpireDict(ByRef names): Dictionary 过期
+
+    Public Function ExpireDict(ByRef names)
+        DelDict(names)
+    End Function
+	
+	'@ClearDict(): Dictionary 清
+
+    Public Function ClearDict()
+        cacheDict_.RemoveAll()
+    End Function
+
+	'@CleanDict(): Dictionary 释放容器
+
+    Public Function CleanDict()
+        Set cacheDict_ = Nothing
+        CloseDict "dict_"&cacheDataPath_
+    End Function
+
+    '******
+
+    '@CreateDict(ByRef kname): 创建字典容器方法
+
+    Public Function CreateDict(ByRef kname)
+        Dim isDic:isDic = True
+        If IsArray(Application(kname)) Then
+            If ubound(Application(kname))<>-1 Then
+                If typename(Application(kname)(0))<>"Dictionary" Then isDic = False
+            Else
+                isDic = False
+            End If
+        Else
+            isDic = False
+        End If
+        if Not isDic Then 
+            Application.Lock
+            Application(kname) = Array(Server.CreateObject("Scripting.Dictionary"))
+            Application.Unlock
+        End If
+        set CreateDict = Application(kname)(0)
+    End function
+
+	'@CloseDict(ByRef kname): 释放字典容器方法
+
+    Public Function CloseDict(ByRef kname)
+        Application.Lock
+        Application.Contents.Remove(kname)
+        Application.Unlock
     End Function
 
 End Class
