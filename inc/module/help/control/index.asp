@@ -134,7 +134,8 @@ Class Control_Index
 	'递归文件
 	
     Private Sub LoadData(dirPath,data)
-	
+        '有些文件夹没权限会导致错误
+	    On Error Resume Next
         Dim fso
 		Dim objFolder
 		Dim objFiles,objSubFolders
