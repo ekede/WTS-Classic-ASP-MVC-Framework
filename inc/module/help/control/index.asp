@@ -134,14 +134,16 @@ Class Control_Index
 	'递归文件
 	
     Private Sub LoadData(dirPath,data)
-        '有些文件夹没权限会导致错误
+        '有些文件夹没权限会导致判断错误
 	    On Error Resume Next
+
         Dim fso
 		Dim objFolder
 		Dim objFiles,objSubFolders
 		
 		Set fso = server.CreateObject("scripting.filesystemobject")
         Set objFolder = fso.GetFolder(DirPath)
+		IF Err Then Exit Sub
 		
 		'文件列表集合
         Set objFiles = objFolder.Files
