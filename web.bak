@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+        <httpErrors errorMode="Custom">
+            <remove statusCode="405" subStatusCode="-1" />
+            <remove statusCode="404" subStatusCode="-1" />
+            <error statusCode="404" prefixLanguageFilePath="" path="/index.asp" responseMode="ExecuteURL" />
+            <error statusCode="405" prefixLanguageFilePath="" path="/index.asp" responseMode="ExecuteURL" />
+        </httpErrors>
+        <defaultDocument>
+            <files>
+                <add value="index.asp" />
+            </files>
+        </defaultDocument>
+    </system.webServer>
+</configuration>
